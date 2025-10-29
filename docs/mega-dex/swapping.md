@@ -1,4 +1,4 @@
-# Swapping
+# Swapping on MEGA DEX
 
 Exchange one token for another instantly through MegaPools. Swaps on MegaFi execute in under 50 milliseconds with minimal slippage and transparent pricing.
 
@@ -372,7 +372,7 @@ Currently not supported natively. Use third-party limit order protocols built on
 Execute multiple small swaps over time:
 - Reduces price impact
 - Averages entry price
-- Can be automated via Strategy Layer
+- Can be automated via MEGA CLM
 
 ### Arbitrage
 
@@ -427,8 +427,8 @@ Yes, but amount is minimal. $1 worth provides 200+ swaps.
 
 After mastering swaps:
 
-- [Provide liquidity](providing-liquidity.md) to earn fees from swaps
-- Explore [Strategy Layer](../strategy-layer/overview.md) for automated trading
+- [Provide liquidity](providing-liquidity.md) to earn fees from trades
+- Explore [MEGA CLM](../mega-clm/overview.md) for automated management
 - Learn about [fees and rewards](fees-and-rewards.md)
 
 ---

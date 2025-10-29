@@ -20,8 +20,8 @@ graph TD
     C --> D[MegaETH Network]
     
     E[Liquidity Layer] --> C
-    F[Strategy Layer] --> C
-    G[Risk Layer] --> C
+    F[MEGA CLM] --> C
+    G[MEGA Hedge] --> C
     
     C --> H[State Manager]
     H --> I[Event Emitter]
@@ -55,7 +55,7 @@ Components:
 
 [Smart Contracts documentation →](smart-contracts.md)
 
-### Strategy Layer
+### MEGA CLM
 
 **Automation Engine**: Manages algorithmic liquidity strategies.
 
@@ -73,7 +73,7 @@ Components:
 - Performance tracking
 - Risk management
 
-### Risk Layer
+### MEGA Hedge
 
 **Options Protocol**: Handles options trading and settlement.
 

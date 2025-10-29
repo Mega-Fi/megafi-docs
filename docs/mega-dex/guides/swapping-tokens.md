@@ -287,7 +287,7 @@ No protocol-level limits. Swap as much as liquidity allows.
 
 After mastering swaps:
 
-- [Providing Liquidity](../liquidity-layer/providing-liquidity.md) - Earn fees from swaps
+- [Providing Liquidity](../providing-liquidity.md) - Earn fees from trades
 - [Understanding Fees](understanding-fees.md) - Learn about costs
 - [Earning Yield](earning-yield.md) - Maximize returns
 

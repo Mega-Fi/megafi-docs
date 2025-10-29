@@ -400,9 +400,9 @@ Yes. All strategy contracts undergo thorough security audits.
 
 Master automated strategies:
 
-- [Strategy Modes](../strategy-layer/strategy-modes.md) - Deep dive into each mode
-- [Performance Tracking](../strategy-layer/performance-tracking.md) - Monitor results
-- [Automated Rebalancing](../strategy-layer/automated-rebalancing.md) - Understand mechanics
+- [Strategy Modes](../strategy-modes.md) - Deep dive into each mode
+- [Performance Tracking](../performance-tracking.md) - Monitor results
+- [Automated Rebalancing](../automated-rebalancing.md) - Understand mechanics
 
 ---
 

@@ -2,12 +2,12 @@
 
 ## The Real-Time DeFi Super App on MegaETH
 
-MegaFi is a comprehensive DeFi platform built natively on MegaETH, delivering sub-10 millisecond transaction finality and 100,000+ transactions per second. MegaFi combines three core layers - Liquidity, Strategy, and Risk - into a unified interface that redefines what's possible in decentralized finance.
+MegaFi is a comprehensive DeFi platform built natively on MegaETH, delivering sub-10 millisecond transaction finality and 100,000+ transactions per second. MegaFi combines three core products - MEGA DEX, MEGA CLM, and MEGA Hedge - into a unified interface that redefines what's possible in decentralized finance.
 
 ## At a Glance
 
 - **Real-Time Execution**: Sub-10ms finality enables instant swaps, live liquidity updates, and continuous rebalancing
-- **Three Integrated Layers**: Liquidity Layer for trading, Strategy Layer for automated management, Risk Layer for hedging
+- **Three Integrated Layers**: MEGA DEX for trading, MEGA CLM for automated management, MEGA Hedge for option trading
 - **Capital Efficient**: Up to 95% optimized capital utilization through concentrated liquidity and automated rebalancing
 - **Low Cost**: Transaction fees under $0.005, 99% cheaper than traditional Ethereum protocols
 - **Native MegaETH**: Purpose-built for MegaETH's real-time, continuous execution architecture
@@ -25,37 +25,36 @@ Traditional DeFi platforms are constrained by block times, high fees, and manual
 
 ## Core Layers
 
-### Liquidity Layer
+### MEGA DEX
 
-The foundation of MegaFi. Swap tokens instantly through MegaPools that use concentrated liquidity for superior capital efficiency. Provide liquidity in custom Liquidity Zones to earn fees. Real-time pool updates mean your positions stay synchronized with market conditions.
+The trading core of MegaFi. Swap tokens instantly on MEGA DEX through MegaPools powered by concentrated liquidity. Provide liquidity in custom Liquidity Zones to earn fees. Real-time pool updates keep positions synchronized with market conditions.
 
-[Learn more →](docs/liquidity-layer/overview.md)
+[Learn more →](docs/mega-dex/overview.md)
 
-### Strategy Layer
+### MEGA CLM
 
 Automated liquidity management that works 24/7. Deploy Strategy Modes that continuously rebalance your positions, optimize Liquidity Zones, and maximize yield. MegaETH's speed enables strategies that adjust positions multiple times per minute.
 
-[Learn more →](docs/strategy-layer/overview.md)
+[Learn more →](docs/mega-clm/overview.md)
 
-### Risk Layer
+### MEGA Hedge
 
 Hedge your positions with options and advanced risk management tools. Real-time Greeks updates and sub-second execution enable sophisticated risk strategies previously available only to institutional traders.
 
-[Learn more →](docs/risk-layer/overview.md)
+[Learn more →](docs/mega-hedge/overview.md)
 
 ## Quick Start
 
-1. [Connect your wallet](docs/getting-started/connect-wallet.md) to MegaETH
-2. [Configure MegaETH network](docs/getting-started/megaeth-setup.md) in your wallet
-3. [Make your first swap](docs/getting-started/first-swap.md)
-4. [Provide liquidity](docs/liquidity-layer/providing-liquidity.md) to earn fees
+1. [Connect your wallet](docs/getting-started/connect-wallet.md)
+2. [Provide liquidity](docs/mega-dex/providing-liquidity.md) to earn fees
 
 ## For Developers
 
-MegaFi provides a complete SDK for integrating swaps, liquidity, and strategies into your application. API latency under 10ms, native TypeScript support, and modular architecture.
+Review system design and contracts:
 
-[Integration Guide →](docs/technical/integration-guide.md)  
-[SDK Reference →](docs/technical/sdk-reference.md)
+[Architecture →](docs/technical/architecture.md)  
+[Smart Contracts →](docs/technical/smart-contracts.md)  
+[Contract Addresses →](docs/technical/contract-addresses.md)
 
 ## Security
 
@@ -73,16 +72,19 @@ MegaFi inherits MegaETH's exceptional performance characteristics:
 - **Continuous Execution**: Real-time processing, not block batching
 - **99.99% Uptime**: Reliable execution under all market conditions
 
-[Learn about MegaETH →](docs/megaeth/overview.md)
+ 
 
 ## Documentation
 
-This documentation covers everything from basic usage to advanced integration:
+This documentation covers everything from basic usage to architecture:
 
-- **Getting Started**: Wallet setup, first transactions, platform basics
-- **User Guides**: Step-by-step walkthroughs for swapping, providing liquidity, and managing strategies
-- **Technical Docs**: Smart contracts, SDK reference, integration patterns
-- **Reference**: Glossary, FAQs, supported tokens, protocol limits
+- **Getting Started**: Wallet connection and app overview
+- **MEGA DEX**: Trading, liquidity, fees, LP NFTs, zones
+- **MEGA CLM**: Automated strategies and optimization
+- **MEGA Hedge**: Options and risk management
+- **User Guides**: Earning yield, managing risk, troubleshooting
+- **Technical Docs**: Architecture, smart contracts, addresses, audits
+- **Reference**: Glossary, supported tokens, limits
 
 ## Disclaimer
 

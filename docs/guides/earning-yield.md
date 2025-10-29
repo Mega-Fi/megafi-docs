@@ -26,7 +26,7 @@ Deploy algorithm-managed liquidity positions.
 **Time Commitment**: Very low (fully automated)
 **Minimum**: $500+ recommended
 
-[Strategy guide →](../strategy-layer/overview.md)
+[MEGA CLM guide →](../mega-clm/overview.md)
 
 ### 3. Options Selling
 
@@ -37,7 +37,7 @@ Collect premium by selling covered calls or cash-secured puts.
 **Time Commitment**: Medium (active management beneficial)
 **Minimum**: Varies by token price
 
-[Options guide →](../risk-layer/options-trading.md)
+[Options guide →](../mega-hedge/options-trading.md)
 
 ## Getting Started with LP Yield
 
@@ -294,7 +294,7 @@ Annualized: 48% APY
 ```
 
 **Process**:
-1. Navigate to Risk Layer
+1. Navigate to MEGA Hedge
 2. Select "Sell Options"
 3. Choose covered call
 4. Set strike (5-10% above current)
@@ -471,7 +471,7 @@ Start earning:
 
 - [Providing Liquidity](../liquidity-layer/providing-liquidity.md) - Begin LP journey
 - [Using Strategies](using-strategies.md) - Deploy automated strategies
-- [Options Trading](../risk-layer/options-trading.md) - Add option yield
+- [Options Trading](../mega-hedge/options-trading.md) - Add option yield
 
 ---
 

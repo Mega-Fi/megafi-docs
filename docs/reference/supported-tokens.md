@@ -205,7 +205,6 @@ Submit token listing request:
 - Cost: $0.40-2
 - Supported: Major tokens
 
-[Bridge guide →](../megaeth/bridge-guide.md)
 
 ## Token Safety
 
@@ -348,9 +347,9 @@ Technical minimum: 1 wei. Practical minimum: $1,000+ for functionality.
 
 Start trading:
 
-- [Bridge Guide](../megaeth/bridge-guide.md) - Get tokens on MegaETH
+ 
 - [Swapping Guide](../guides/swapping-tokens.md) - Trade tokens
-- [Providing Liquidity](../liquidity-layer/providing-liquidity.md) - Earn fees
+- [Providing Liquidity](../mega-dex/providing-liquidity.md) - Earn fees
 
 ---
 

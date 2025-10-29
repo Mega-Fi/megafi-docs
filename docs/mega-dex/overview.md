@@ -98,9 +98,9 @@ This enables features impossible on block-based chains:
 
 ### Composability
 
-MegaPools integrate with Strategy Layer and Risk Layer:
+MegaPools integrate with MEGA CLM and MEGA Hedge:
 - Deploy automated strategies that rebalance your Liquidity Zones
-- Hedge liquidity positions with options from Risk Layer
+- Hedge liquidity positions with options from MEGA Hedge
 - Combine multiple positions for complex yield strategies
 
 ## For Traders
@@ -163,7 +163,7 @@ The Liquidity Layer leverages MegaETH's unique capabilities:
 
 **Ultra-Low Costs**: Gas fees under $0.005 per transaction. Profitable to rebalance positions multiple times daily.
 
-[MegaETH details →](../megaeth/overview.md)
+ 
 
 ## Getting Started
 

@@ -147,7 +147,7 @@ $10,000 Swap:
 MegaFi (0.3%): $30.00 + $0.003 gas = $30.003
 Competitor A: $30.00 + $2.50 gas = $32.50
 Competitor B: $30.00 + $50 gas = $80.00
-Ethereum DEX: $30.00 + $100 gas = $130.00
+MEGA DEX: example cost breakdown
 
 MegaFi savings vs Ethereum: $99.997 (77%)
 ```
@@ -381,7 +381,7 @@ Transaction history shows all fees. Export for detailed analysis.
 Optimize your costs:
 
 - [Swapping Tokens](swapping-tokens.md) - Minimize swap costs
-- [Providing Liquidity](../liquidity-layer/providing-liquidity.md) - Maximize fee earnings
+- [Providing Liquidity](../providing-liquidity.md) - Maximize fee earnings
 - [Using Strategies](using-strategies.md) - Efficient automation
 
 ---

@@ -38,7 +38,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **DeFi (Decentralized Finance)**: Financial services on blockchain without intermediaries.
 
-**DEX (Decentralized Exchange)**: Trading platform running on blockchain. MegaFi is a DEX.
+**MEGA DEX**: MegaFi's trading interface for token swaps and routing.
 
 ## E
 
@@ -140,7 +140,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Rebalancing**: Adjusting position parameters. Strategies rebalance Liquidity Zones automatically.
 
-**Risk Layer**: MegaFi's options and hedging functionality.
+**MEGA Hedge**: MegaFi's options and hedging functionality.
 
 **RPC (Remote Procedure Call)**: Connection to blockchain. Primary: rpc.megaeth.io.
 
@@ -222,7 +222,7 @@ MegaFi uses specific terminology. Equivalents from other protocols:
 **CEX**: Centralized Exchange
 **CLM**: Concentrated Liquidity Manager
 **DA**: Data Availability
-**DEX**: Decentralized Exchange
+**MEGA DEX**: MegaFi's decentralized exchange
 **EVM**: Ethereum Virtual Machine
 **IL**: Impermanent Loss
 **ITM**: In-the-Money
@@ -247,7 +247,7 @@ MegaFi uses specific terminology. Equivalents from other protocols:
 
 Explore related concepts:
 
-- [FAQs](faqs.md) - Common questions answered
+ 
 - [Limits and Constraints](limits-and-constraints.md) - Protocol limits
 - [Liquidity Layer](../liquidity-layer/overview.md) - Core concepts
 

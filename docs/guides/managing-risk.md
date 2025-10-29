@@ -136,7 +136,7 @@ Caps maximum loss
 
 ### Hedging
 
-Use Risk Layer to protect positions:
+Use MEGA Hedge to protect positions:
 
 **Protective Puts**:
 ```
@@ -401,8 +401,8 @@ No. Only option sellers face liquidation. LPs cannot be liquidated.
 
 Develop risk management skills:
 
-- [Hedging Strategies](../risk-layer/hedging-strategies.md) - Protect positions
-- [Risk Management](../risk-layer/risk-management.md) - Advanced controls
+- [Hedging Strategies](../mega-hedge/hedging-strategies.md) - Protect positions
+- [Risk Management](../mega-hedge/risk-management.md) - Advanced controls
 - [Understanding Fees](understanding-fees.md) - Know all costs
 
 ---

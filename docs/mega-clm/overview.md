@@ -1,6 +1,6 @@
-# Strategy Layer
+# MEGA CLM
 
-Automated liquidity management that continuously optimizes your positions. The Strategy Layer deploys algorithmic strategies that rebalance Liquidity Zones, maximize capital efficiency, and adapt to changing market conditions.
+Automated liquidity management directly connected to MEGA DEX. MEGA CLM deploys algorithmic strategies that rebalance Liquidity Zones, maximize capital efficiency, and adapt to changing market conditions.
 
 ## At a Glance
 
@@ -9,7 +9,7 @@ Automated liquidity management that continuously optimizes your positions. The S
 - Continuous rebalancing enabled by MegaETH's low gas costs
 - Real-time performance tracking and analytics
 - Capital efficiency up to 95% vs 60-70% for manual positions
-- Composable with Liquidity Layer and Risk Layer
+- Composable with MEGA DEX and MEGA Hedge
 
 ## How It Works
 
@@ -45,7 +45,7 @@ Managing concentrated liquidity manually is complex:
 - Time-intensive and prone to human error
 - Emotional decisions during volatility
 
-### Strategy Layer Benefits
+### MEGA CLM Benefits
 
 **Automation**: Strategies work 24/7 without human input.
 
@@ -176,7 +176,7 @@ Compare manual vs automated performance.
 
 ### Select Strategy Mode
 
-1. Navigate to Strategy Layer
+1. Navigate to MEGA CLM
 2. Browse available modes
 3. Review characteristics of each
 4. Select mode matching your goals
@@ -310,18 +310,18 @@ Strategies build on top of MegaPools:
 - Manage Liquidity Zones automatically
 - Collect and compound fees
 
-### With Risk Layer
+### With MEGA Hedge
 
 Combine strategies with hedging:
 
 ```
-Strategy Layer: Earn fees from LP position
-Risk Layer: Buy put option for downside protection
+MEGA CLM: Earn fees from LP position
+MEGA Hedge: Buy put option for downside protection
 ```
 
 Fees help offset option premiums. Protection limits downside.
 
-[Risk Layer integration →](../risk-layer/hedging-strategies.md)
+[MEGA Hedge integration →](../mega-hedge/hedging-strategies.md)
 
 ## Strategy on MegaETH
 
@@ -422,7 +422,7 @@ Yes. Dynamic and Conservative modes specifically designed for volatile markets.
 
 ## Next Steps
 
-Explore Strategy Layer components:
+Explore MEGA CLM components:
 
 - [Strategy Modes](strategy-modes.md) - Detailed mode descriptions
 - [Automated Rebalancing](automated-rebalancing.md) - How rebalancing works

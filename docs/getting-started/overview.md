@@ -41,13 +41,12 @@ After connecting, MegaFi will prompt you to add the MegaETH network if it's not 
 
 Click "Bridge" in the top navigation. Select your source chain (Ethereum, Arbitrum, Base, or Optimism) and the token you want to bridge. Enter the amount and confirm. Assets arrive on MegaETH in 5-15 minutes.
 
-[Bridge guide →](../megaeth/bridge-guide.md)
+ 
 
 ### 4. Make Your First Swap
 
 Navigate to "Swap". Select the tokens you want to trade. Enter the amount. Review the quote (zero price impact on most pairs). Click "Swap" and confirm. Transaction completes in under 50 milliseconds.
 
-[Swap walkthrough →](first-swap.md)
 
 ## Quick Actions
 
@@ -59,7 +58,7 @@ Once set up, you can immediately:
 
 **Deploy Strategies**: Activate automated Strategy Modes that rebalance your liquidity positions continuously.
 
-**Hedge Positions**: Open options positions through the Risk Layer to protect against price movements.
+**Hedge Positions**: Open options positions through MEGA Hedge to protect against price movements.
 
 ## Performance Expectations
 
@@ -101,9 +100,9 @@ All DeFi protocols involve risk. MegaFi smart contracts are audited, but users s
 
 After completing setup:
 
-1. [Make your first swap](first-swap.md) to experience MegaFi's speed
-2. [Provide liquidity](../liquidity-layer/providing-liquidity.md) to earn fees
-3. Explore [Strategy Modes](../strategy-layer/strategy-modes.md) for automation
+1. Try a small swap to experience the interface
+2. [Provide liquidity](../mega-dex/providing-liquidity.md) to earn fees
+3. Explore [Strategy Modes](../mega-clm/strategy-modes.md) for automation
 4. Review [security practices](../guides/troubleshooting.md) for safe DeFi usage
 
 ## Support

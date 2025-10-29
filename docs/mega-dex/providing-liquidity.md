@@ -385,7 +385,7 @@ Deploy automated strategies:
 - Dynamic zone adjustment
 - Risk management algorithms
 
-[Strategy Layer →](../strategy-layer/overview.md)
+[MEGA CLM →](../mega-clm/overview.md)
 
 ## Position on MegaETH
 
@@ -443,13 +443,13 @@ Acts like a limit sell order while earning fees.
 
 ### Hedge with Options
 
-Open opposite positions in Risk Layer:
+Open opposite positions in MEGA Hedge:
 - Long LP position: Earn fees
 - Long put option: Protect against downside
 
 Fee earnings help offset option premiums.
 
-[Risk Layer →](../risk-layer/overview.md)
+[MEGA Hedge →](../mega-hedge/overview.md)
 
 ## FAQ
 
@@ -477,7 +477,7 @@ After providing liquidity:
 
 - [Understand LP NFTs](lp-nfts.md) and position management
 - [Optimize fee earnings](fees-and-rewards.md)
-- [Deploy automated strategies](../strategy-layer/strategy-modes.md)
+- [Deploy automated strategies](../mega-clm/strategy-modes.md)
 - [Learn about impermanent loss](liquidity-zones.md#capital-efficiency)
 
 ---
