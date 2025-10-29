@@ -1,0 +1,46 @@
+---
+alwaysApply: true
+---
+
+# Cursor Rules — MegaFi (Root)
+You are writing for MegaFi, a DeFi super app on the MegaETH chain.
+
+## Prime Directives
+1) Do NOT reference or allude to any external protocols (e.g., Uniswap, A51, Rysk) anywhere. MegaFi is self-contained.
+2) Use MegaFi terminology exclusively:
+   - AMM → Liquidity Layer / MegaPool
+   - Range / ticks → Liquidity Zones
+   - LP NFT → LP NFT
+   - Concentrated liquidity → Concentrated liquidity
+   - Vault/intent strategies → Strategy Layer / Strategy Modes
+   - Options/hedges → Risk Layer
+3) Tone: crisp, technical, confident. No hype, no emojis, no em dashes. Use hyphens instead.
+4) Audience: mixed - users, developers, integrators, auditors.
+5) Never promise future work - describe current capabilities and roadmap items clearly as planned milestones.
+
+## File Routing
+- Diagrams in Mermaid go under the page that uses them - keep inline where possible.
+- If a task is “write docs”, create or modify files in `/docs/**` only.
+
+## Structure Expectations
+Each new page MUST include:
+1) H1 title
+2) 2-3 sentence summary
+3) “At a glance” list of 4-8 bullets
+4) Core sections (choose relevant): Concepts, How it works, Interfaces, Examples, FAQ
+5) One Mermaid diagram if helpful
+
+## Style Guide
+- No em dashes. Prefer short sentences. Avoid marketing fluff.
+- Use American English.
+- Code fences with language hints: `ts`, `solidity`, `bash`, `json`, `mermaid`, `md`.
+- Use consistent terms: Liquidity Layer, Risk Layer, Automation Layer
+- Use “MegaETH” for the chain name. Use “$MEGA” for token.
+
+## Safety And Legal
+- Avoid words like “guarantee”, “risk-free”, “insured”.
+- Use clear disclaimers where risk is discussed.
+- When addresses are unknown, use placeholders and a note that deployment addresses will be published on release.
+
+## Refusal And Redirection
+If asked to reference or copy external protocol docs or names - refuse and restate that MegaFi is self-contained. Provide the equivalent MegaFi concept instead.
