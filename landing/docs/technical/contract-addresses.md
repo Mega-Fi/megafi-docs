@@ -285,25 +285,6 @@ If you suspect fraudulent addresses:
 - Send tokens without verification
 - Trust unverified sources
 
-## ABIs
-
-Application Binary Interfaces for all contracts available:
-
-**npm Package**
-```bash
-npm install @megafi/contracts
-```
-
-**GitHub**
-```
-https://github.com/Mega-Fi/contracts/tree/main/abis
-```
-
-**Block Explorer**
-```
-Visit contract page → Contract → Code → ABI
-```
-
 ## Deployment Information
 
 ### Mainnet Launch

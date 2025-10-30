@@ -88,7 +88,7 @@ MegaETH is a separate Layer 2 chain. Your wallet needs the network configuration
 No minimum deposit or balance required. Even $10 worth of tokens is enough to begin swapping and exploring features.
 
 **Are my funds at risk?**  
-All DeFi protocols involve risk. MegaFi smart contracts are audited, but users should understand DeFi risks before depositing significant amounts.
+All DeFi protocols involve risk. MegaFi smart contracts are in development and have not yet been audited. Current deployments are for testing purposes only. Users should understand DeFi risks before depositing funds.
 
 ## Next Steps
 

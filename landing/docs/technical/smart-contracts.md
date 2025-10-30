@@ -2,14 +2,14 @@
 
 Technical reference for MegaFi smart contracts. Understand contract architecture, key functions, and integration patterns.
 
-> **Note**: Smart contracts are currently in final audit and not yet deployed to mainnet. Contract addresses will be published upon mainnet launch. Testnet contracts are available for development and testing.
+> **Note**: Smart contracts are currently in development and testing. Security audits are planned before mainnet deployment. Contract addresses will be published upon mainnet launch. Testnet contracts are available for development and testing.
 
 ## At a Glance
 
 - All contracts are open source and will be verified upon deployment
 - EVM-compatible Solidity contracts
 - Upgradeable proxy pattern for core contracts
-- Multi-tier audit coverage
+- Security audits planned before mainnet
 - Optimized for MegaETH's continuous execution
 - Complete ABIs available for integration
 
@@ -409,10 +409,9 @@ function upgradeTo(address newImplementation) external onlyOwner {
 
 ### Audit Status
 
-All contracts audited by multiple firms:
-- Audit 1: [Firm Name] - [Date]
-- Audit 2: [Firm Name] - [Date]  
-- Audit 3: [Firm Name] - [Date]
+**Current Status**: Pre-audit phase. Security audits are planned and will be completed before mainnet deployment.
+
+**Timeline**: Audits to be conducted by multiple independent security firms prior to production launch.
 
 Reports available on [GitHub/website].
 

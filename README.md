@@ -60,7 +60,7 @@ Review system design and contracts:
 
 ## Security
 
-MegaFi smart contracts undergo multi-tier audits covering runtime execution, contract logic, and interface security. Running natively on MegaETH's real-time sequencer eliminates mempool exposure and front-running vectors.
+MegaFi smart contracts are in development with security audits planned before mainnet launch. Running natively on MegaETH's real-time sequencer eliminates mempool exposure and front-running vectors.
 
 [Security Details →](docs/technical/security-audits.md)
 

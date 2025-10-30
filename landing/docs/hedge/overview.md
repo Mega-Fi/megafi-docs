@@ -419,7 +419,7 @@ Yes. Secondary market for buying and selling options anytime.
 System auto-exercises at expiration. You don't lose value.
 
 **Are options audited?**  
-Yes. All Hedge contracts undergo thorough security audits.
+Not yet. Security audits are planned before mainnet launch. Current deployments are for testing only.
 
 **Can I use options as collateral elsewhere?**  
 Some lending protocols accept options as collateral. Check protocol support.
