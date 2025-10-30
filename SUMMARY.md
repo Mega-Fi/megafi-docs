@@ -3,6 +3,7 @@
 ## Getting Started
 
 - [Introduction](README.md)
+- [Welcome](docs/getting-started/welcome.md)
 - [Overview](docs/getting-started/overview.md)
 - [Connect Wallet](docs/getting-started/connect-wallet.md)
  
