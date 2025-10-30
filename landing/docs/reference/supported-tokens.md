@@ -170,7 +170,6 @@ Check interface for current list
 
 Submit token listing request:
 
-**Form**: [megafi.app/token-request](https://megafi.app/token-request)
 
 **Required Information**:
 - Token contract address (origin chain)

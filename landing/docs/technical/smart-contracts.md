@@ -446,8 +446,8 @@ security@megafi.app with responsible disclosure. Bug bounty available.
 Explore contract integration:
 
 - [Contract Addresses](contract-addresses.md) - Deployed addresses
-- [SDK Reference](sdk-reference.md) - JavaScript integration
-- [Integration Guide](integration-guide.md) - Build on MegaFi
+- [Architecture](architecture.md) - System design
+- [Security Audits](security-audits.md) - Security information
 
 ---
 

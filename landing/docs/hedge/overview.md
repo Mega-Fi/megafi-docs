@@ -7,8 +7,6 @@ Advanced risk management tools including options trading and hedging strategies.
 - Trade options on major token pairs with sub-10ms execution
 - Hedge liquidity positions against price movements and volatility
 - Real-time Greeks calculations and risk metrics
-- Automated position management and risk controls
-- Composable with DEX and CLM
 - Capital-efficient collateral requirements
 
 ## How It Works
@@ -82,10 +80,6 @@ Strategy: Buy straddle (call + put at same strike)
 **Call Options**: Right to buy token at strike price.
 
 **Put Options**: Right to sell token at strike price.
-
-**American Style**: Exercise anytime before expiration.
-
-**European Style**: Exercise only at expiration.
 
 Available expirations: Daily, weekly, monthly.
 
@@ -283,12 +277,6 @@ Sell ETH call: Hold 1 ETH per contract
 Sell ETH put: Hold strike price worth of USDC per contract
 ```
 
-**Naked Options** (advanced):
-```
-Risk-based margin calculated by system
-Typically 130-150% of option value
-Margin calls if value approaches collateral
-```
 
 ### Position Limits
 

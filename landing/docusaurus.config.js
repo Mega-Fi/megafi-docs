@@ -66,7 +66,7 @@ const config = {
             label: 'Documentation',
           },
           {
-            href: 'https://megafi.app',
+            href: 'https://www.megafi.app/',
             label: 'Launch App',
             position: 'right',
           },
@@ -123,11 +123,11 @@ const config = {
             items: [
               {
                 label: 'Discord',
-                href: 'https://discord.gg/megafi',
+                href: 'https://discord.gg/dafqYYwM',
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/megafi',
+                href: 'https://x.com/megafi_app',
               },
               {
                 label: 'GitHub',
@@ -140,7 +140,7 @@ const config = {
             items: [
               {
                 label: 'Website',
-                href: 'https://megafi.app',
+                href: 'https://www.megafi.app/',
               },
               {
                 label: 'MegaETH',

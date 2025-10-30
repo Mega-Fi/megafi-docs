@@ -360,8 +360,8 @@ Proxy addresses remain constant. Implementation addresses may change with upgrad
 Use addresses for integration:
 
 - [Smart Contracts](smart-contracts.md) - Contract details
-- [SDK Reference](sdk-reference.md) - JavaScript SDK
-- [Integration Guide](integration-guide.md) - Build on MegaFi
+- [Architecture](architecture.md) - System design
+- [Security Audits](security-audits.md) - Security information
 
 ---
 

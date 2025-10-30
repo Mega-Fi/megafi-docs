@@ -242,7 +242,7 @@ Easy integration for:
 - Other protocols
 ```
 
-[Integration Guide →](integration-guide.md)
+[Smart Contracts →](smart-contracts.md)
 
 ## Performance Optimizations
 
@@ -258,7 +258,7 @@ Optimizations for continuous execution:
 
 **Parallel Execution**: State designed for parallel access.
 
-[MegaETH Optimizations →](megaeth-optimizations.md)
+[Contract Addresses →](contract-addresses.md)
 
 ### Gas Optimizations
 
@@ -425,8 +425,8 @@ Yes. Public API: 100 req/min. Higher limits available for partners.
 Dive deeper into technical details:
 
 - [Smart Contracts](smart-contracts.md) - Contract specifications
-- [SDK Reference](sdk-reference.md) - Developer SDK
-- [Integration Guide](integration-guide.md) - Build on MegaFi
+- [Contract Addresses](contract-addresses.md) - Deployed addresses
+- [Security Audits](security-audits.md) - Security information
 
 ---
 

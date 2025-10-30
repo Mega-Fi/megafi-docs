@@ -158,9 +158,7 @@ Break-even: $1,750 ($1,800 strike - $50 premium)
 
 ### Risks
 
-**Unlimited Risk** (naked options): Large losses if price moves against you.
-
-**Assignment Risk**: May be forced to buy/sell underlying.
+**Assignment Risk**: May be forced to buy/sell underlying at unfavorable prices.
 
 **Collateral Requirement**: Must lock capital as collateral.
 

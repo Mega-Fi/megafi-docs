@@ -164,7 +164,7 @@ DEX leverages MegaETH's unique capabilities:
 
 ### As a Trader
 
-1. [Connect wallet](../getting-started/connect-wallet.md)
+1. [Connect wallet](../getting-started/overview.md)
 2. [Make your first swap](swapping.md)
 3. Explore available pools and routes
 

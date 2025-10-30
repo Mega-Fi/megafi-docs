@@ -416,25 +416,15 @@ Users must acknowledge:
 
 ## Contact
 
-Security-related inquiries:
+Security-related or any other inquiries:
 
-**Email**: security@megafi.app
-
-**PGP Key**: Available on website
+**Email**: contact@megafi.app
 
 **Response Time**: < 24 hours
-
-**Bug Bounties**: Up to $500,000
 
 ## Resources
 
 **Audit Reports**: [GitHub/audits](https://github.com/Mega-Fi/audits)
-
-**Bug Bounty**: [megafi.app/bounty](https://megafi.app/bounty)
-
-**Security Docs**: [docs.megafi.app/security](https://docs.megafi.app/security)
-
-**Status Page**: [status.megafi.app](https://status.megafi.app)
 
 ## FAQ
 

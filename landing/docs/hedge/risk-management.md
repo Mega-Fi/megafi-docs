@@ -121,13 +121,6 @@ Sell Cash-Secured Put:
 - Risk: Buy at strike if assigned
 ```
 
-**Naked Options**:
-```
-Sell Naked Call/Put:
-- Initial Margin: 130-200% of current value
-- Maintenance Margin: 120% of current value
-- Risk: Significant if price moves adversely
-```
 
 ### Margin Calculations
 
