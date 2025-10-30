@@ -13,23 +13,30 @@ Advanced risk management tools including options trading and hedging strategies.
 
 ```mermaid
 graph TD
-    A[Risk Exposure] --> B{Hedging Need}
-    B -->|Downside Protection| C[Buy Put Options]
-    B -->|Upside Participation| D[Buy Call Options]
-    B -->|Generate Income| E[Sell Covered Options]
+    A[User] --> B{Choose Strategy}
+    B -->|Earn Yield| C[Covered Call Vault]
+    B -->|Earn Yield| D[Cash-Secured Put Vault]
+    B -->|Buy Protection| E[Protective Put]
     
-    C --> F[Protected Position]
+    C --> F[RFQ System]
     D --> F
     E --> F
     
-    G[LP Position] --> H[Hedge]
-    H --> I[Hedged LP Position]
+    F --> G[Market Makers]
+    G --> H[Best Quote Selected]
+    H --> I[Instant Execution on MegaETH]
     
-    style H fill:#4F46E5
+    style F fill:#4F46E5
     style I fill:#10B981
 ```
 
-Hedge provides derivatives instruments to manage exposure from DEX positions or general token holdings.
+**Hedge combines two powerful models**:
+
+1. **Vault-Based Yield**: Deposit assets into covered call or cash-secured put vaults. The protocol automatically manages positions to generate consistent yield.
+
+2. **RFQ Options Trading**: Buy protective puts or manage positions through a Request for Quote system where market makers compete to provide the best prices.
+
+Both leverage MegaETH's sub-10ms execution for instant settlement and real-time position management.
 
 ## Why Use Hedge?
 
@@ -81,6 +88,12 @@ Strategy: Buy straddle (call + put at same strike)
 
 **Put Options**: Right to sell token at strike price.
 
+**How Trading Works**:
+- Request quotes through RFQ system
+- Market makers provide competitive prices
+- Select best quote and execute instantly
+- Positions settle in < 10ms on MegaETH
+
 Available expirations: Daily, weekly, monthly.
 
 [Options trading guide →](options-trading.md)
@@ -115,7 +128,7 @@ Automated risk controls:
 
 ### Portfolio Hedging
 
-Hedge entire portfolios with single operations:
+Hedge portfolios with coordinated options strategies:
 
 ```
 Portfolio:
@@ -123,10 +136,11 @@ Portfolio:
 - 5 WBTC
 - $50k in LP positions
 
-Single hedge:
-- Portfolio put option (basket)
-- Protects entire portfolio
-- More capital efficient than individual hedges
+Hedging approach:
+- Buy protective puts on major holdings
+- Use covered calls to offset hedge costs
+- Coordinate strikes and expirations
+- More efficient than uncoordinated hedges
 ```
 
 ## Option Mechanics
@@ -183,17 +197,20 @@ Options priced using adapted Black-Scholes model with DeFi modifications:
 
 **Risk-Free Rate**: DeFi lending rates (e.g., USDC yield).
 
-### On-Chain Pricing
+### RFQ Pricing
 
-Pricing happens on-chain in real-time:
+Competitive pricing through Request for Quote system:
 
 ```
-Price Update: Every swap in MegaPool
-Volatility Update: Every 100 swaps or 1 minute
-Greeks Update: With each price update
+User Request: Submit option parameters
+Market Makers: Provide competitive quotes
+Best Price: Automatically selected
+Execution: Instant on MegaETH (< 10ms)
 
-Result: Sub-second pricing updates vs minutes on other chains
+Result: Professional pricing with sub-100ms quote response
 ```
+
+Market makers continuously update quotes based on real-time market conditions, ensuring competitive pricing at all times.
 
 [Pricing details →](pricing-models.md)
 

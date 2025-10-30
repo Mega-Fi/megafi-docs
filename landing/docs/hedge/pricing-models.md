@@ -97,20 +97,27 @@ Put price derived via put-call parity.
 
 **Implied Volatility (σ)**: Market expectation of future volatility.
 
-### On-Chain Implementation
+### RFQ Pricing System
 
-Pricing calculated on-chain:
+MegaFi uses a Request for Quote (RFQ) system for competitive options pricing:
 
 ```
-1. MegaPool swap occurs
-2. ETH price updates: $2,001.50
-3. Pricing contract triggered
-4. All options re-priced with new S
-5. Updated prices available
-Total time: < 10ms
+1. User requests option quote (strike, expiration, size)
+2. Multiple market makers provide competitive quotes
+3. Best price automatically selected
+4. User reviews and confirms
+5. Trade executes instantly on MegaETH
+Total time: < 100ms
 ```
 
-Real-time pricing enabled by MegaETH's continuous execution.
+**Benefits of RFQ**:
+- Competitive pricing from multiple professional market makers
+- Deep liquidity across all strikes and expirations
+- Fast execution leveraging MegaETH's sub-10ms finality
+- Transparent quote comparison
+
+**How It Works**:
+Market makers continuously monitor markets and provide real-time quotes. When you request a price, the system queries multiple makers simultaneously and presents the best available price. MegaETH's speed ensures quotes remain fresh and execution is near-instant.
 
 ## Implied Volatility
 
@@ -282,48 +289,49 @@ Option value increases $5
 
 ### Real-Time Updates
 
-MegaFi pricing updates continuously:
+MegaFi pricing updates continuously through the RFQ system:
 
 ```mermaid
 graph LR
-    A[Swap in MegaPool] --> B[Price Update]
-    B --> C[Recalculate Options]
-    C --> D[Update Quotes]
-    D --> E[Display New Prices]
+    A[Market Conditions Change] --> B[Market Makers Update Quotes]
+    B --> C[RFQ System Aggregates]
+    C --> D[Best Prices Available]
+    D --> E[User Requests Quote]
+    E --> F[Instant Response]
     
-    style B fill:#4F46E5
-    style C fill:#10B981
+    style C fill:#4F46E5
+    style F fill:#10B981
 ```
 
-Frequency: Every transaction (sub-second).
+**Update Frequency**:
+- Market maker quotes: Continuous (sub-second)
+- User quote requests: On-demand (< 100ms response)
+- Underlying price feeds: Real-time from MegaPools
 
-Compare to block-based chains:
-```
-Ethereum: Updates every ~12 seconds
-Arbitrum: Updates every ~2 seconds
-MegaETH: Updates every <0.01 seconds
-```
+**MegaETH Advantage**:
+MegaETH's sub-10ms finality means once you accept a quote, execution and settlement happen almost instantly. No waiting for block confirmations or dealing with stale prices.
 
-### Arbitrage and Efficiency
+### Competitive Pricing and Efficiency
 
-Mispricing corrected immediately:
+RFQ system ensures competitive pricing:
 
 ```
 Scenario:
-ETH MegaPool: $2,000
-$2,000 call fair value: $100
-Market price: $95 (underpriced)
+User requests ETH $2,000 call quote
 
-Arbitrage:
-1. Buy call for $95
-2. Delta hedge by shorting ETH
-3. Hold until price corrects to $100
-4. Profit: $5 per contract
+Market Maker A: $100
+Market Maker B: $98
+Market Maker C: $99
 
-Result: Buying pressure brings price to $100
+System automatically selects: $98 (best price)
+User gets competitive execution
 ```
 
-MegaETH's low costs make tiny mispricings profitable to correct.
+**Why RFQ is Efficient**:
+- Market makers compete for your order
+- Professional pricing from experienced traders
+- Tight spreads due to competition
+- MegaETH's low costs enable market makers to offer better prices
 
 ## Factors Affecting Price
 
@@ -469,11 +477,11 @@ Reason: Downside protection demand
 **Why do option prices change when underlying doesn't?**  
 Time decay, volatility changes, or interest rate changes affect value.
 
-**Can I see the exact pricing formula?**  
-Yes. Smart contracts are open source. Black-Scholes implementation visible on-chain.
+**How does RFQ pricing compare to on-chain pricing?**  
+RFQ provides competitive quotes from professional market makers. While Black-Scholes principles guide pricing, market makers factor in real-time supply/demand and risk management.
 
 **How accurate is the pricing model?**  
-Very accurate for European options. American options may show small deviations due to early exercise value.
+Market makers use sophisticated pricing models based on Black-Scholes and other factors. RFQ competition ensures fair market pricing.
 
 **What if I think an option is mispriced?**  
 Arbitrage opportunity. Trade against it and potentially profit.

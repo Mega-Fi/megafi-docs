@@ -4,12 +4,12 @@ Buy and sell call and put options on major token pairs. Options provide leverage
 
 ## At a Glance
 
-- Trade American and European style options
-- Call options for bullish exposure, puts for bearish or hedging
-- Real-time pricing with sub-second updates
-- Leverage exposure with defined maximum loss
-- Exercise anytime (American) or at expiration (European)
-- Secondary market for closing positions before expiration
+- Trade call and put options on major token pairs
+- RFQ system provides competitive pricing from market makers
+- Real-time execution with sub-10ms settlement on MegaETH
+- Covered calls and cash-secured puts for yield generation
+- Protective puts for hedging and risk management
+- Defined maximum loss for option buyers
 
 ## Option Basics
 
@@ -169,9 +169,8 @@ Break-even: $1,750 ($1,800 strike - $50 premium)
 3. Set strike and expiration
 4. Enter size
 5. Review collateral requirement:
-   - Covered: Must own underlying
-   - Cash-secured: Must have USDC
-   - Naked: Risk-based margin
+   - Covered: Must own underlying (e.g., hold ETH to sell calls)
+   - Cash-secured: Must have USDC (e.g., hold USDC to sell puts)
 6. Deposit collateral
 7. Review premium received
 8. Confirm sale
@@ -277,9 +276,9 @@ Net cost: $50 to extend position
 
 Automated roll available: Set parameters and system rolls automatically.
 
-### Early Exercise (American Options)
+### Early Exercise
 
-Exercise any time before expiration:
+Exercise options before expiration when beneficial:
 
 1. Click "Exercise" on ITM option
 2. System calculates intrinsic value
@@ -300,56 +299,28 @@ Usually better to sell option than exercise early (preserves time value), but fl
 
 **Cash-Secured Put**: Income while waiting to buy.
 
-### Multi-Leg Strategies
+### Combined Strategies
 
-**Vertical Spreads**:
+**Collar (Protective Put + Covered Call)**:
 ```
-Bull Call Spread:
-- Buy call at lower strike
-- Sell call at higher strike
-- Defined risk and reward
-- Lower cost than single call
+Risk management strategy:
+- Hold underlying asset
+- Buy protective put (downside protection)
+- Sell covered call (generate income)
+- Net cost reduced or zero
 
 Example:
-Buy $2,000 call for $100
-Sell $2,200 call for $30
-Net cost: $70
-Max profit: $200 - $70 = $130
-Max loss: $70
+Hold 10 ETH at $2,000
+Buy $1,800 put for $50
+Sell $2,200 call for $80
+Net credit: $30 per ETH
+
+Result: Protected between $1,800-$2,200 with income
 ```
 
-**Straddle**:
-```
-Volatility play:
-- Buy call and put at same strike
-- Profit from large move either direction
-- Loss if price stays flat
+**Note**: Advanced multi-leg strategies like vertical spreads, iron condors, and butterflies may be added in future releases. Current focus is on core strategies: covered calls, cash-secured puts, protective puts, and collars.
 
-Example:
-ETH at $2,000
-Buy $2,000 call for $100
-Buy $2,000 put for $95
-Total cost: $195
-Break-even: $1,805 or $2,195
-```
-
-**Iron Condor**:
-```
-Income strategy:
-- Sell OTM call and put
-- Buy further OTM call and put for protection
-- Profit if price stays in range
-
-Example:
-Sell $2,200 call, collect $30
-Sell $1,800 put, collect $30
-Buy $2,300 call, pay $10
-Buy $1,700 put, pay $10
-Net credit: $40
-Profit if ETH stays between $1,800-$2,200
-```
-
-[More strategies →](hedging-strategies.md)
+[More hedging strategies →](hedging-strategies.md)
 
 ## Greeks and Risk Metrics
 
@@ -420,8 +391,8 @@ Interface displays all Greeks in real-time.
 **What's the minimum trade size?**  
 0.1 contracts (0.1 ETH notional).
 
-**Can I exercise options anytime?**  
-American style: Yes. European style: Only at expiration. Check option type.
+**Can I exercise options before expiration?**  
+Most options can be closed or exercised before expiration. Check specific option terms when trading.
 
 **What if I don't have tokens to deliver on assigned put?**  
 Position automatically closes at market with P&L settled in USDC.

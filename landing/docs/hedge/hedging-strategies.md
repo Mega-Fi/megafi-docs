@@ -237,14 +237,16 @@ $50,000 in LP positions
 Total: $270,000
 ```
 
-**Strategy: Index Puts**
+**Strategy: Coordinated Hedging**
 ```
-Instead of hedging each asset:
-Buy portfolio puts (basket option)
+Instead of hedging each asset separately:
+Buy protective puts on largest holdings
+Coordinate strikes and expirations
+Use covered calls to offset costs
 
-Protection: Entire portfolio
-Cost: 30% cheaper than individual hedges
-Correlation: Leverages asset correlation
+Protection: Major portfolio components
+Cost: More efficient than uncoordinated approach
+Benefit: Simplified management
 ```
 
 **Strategy: Tail Risk Hedge**
@@ -276,46 +278,24 @@ More efficient than individual asset hedges
 
 ## Advanced Strategies
 
-### Delta Hedging
+### Portfolio Rebalancing with Options
 
-Maintain delta-neutral position:
-
-```
-Position: Sold 20 ETH $2,000 calls (delta -0.6 each)
-Portfolio Delta: -12 ETH
-
-Hedge: Buy 12 ETH or 12 ETH delta in options
-Result: Delta-neutral, profit from theta and vega
-```
-
-Automated delta hedging available.
-
-### Gamma Scalping
-
-Profit from volatility via gamma:
+Use options to adjust portfolio exposure:
 
 ```
-Setup: Long straddle (gamma positive)
-As price moves: Delta changes
-Action: Trade underlying to capture gamma
-Result: Profit from realized volatility
+Scenario: Portfolio too heavy in ETH
+Want to reduce exposure without selling
+
+Strategy: Sell covered calls on portion of ETH
+- Generate income from premium
+- Reduce upside exposure
+- Maintain long-term position
+
+If assigned: ETH sold at profit
+If not assigned: Keep premium and ETH
 ```
 
-Requires active management. Best on MegaETH due to low gas costs.
-
-### Volatility Arbitrage
-
-Trade mispriced volatility:
-
-```
-Implied Volatility: 60% (options market)
-Realized Volatility: 40% (actual)
-
-Strategy:
-Sell options (short expensive IV)
-Delta hedge (stay neutral to direction)
-Profit: IV mean reversion
-```
+**Note**: Advanced strategies like delta hedging, gamma scalping, and volatility arbitrage require sophisticated trading infrastructure and may be added in future releases. Current focus is on accessible hedging strategies for all users.
 
 ## Hedge Monitoring
 
@@ -453,7 +433,7 @@ Yes. If price doesn't move as expected, premium is lost. That's the insurance co
 Longer-term hedges have better cost efficiency but lock capital longer.
 
 **Can hedging be automated?**  
-Yes. CLM can automatically manage hedges based on your rules.
+Vault-based strategies (covered calls, cash-secured puts) are automated. Manual hedges (protective puts) require user management or can be integrated with CLM strategies.
 
 **Do I need to hedge if I'm long-term holder?**  
 Not required, but can reduce drawdowns and sleep-better factor.
