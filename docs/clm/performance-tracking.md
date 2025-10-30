@@ -1,6 +1,6 @@
 # Performance Tracking
 
-Monitor, analyze, and optimize your Strategy Layer positions with comprehensive performance metrics and analytics tools.
+Monitor, analyze, and optimize your CLM positions with comprehensive performance metrics and analytics tools.
 
 ## At a Glance
 

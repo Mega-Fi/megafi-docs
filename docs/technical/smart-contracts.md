@@ -1,10 +1,12 @@
 # Smart Contracts
 
-Technical reference for MegaFi smart contracts deployed on MegaETH. Understand contract architecture, key functions, and integration patterns.
+Technical reference for MegaFi smart contracts. Understand contract architecture, key functions, and integration patterns.
+
+> **Note**: Smart contracts are currently in final audit and not yet deployed to mainnet. Contract addresses will be published upon mainnet launch. Testnet contracts are available for development and testing.
 
 ## At a Glance
 
-- All contracts are open source and verified
+- All contracts are open source and will be verified upon deployment
 - EVM-compatible Solidity contracts
 - Upgradeable proxy pattern for core contracts
 - Multi-tier audit coverage

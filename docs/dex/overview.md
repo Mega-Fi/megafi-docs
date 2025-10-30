@@ -1,6 +1,6 @@
-# MEGA DEX
+# DEX
 
-The trading core of MegaFi. MEGA DEX enables instant token swaps and efficient capital deployment through MegaPools powered by concentrated liquidity.
+The trading core of MegaFi. DEX enables instant token swaps and efficient capital deployment through MegaPools powered by concentrated liquidity.
 
 ## At a Glance
 
@@ -100,7 +100,7 @@ This enables features impossible on block-based chains:
 
 ## For Traders
 
-Use MEGA DEX to:
+Use DEX to:
 
 **Swap Tokens**: Trade any supported token pair with minimal slippage and instant execution.
 
@@ -148,7 +148,7 @@ Result: Same fee earnings with 50-70% less capital deployed.
 
 ## MegaETH Advantages
 
-MEGA DEX leverages MegaETH's unique capabilities:
+DEX leverages MegaETH's unique capabilities:
 
 **Sub-10ms Finality**: Swaps execute and finalize before traditional chains process a single block.
 
@@ -207,7 +207,7 @@ MegaPools are deployed as smart contracts on MegaETH. Key components:
 
 ## Performance Metrics
 
-Real-world MEGA DEX performance on MegaETH:
+Real-world DEX performance on MegaETH:
 
 - **Swap Latency**: 10-50ms (submission to finality)
 - **Pool Update Frequency**: Continuous (real-time state changes)
@@ -235,7 +235,7 @@ Yes. They're standard ERC-721 tokens. Sell or transfer like any NFT.
 
 ## Next Steps
 
-Dive deeper into MEGA DEX components:
+Dive deeper into DEX components:
 
 - [MegaPools](megapools.md) - Pool mechanics and pricing
 - [Liquidity Zones](liquidity-zones.md) - Range selection strategies

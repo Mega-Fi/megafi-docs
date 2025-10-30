@@ -4,7 +4,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 ## A
 
-**AMM (Automated Market Maker)**: Algorithm that prices assets and enables trading without traditional order books. In MegaFi, see Liquidity Layer.
+**AMM (Automated Market Maker)**: Algorithm that prices assets and enables trading without traditional order books. In MegaFi, see DEX.
 
 **APR (Annual Percentage Rate)**: Annualized return rate. Example: 30% APR means earning 30% per year at current rate.
 
@@ -38,7 +38,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **DeFi (Decentralized Finance)**: Financial services on blockchain without intermediaries.
 
-**MEGA DEX**: MegaFi's trading interface for token swaps and routing.
+**DEX**: MegaFi's trading interface for token swaps and routing.
 
 ## E
 
@@ -88,7 +88,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Liquidity**: Available tokens for trading. More liquidity = less slippage.
 
-**Liquidity Layer**: MegaFi's core AMM functionality. Swaps and liquidity provision.
+**DEX**: MegaFi's core AMM functionality. Swaps and liquidity provision.
 
 **Liquidity Provider (LP)**: User who deposits tokens into pools to enable trading.
 
@@ -140,7 +140,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Rebalancing**: Adjusting position parameters. Strategies rebalance Liquidity Zones automatically.
 
-**MEGA Hedge**: MegaFi's options and hedging functionality.
+**Hedge**: MegaFi's options and hedging functionality.
 
 **RPC (Remote Procedure Call)**: Connection to blockchain. Primary: rpc.megaeth.io.
 
@@ -156,7 +156,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Stablecoin**: Token pegged to stable asset (usually $1). USDC, USDT, DAI.
 
-**Strategy Layer**: MegaFi's automated liquidity management functionality.
+**CLM**: MegaFi's automated liquidity management functionality.
 
 **Strike Price**: Price at which option can be exercised.
 
@@ -180,7 +180,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 ## V
 
-**Vault**: In other protocols, automated strategy. In MegaFi, see Strategy Layer.
+**Vault**: In other protocols, automated strategy. In MegaFi, see CLM.
 
 **Vega**: Options Greek measuring volatility sensitivity. How much option value changes with IV.
 
@@ -208,9 +208,9 @@ MegaFi uses specific terminology. Equivalents from other protocols:
 
 | Other Protocols | MegaFi |
 |-----------------|--------|
-| AMM | Liquidity Layer / MegaPool |
+| AMM | DEX / MegaPool |
 | Range / Ticks | Liquidity Zones |
-| Vault | Strategy Layer / Strategy Modes |
+| Vault | CLM / Strategy Modes |
 | Pool | MegaPool |
 | V3 Position | LP NFT |
 
@@ -222,7 +222,7 @@ MegaFi uses specific terminology. Equivalents from other protocols:
 **CEX**: Centralized Exchange
 **CLM**: Concentrated Liquidity Manager
 **DA**: Data Availability
-**MEGA DEX**: MegaFi's decentralized exchange
+**DEX**: MegaFi's decentralized exchange
 **EVM**: Ethereum Virtual Machine
 **IL**: Impermanent Loss
 **ITM**: In-the-Money
@@ -249,7 +249,7 @@ Explore related concepts:
 
  
 - [Limits and Constraints](limits-and-constraints.md) - Protocol limits
-- [Liquidity Layer](../liquidity-layer/overview.md) - Core concepts
+- [DEX](../dex/overview.md) - Core concepts
 
 ---
 

@@ -331,7 +331,7 @@ As price moves, different NFTs activate. Smooth fee earnings across price ranges
 
 **Hedge Strategy**:
 
-Combine LP NFT with MEGA Hedge options:
+Combine LP NFT with Hedge options:
 - LP NFT: Earn fees
 - Put option: Protect downside
 
@@ -407,7 +407,7 @@ Understand LP NFT mechanics:
 
 - [Providing Liquidity](providing-liquidity.md) - Create positions and receive NFTs
 - [Fees and Rewards](fees-and-rewards.md) - Maximize NFT value
-- [MEGA CLM](../mega-clm/overview.md) - Automate NFT management
+- [CLM](../clm/overview.md) - Automate NFT management
 
 ---
 

@@ -389,7 +389,7 @@ Adjustable parameters:
 
 ### How to Switch
 
-1. Open position in Strategy Layer
+1. Open position in CLM
 2. Click "Change Strategy Mode"
 3. Select new mode
 4. Review expected changes

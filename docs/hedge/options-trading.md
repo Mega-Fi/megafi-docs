@@ -59,7 +59,7 @@ Exposure: Same upside, 96% less capital
 
 ### Buying Process
 
-1. Navigate to Risk Layer → Options
+1. Navigate to Hedge → Options
 2. Select token pair (e.g., ETH/USDC)
 3. Choose option type:
    - Call (bullish or selling covered)

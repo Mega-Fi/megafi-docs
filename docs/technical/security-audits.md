@@ -22,13 +22,13 @@ All core contracts have been audited by multiple independent security firms.
 2. [Audit Firm 2] - [Date]
 3. [Audit Firm 3] - [Date]
 
-**Scope**: All smart contracts including MEGA DEX, MEGA CLM, and MEGA Hedge.
+**Scope**: All smart contracts including DEX, CLM, and Hedge.
 
 **Results**: All critical and high-severity issues resolved. Audit reports available publicly.
 
 ## Audit Coverage
 
-### Liquidity Layer
+### DEX
 
 **Contracts Audited**:
 - MegaPoolFactory
@@ -48,7 +48,7 @@ All core contracts have been audited by multiple independent security firms.
 
 **Findings**: [Summary of resolved issues]
 
-### Strategy Layer
+### CLM
 
 **Contracts Audited**:
 - StrategyManager
@@ -65,7 +65,7 @@ All core contracts have been audited by multiple independent security firms.
 
 **Findings**: [Summary of resolved issues]
 
-### MEGA Hedge
+### Hedge
 
 **Contracts Audited**:
 - OptionFactory
@@ -461,8 +461,8 @@ Yes. All smart contracts are open source and verified.
 Understand security:
 
 - [Smart Contracts](smart-contracts.md) - Contract architecture
-- [Risk Management](../mega-hedge/risk-management.md) - User risk controls
-- [Managing Risk](../guides/managing-risk.md) - Risk best practices
+- [Risk Management](../hedge/risk-management.md) - User risk controls
+- [Architecture](architecture.md) - System design
 
 ---
 

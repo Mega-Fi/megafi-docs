@@ -142,7 +142,7 @@ Block gas limit: Effectively unlimited (continuous execution)
 - Minimum APR before warning: 5%
 - Maximum drawdown before pause: 50%
 
-## MEGA Hedge Constraints
+## Hedge Constraints
 
 ### Collateral
 
@@ -366,9 +366,9 @@ Interface displays usage vs limits in account dashboard.
 
 Understand boundaries:
 
- 
-- [Risk Management](../mega-hedge/risk-management.md) - Risk controls
-- [Troubleshooting](../guides/troubleshooting.md) - Common issues
+- [Risk Management](../hedge/risk-management.md) - Risk controls
+- [Architecture](../technical/architecture.md) - System design
+- [Security Audits](../technical/security-audits.md) - Security information
 
 ---
 

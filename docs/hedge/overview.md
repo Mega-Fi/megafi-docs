@@ -1,6 +1,6 @@
-# Risk Layer
+# Hedge
 
-Advanced risk management tools including options trading and hedging strategies. The Risk Layer enables sophisticated portfolio protection and yield enhancement through derivatives built on MegaETH's real-time infrastructure.
+Advanced risk management tools including options trading and hedging strategies. Hedge enables sophisticated portfolio protection and yield enhancement through derivatives built on MegaETH's real-time infrastructure.
 
 ## At a Glance
 
@@ -8,7 +8,7 @@ Advanced risk management tools including options trading and hedging strategies.
 - Hedge liquidity positions against price movements and volatility
 - Real-time Greeks calculations and risk metrics
 - Automated position management and risk controls
-- Composable with Liquidity Layer and Strategy Layer
+- Composable with DEX and CLM
 - Capital-efficient collateral requirements
 
 ## How It Works
@@ -24,20 +24,20 @@ graph TD
     D --> F
     E --> F
     
-    G[LP Position] --> H[Risk Layer]
+    G[LP Position] --> H[Hedge]
     H --> I[Hedged LP Position]
     
     style H fill:#4F46E5
     style I fill:#10B981
 ```
 
-The Risk Layer provides derivatives instruments to manage exposure from Liquidity Layer positions or general token holdings.
+Hedge provides derivatives instruments to manage exposure from DEX positions or general token holdings.
 
-## Why Use Risk Layer?
+## Why Use Hedge?
 
 ### Protect Liquidity Positions
 
-Liquidity providers face impermanent loss risk. Risk Layer enables protection:
+Liquidity providers face impermanent loss risk. Hedge enables protection:
 
 ```
 Scenario: Provide liquidity to ETH/USDC pool
@@ -321,7 +321,7 @@ If ETH drops to $1,800:
 
 [Risk controls →](risk-management.md)
 
-## Risk Layer on MegaETH
+## Hedge on MegaETH
 
 ### Real-Time Greeks
 
@@ -379,19 +379,19 @@ Options stay efficiently priced
 
 ## Composability
 
-### With Liquidity Layer
+### With DEX
 
 Hedge LP positions automatically:
 
 ```
 Strategy:
 1. Provide liquidity to ETH/USDC
-2. Buy protective puts from Risk Layer
+2. Buy protective puts from Hedge
 3. LP fees help offset put premium
 4. Downside protected LP position
 ```
 
-### With Strategy Layer
+### With CLM
 
 Combine automated liquidity management with hedging:
 
@@ -414,7 +414,7 @@ Yes. Secondary market for buying and selling options anytime.
 System auto-exercises at expiration. You don't lose value.
 
 **Are options audited?**  
-Yes. All Risk Layer contracts undergo thorough security audits.
+Yes. All Hedge contracts undergo thorough security audits.
 
 **Can I use options as collateral elsewhere?**  
 Some lending protocols accept options as collateral. Check protocol support.
@@ -424,7 +424,7 @@ Some lending protocols accept options as collateral. Check protocol support.
 
 ## Next Steps
 
-Explore Risk Layer capabilities:
+Explore Hedge capabilities:
 
 - [Options Trading](options-trading.md) - Trade calls and puts
 - [Hedging Strategies](hedging-strategies.md) - Protect your positions

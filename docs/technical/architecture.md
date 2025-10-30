@@ -19,9 +19,9 @@ graph TD
     B --> C[Smart Contracts]
     C --> D[MegaETH Network]
     
-    E[Liquidity Layer] --> C
-    F[MEGA CLM] --> C
-    G[MEGA Hedge] --> C
+    E[DEX] --> C
+    F[CLM] --> C
+    G[Hedge] --> C
     
     C --> H[State Manager]
     H --> I[Event Emitter]
@@ -34,7 +34,7 @@ graph TD
 
 ## Core Components
 
-### Liquidity Layer
+### DEX
 
 **MegaPool Contracts**: Core AMM implementation with concentrated liquidity.
 
@@ -55,7 +55,7 @@ Components:
 
 [Smart Contracts documentation →](smart-contracts.md)
 
-### MEGA CLM
+### CLM
 
 **Automation Engine**: Manages algorithmic liquidity strategies.
 
@@ -73,7 +73,7 @@ Components:
 - Performance tracking
 - Risk management
 
-### MEGA Hedge
+### Hedge
 
 **Options Protocol**: Handles options trading and settlement.
 

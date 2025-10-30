@@ -436,8 +436,8 @@ Yes. Historical simulator in interface shows projected fees for various zones.
 Maximize your fee earnings:
 
 - [Liquidity Zones](liquidity-zones.md) - Optimize zone selection
-- [MEGA CLM](../mega-clm/overview.md) - Automate management
-- [Performance Tracking](../mega-clm/performance-tracking.md) - Monitor returns
+- [CLM](../clm/overview.md) - Automate management
+- [Performance Tracking](../clm/performance-tracking.md) - Monitor returns
 
 ---
 

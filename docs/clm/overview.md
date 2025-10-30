@@ -1,6 +1,6 @@
-# MEGA CLM
+# CLM
 
-Automated liquidity management directly connected to MEGA DEX. MEGA CLM deploys algorithmic strategies that rebalance Liquidity Zones, maximize capital efficiency, and adapt to changing market conditions.
+Automated liquidity management directly connected to DEX. CLM deploys algorithmic strategies that rebalance Liquidity Zones, maximize capital efficiency, and adapt to changing market conditions.
 
 ## At a Glance
 
@@ -9,7 +9,7 @@ Automated liquidity management directly connected to MEGA DEX. MEGA CLM deploys 
 - Continuous rebalancing enabled by MegaETH's low gas costs
 - Real-time performance tracking and analytics
 - Capital efficiency up to 95% vs 60-70% for manual positions
-- Composable with MEGA DEX and MEGA Hedge
+- Composable with DEX and Hedge
 
 ## How It Works
 
@@ -45,7 +45,7 @@ Managing concentrated liquidity manually is complex:
 - Time-intensive and prone to human error
 - Emotional decisions during volatility
 
-### MEGA CLM Benefits
+### CLM Benefits
 
 **Automation**: Strategies work 24/7 without human input.
 
@@ -176,7 +176,7 @@ Compare manual vs automated performance.
 
 ### Select Strategy Mode
 
-1. Navigate to MEGA CLM
+1. Navigate to CLM
 2. Browse available modes
 3. Review characteristics of each
 4. Select mode matching your goals
@@ -303,25 +303,25 @@ Ensures algorithms don't react to noise.
 
 Strategies integrate with other MegaFi layers:
 
-### With Liquidity Layer
+### With DEX
 
 Strategies build on top of MegaPools:
 - Use same liquidity positions
 - Manage Liquidity Zones automatically
 - Collect and compound fees
 
-### With MEGA Hedge
+### With Hedge
 
 Combine strategies with hedging:
 
 ```
-MEGA CLM: Earn fees from LP position
-MEGA Hedge: Buy put option for downside protection
+CLM: Earn fees from LP position
+Hedge: Buy put option for downside protection
 ```
 
 Fees help offset option premiums. Protection limits downside.
 
-[MEGA Hedge integration →](../mega-hedge/hedging-strategies.md)
+[Hedge integration →](../hedge/hedging-strategies.md)
 
 ## Strategy on MegaETH
 
@@ -422,7 +422,7 @@ Yes. Dynamic and Conservative modes specifically designed for volatile markets.
 
 ## Next Steps
 
-Explore MEGA CLM components:
+Explore CLM components:
 
 - [Strategy Modes](strategy-modes.md) - Detailed mode descriptions
 - [Automated Rebalancing](automated-rebalancing.md) - How rebalancing works

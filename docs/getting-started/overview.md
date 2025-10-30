@@ -58,7 +58,7 @@ Once set up, you can immediately:
 
 **Deploy Strategies**: Activate automated Strategy Modes that rebalance your liquidity positions continuously.
 
-**Hedge Positions**: Open options positions through MEGA Hedge to protect against price movements.
+**Hedge Positions**: Open options positions through Hedge to protect against price movements.
 
 ## Performance Expectations
 
@@ -101,15 +101,13 @@ All DeFi protocols involve risk. MegaFi smart contracts are audited, but users s
 After completing setup:
 
 1. Try a small swap to experience the interface
-2. [Provide liquidity](../mega-dex/providing-liquidity.md) to earn fees
-3. Explore [Strategy Modes](../mega-clm/strategy-modes.md) for automation
-4. Review [security practices](../guides/troubleshooting.md) for safe DeFi usage
+2. [Provide liquidity](../dex/providing-liquidity.md) to earn fees
+3. Explore [Strategy Modes](../clm/strategy-modes.md) for automation
 
 ## Support
 
 If you encounter issues during setup:
 
-- Check [Troubleshooting](../guides/troubleshooting.md) for common solutions
 - Review [FAQs](../reference/faqs.md) for detailed answers
 - Join our Discord for community support
 

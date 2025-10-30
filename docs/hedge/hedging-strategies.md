@@ -8,7 +8,7 @@ Protect your portfolio from adverse price movements using options-based hedging 
 - Protect token holdings from downside
 - Generate income while maintaining protection
 - Combine multiple strategies for complex risk profiles
-- Automated hedging available through Strategy Layer integration
+- Automated hedging available through CLM integration
 - Real-time hedge effectiveness tracking
 
 ## Why Hedge?
@@ -221,7 +221,7 @@ graph TD
 - Maintain hedge ratio: $1 hedge per $20 IL exposure
 - Roll expiring hedges automatically
 
-Automated through Strategy Layer integration.
+Automated through CLM integration.
 
 ## Portfolio Hedging
 
@@ -453,7 +453,7 @@ Yes. If price doesn't move as expected, premium is lost. That's the insurance co
 Longer-term hedges have better cost efficiency but lock capital longer.
 
 **Can hedging be automated?**  
-Yes. Strategy Layer can automatically manage hedges based on your rules.
+Yes. CLM can automatically manage hedges based on your rules.
 
 **Do I need to hedge if I'm long-term holder?**  
 Not required, but can reduce drawdowns and sleep-better factor.

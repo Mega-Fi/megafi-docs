@@ -5,40 +5,32 @@
 - [Introduction](README.md)
 - [Welcome](docs/getting-started/welcome.md)
 - [Overview](docs/getting-started/overview.md)
-- [Connect Wallet](docs/getting-started/connect-wallet.md)
- 
 
-## MEGA DEX
+## Hedge (Options Trading)
 
-- [Overview](docs/mega-dex/overview.md)
-- [MegaPools](docs/mega-dex/megapools.md)
-- [Liquidity Zones](docs/mega-dex/liquidity-zones.md)
-- [Swapping](docs/mega-dex/swapping.md)
-- [Providing Liquidity](docs/mega-dex/providing-liquidity.md)
-- [LP NFTs](docs/mega-dex/lp-nfts.md)
-- [Fees and Rewards](docs/mega-dex/fees-and-rewards.md)
+- [Overview](docs/hedge/overview.md)
+- [Options Trading](docs/hedge/options-trading.md)
+- [Hedging Strategies](docs/hedge/hedging-strategies.md)
+- [Risk Management](docs/hedge/risk-management.md)
+- [Pricing Models](docs/hedge/pricing-models.md)
 
-## MEGA CLM
+## DEX (Trading & Liquidity)
 
-- [MEGA CLM Overview](docs/mega-clm/overview.md)
-- [Strategy Modes](docs/mega-clm/strategy-modes.md)
-- [Automated Rebalancing](docs/mega-clm/automated-rebalancing.md)
-- [Range Optimization](docs/mega-clm/range-optimization.md)
-- [Performance Tracking](docs/mega-clm/performance-tracking.md)
+- [Overview](docs/dex/overview.md)
+- [MegaPools](docs/dex/megapools.md)
+- [Liquidity Zones](docs/dex/liquidity-zones.md)
+- [Swapping](docs/dex/swapping.md)
+- [Providing Liquidity](docs/dex/providing-liquidity.md)
+- [LP NFTs](docs/dex/lp-nfts.md)
+- [Fees and Rewards](docs/dex/fees-and-rewards.md)
 
-## MEGA Hedge
+## CLM (Automated Management)
 
-- [MEGA Hedge Overview](docs/mega-hedge/overview.md)
-- [Options Trading](docs/mega-hedge/options-trading.md)
-- [Hedging Strategies](docs/mega-hedge/hedging-strategies.md)
-- [Risk Management](docs/mega-hedge/risk-management.md)
-- [Pricing Models](docs/mega-hedge/pricing-models.md)
-
-## User Guides
-
-- [Earning Yield](docs/guides/earning-yield.md)
-- [Managing Risk](docs/guides/managing-risk.md)
-- [Troubleshooting](docs/guides/troubleshooting.md)
+- [Overview](docs/clm/overview.md)
+- [Strategy Modes](docs/clm/strategy-modes.md)
+- [Automated Rebalancing](docs/clm/automated-rebalancing.md)
+- [Range Optimization](docs/clm/range-optimization.md)
+- [Performance Tracking](docs/clm/performance-tracking.md)
 
 ## Technical Documentation
 

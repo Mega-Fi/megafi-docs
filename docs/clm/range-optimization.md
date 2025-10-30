@@ -1,6 +1,6 @@
 # Range Optimization
 
-Deep dive into how Strategy Layer algorithms calculate optimal Liquidity Zones for maximum fee earnings and capital efficiency.
+Deep dive into how CLM algorithms calculate optimal Liquidity Zones for maximum fee earnings and capital efficiency.
 
 ## At a Glance
 

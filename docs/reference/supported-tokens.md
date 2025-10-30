@@ -347,9 +347,9 @@ Technical minimum: 1 wei. Practical minimum: $1,000+ for functionality.
 
 Start trading:
 
- 
-- [Swapping Guide](../guides/swapping-tokens.md) - Trade tokens
-- [Providing Liquidity](../mega-dex/providing-liquidity.md) - Earn fees
+- [Swapping Guide](../dex/swapping.md) - Trade tokens
+- [Providing Liquidity](../dex/providing-liquidity.md) - Earn fees
+- [Options Trading](../hedge/options-trading.md) - Trade options
 
 ---
 

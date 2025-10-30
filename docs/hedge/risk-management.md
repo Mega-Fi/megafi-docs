@@ -1,6 +1,6 @@
 # Risk Management
 
-Understand and control risk in the Risk Layer. Learn about position sizing, collateral requirements, liquidations, and automated risk controls that protect your capital.
+Understand and control risk in Hedge. Learn about position sizing, collateral requirements, liquidations, and automated risk controls that protect your capital.
 
 ## At a Glance
 

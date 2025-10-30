@@ -322,7 +322,7 @@ Override automated strategy:
 
 ### How to Manual Rebalance
 
-1. Click position in Strategy Layer
+1. Click position in CLM
 2. Select "Manual Rebalance"
 3. Set new zone boundaries
 4. Review expected outcome
