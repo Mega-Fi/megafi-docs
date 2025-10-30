@@ -115,107 +115,97 @@ Additional Margin: None
 Sell Covered Call:
 - Collateral: 1 ETH per contract
 - Risk: Opportunity cost if assigned
+- Must own underlying tokens
 
 Sell Cash-Secured Put:
 - Collateral: Strike price in USDC per contract
 - Risk: Buy at strike if assigned
+- Must have USDC collateral
 ```
 
-**Naked Options**:
-```
-Sell Naked Call/Put:
-- Initial Margin: 130-200% of current value
-- Maintenance Margin: 120% of current value
-- Risk: Significant if price moves adversely
-```
+**Important**: MegaFi requires full collateralization for all sold options. Naked (uncollateralized) options are not supported to ensure system safety and user protection.
 
-### Margin Calculations
 
-Dynamic margin based on risk:
+### Collateral Monitoring
+
+Real-time collateral tracking for sold options:
 
 ```
-Sold 10 ETH $2,000 calls
+Sold 10 ETH $2,000 covered calls
+Collateral: 10 ETH (locked)
 ETH Price: $1,900
-Call Value: $30 each = $300 total
 
-Initial Margin: $300 × 1.5 = $450
-Maintenance Margin: $300 × 1.2 = $360
-
-Current Collateral: $500
-Status: Adequately collateralized
+Position Status: Fully collateralized
+No additional margin required
 ```
 
-### Margin Calls
+**For Covered Calls**:
+- Collateral: Must hold underlying tokens
+- Locked until position closed or expired
+- No margin calls (fully backed)
 
-When collateral insufficient:
+**For Cash-Secured Puts**:
+- Collateral: USDC equal to strike × contracts
+- Locked until position closed or expired
+- No margin calls (fully backed)
 
+Interface shows collateral status and locked amounts in real-time.
+
+## Position Management
+
+### Fully Collateralized Model
+
+MegaFi uses full collateralization, which means:
+
+**No Liquidation Risk for Sellers**:
+- Covered calls: Backed by tokens you own
+- Cash-secured puts: Backed by USDC you deposit
+- Collateral locked, not at risk of liquidation
+
+**Buyers Have Defined Risk**:
+- Maximum loss = premium paid
+- No additional margin requirements
+- No liquidation possible
+
+### Position Monitoring
+
+**For Option Sellers**:
 ```
-Position Value Increases:
-ETH rises to $2,050
-Call Value: $80 each = $800 total
-Required Maintenance: $800 × 1.2 = $960
-Current Collateral: $500
+Monitor:
+- Collateral locked amount
+- Position P&L
+- Time to expiration
+- Assignment risk
 
-Margin Call: Deposit $460+ within 1 hour
-Or: Position automatically reduced
-```
-
-Interface alerts before margin call occurs.
-
-## Liquidation Process
-
-### When Liquidations Occur
-
-Position liquidated when:
-
-1. Collateral < Maintenance Margin
-2. Grace period (1 hour) expires
-3. No additional collateral deposited
-
-### Liquidation Mechanics
-
-```mermaid
-graph TD
-    A[Collateral < Maintenance] --> B[Margin Call Issued]
-    B --> C{Collateral Added?}
-    C -->|Yes| D[Position Safe]
-    C -->|No, 1 hour passed| E[Liquidation Triggered]
-    E --> F[Position Closed at Market]
-    F --> G[Remaining Collateral Returned]
-    
-    style E fill:#EF4444
-    style G fill:#10B981
-```
-
-System sells position at market to restore solvency.
-
-### Liquidation Costs
-
-```
-Position Value: $10,000
-Collateral: $11,500
-Maintenance: $12,000
-
-Liquidation:
-- Close position at market: $10,200 (slippage)
-- Liquidation fee (5%): $510
-- Total Cost: $10,710
-- Returned: $11,500 - $10,710 = $790
-
-You keep remaining collateral after liquidation
+Actions Available:
+- Close position early (buy back)
+- Let expire (keep premium if OTM)
+- Roll to new expiration
 ```
 
-### Avoiding Liquidation
+**For Option Buyers**:
+```
+Monitor:
+- Position value
+- Greeks (delta, theta, vega)
+- Time decay
+- Profit/loss
 
-**Monitor Positions**: Check margin status regularly.
+Actions Available:
+- Sell to close (take profit/cut loss)
+- Exercise if ITM
+- Let expire if OTM
+```
 
-**Set Alerts**: Get notified when margin ratio < 1.5.
+### Risk Management Best Practices
 
-**Over-Collateralize**: Keep extra margin buffer.
+**Position Sizing**: Don't allocate more than 20% of portfolio to any single strategy.
 
-**Use Stop-Loss**: Close positions before liquidation level.
+**Diversification**: Spread across multiple strikes and expirations.
 
-**Reduce Position Size**: Cut exposure when margin tight.
+**Time Management**: Be aware of theta decay on long positions.
+
+**Set Targets**: Define profit targets and loss limits before entering.
 
 ## Automated Risk Controls
 
@@ -374,34 +364,34 @@ Mitigation: Size based on daily volume
 ### Conservative Risk Profile
 
 ```
-Max Notional: 1x account value
+Max Position Size: 20% of portfolio per strategy
 Max Delta: ±20% of portfolio
-Max Naked Exposure: 0% (covered only)
-Collateral Buffer: 2x maintenance
-Leverage: 1x max
+Strategy Types: Covered calls, cash-secured puts only
+Diversification: Minimum 5 different positions
+Time Horizon: 30+ days to expiration
 ```
 
 ### Moderate Risk Profile
 
 ```
-Max Notional: 3x account value
+Max Position Size: 40% of portfolio per strategy
 Max Delta: ±50% of portfolio
-Max Naked Exposure: 30% of portfolio
-Collateral Buffer: 1.5x maintenance
-Leverage: 2x max
+Strategy Types: All covered strategies + protective puts
+Diversification: Minimum 3 different positions
+Time Horizon: 7-30 days to expiration
 ```
 
 ### Aggressive Risk Profile
 
 ```
-Max Notional: 5x account value
+Max Position Size: 60% of portfolio per strategy
 Max Delta: ±100% of portfolio
-Max Naked Exposure: 50% of portfolio
-Collateral Buffer: 1.25x maintenance
-Leverage: 3x max
+Strategy Types: All available strategies
+Diversification: Minimum 2 different positions
+Time Horizon: 1-7 days to expiration
 ```
 
-Choose based on experience and risk tolerance.
+**Note**: All profiles use fully collateralized positions only. Choose based on your experience and risk tolerance.
 
 ## Monitoring and Alerts
 
@@ -445,20 +435,20 @@ Set notifications for:
 
 ## FAQ
 
-**What happens if I get liquidated?**  
-Position closed at market, remaining collateral returned minus liquidation fee.
+**Can my sold options be liquidated?**  
+No. Covered calls and cash-secured puts are fully collateralized. No liquidation risk.
 
-**Can I add collateral during margin call?**  
-Yes. 1-hour grace period to add collateral before liquidation.
+**What happens if I'm assigned on a sold option?**  
+Covered calls: Your tokens are sold at strike price. Cash-secured puts: You buy tokens at strike price using your USDC collateral.
 
-**Are liquidation fees high?**  
-5% of position value. Avoid by maintaining adequate collateral.
+**Can I lose more than my collateral?**  
+No. Sellers: Risk limited to collateral. Buyers: Risk limited to premium paid.
 
-**Can I check my liquidation price?**  
-Yes. Interface shows exact price where liquidation would occur.
+**How do I unlock my collateral?**  
+Close the position (buy back the option) or wait for expiration. If option expires OTM, collateral unlocks automatically.
 
-**What if market moves too fast for liquidation?**  
-System prioritizes protecting solvency. Positions close as quickly as possible.
+**What if I can't afford to be assigned?**  
+Close the position before expiration to avoid assignment. Monitor positions actively.
 
 **Can I set custom risk limits?**  
 Yes. Set personal limits stricter than system limits for extra safety.

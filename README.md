@@ -60,7 +60,7 @@ Review system design and contracts:
 
 ## Security
 
-MegaFi smart contracts undergo multi-tier audits covering runtime execution, contract logic, and interface security. Running natively on MegaETH's real-time sequencer eliminates mempool exposure and front-running vectors.
+MegaFi smart contracts are in development with security audits planned before mainnet launch. Running natively on MegaETH's real-time sequencer eliminates mempool exposure and front-running vectors.
 
 [Security Details →](docs/technical/security-audits.md)
 
@@ -91,7 +91,7 @@ MegaFi is a decentralized protocol. Users interact directly with smart contracts
 
 - Website: [megafi.app](https://megafi.app)
 - GitHub: [github.com/Mega-Fi](https://github.com/Mega-Fi)
-- Discord: Coming soon
+- Discord: [discord.gg/YDUx3J3F7y](https://discord.gg/YDUx3J3F7y)
 - Twitter: Coming soon
 
 ---

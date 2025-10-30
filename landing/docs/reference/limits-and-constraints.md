@@ -149,7 +149,6 @@ Block gas limit: Effectively unlimited (continuous execution)
 **Requirements**:
 - Covered options: 100% underlying
 - Cash-secured: 100% strike value
-- Naked options: 130-200% based on risk
 - Maintenance margin: 120% minimum
 
 **Liquidation**:

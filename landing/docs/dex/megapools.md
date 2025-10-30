@@ -200,7 +200,7 @@ MegaPools include several security features:
 
 **Oracle Integration**: Secondary price feeds detect and prevent price manipulation.
 
-**Audited Contracts**: Multi-tier audit process covering all pool logic.
+**Security**: Smart contract audits planned before mainnet launch.
 
 [Security details →](../technical/security-audits.md)
 

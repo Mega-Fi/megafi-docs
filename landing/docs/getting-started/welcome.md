@@ -69,7 +69,7 @@ This performance enables features impossible elsewhere:
 
 ## Security
 
-- Multi-tier smart contract audits
+- Security audits planned before mainnet
 - Real-time transaction verification
 - No mempool exposure (direct sequencer execution)
 - Emergency pause mechanisms

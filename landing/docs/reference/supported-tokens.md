@@ -157,7 +157,7 @@ Check interface for current list
 **Technical Requirements**:
 - ERC-20 compliant
 - Deployed on Ethereum or supported L2
-- Contract verified and audited
+- Contract verified on origin chain
 - Reasonable liquidity on origin chain
 
 **Business Requirements**:
@@ -170,12 +170,11 @@ Check interface for current list
 
 Submit token listing request:
 
-**Form**: [megafi.app/token-request](https://megafi.app/token-request)
 
 **Required Information**:
 - Token contract address (origin chain)
 - Project description
-- Audit reports
+- Security information
 - Community links
 - Proposed liquidity
 
@@ -211,7 +210,7 @@ Submit token listing request:
 ### Verified Tokens
 
 Tokens with verification badge:
-- Contract audited
+- Contract verified
 - Team known
 - Active development
 - No major issues
@@ -323,7 +322,7 @@ Planned utility:
 ## FAQ
 
 **How do I know which tokens are safe?**  
-Verified badge indicates audited and vetted. Always DYOR.
+Verified badge indicates vetted and verified. Always DYOR.
 
 **Can I trade any ERC-20 token?**  
 Only if it's bridged to MegaETH and has liquidity. Check pool availability.

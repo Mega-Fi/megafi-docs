@@ -19,9 +19,9 @@ The MegaFi documentation has been fully integrated into Docusaurus and is ready 
 
 3. **Documentation Structure** - Organized by priority
    - Getting Started (2 pages)
-   - Hedge - Options Trading (5 pages) ← PRIMARY
-   - DEX - Trading & Liquidity (7 pages) ← SUPPORTING
-   - CLM - Automated Management (5 pages) ← SUPPORTING
+   - Hedge - Options Trading (5 pages)
+   - DEX - Trading & Liquidity (7 pages)
+   - CLM - Automated Management (5 pages)
    - Technical Documentation (4 pages)
    - Reference (3 pages)
    - **Total: 27 documentation files**
@@ -41,7 +41,7 @@ landing/
 ├── docs/                    # All documentation (27 files)
 │   ├── intro.md            # Main entry point
 │   ├── getting-started/
-│   ├── hedge/              # Options trading (primary)
+│   ├── hedge/              # Options trading
 │   ├── dex/                # Trading & liquidity
 │   ├── clm/                # Automated strategies
 │   ├── technical/

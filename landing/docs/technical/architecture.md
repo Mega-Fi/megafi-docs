@@ -145,27 +145,6 @@ WebSocket pushes real-time updates
 
 ## Smart Contract Architecture
 
-### Contract Hierarchy
-
-```
-Factory Contracts
-  ├── MegaPool Factory
-  ├── Strategy Factory
-  └── Option Factory
-
-Core Contracts
-  ├── MegaPool (per pair/fee)
-  ├── Position Manager (NFTs)
-  ├── Router (swap routing)
-  ├── Strategy Manager
-  └── Option Contract
-
-Peripheral Contracts
-  ├── Quoter
-  ├── Multicall
-  ├── Oracle Aggregator
-  └── Periphery Helper
-```
 
 ### Upgradeability
 
@@ -194,41 +173,11 @@ Roles:
 - User: Standard operations
 ```
 
-## Integration Architecture
 
-### Frontend Integration
-
-```
-React Application
-  ├── Web3 Provider (ethers.js)
-  ├── Contract ABIs
-  ├── State Management (Redux)
-  ├── WebSocket Connection
-  └── API Client
-
-Connects to:
-- MegaETH RPC
-- Indexer API
-- WebSocket Server
-```
-
-### Backend Services
+Direct smart contract integration for external developers:
 
 ```
-Services:
-- Indexer: Event processing
-- API Server: REST endpoints
-- WebSocket Server: Real-time updates
-- Analytics: Data aggregation
-- Monitoring: Health checks
-```
-
-### Third-Party Integration
-
-SDK for external developers:
-
-```
-MegaFi SDK
+Contract Interfaces
   ├── Swap Functions
   ├── Liquidity Functions
   ├── Strategy Functions
@@ -242,7 +191,7 @@ Easy integration for:
 - Other protocols
 ```
 
-[Integration Guide →](integration-guide.md)
+[Smart Contracts →](smart-contracts.md)
 
 ## Performance Optimizations
 
@@ -258,7 +207,7 @@ Optimizations for continuous execution:
 
 **Parallel Execution**: State designed for parallel access.
 
-[MegaETH Optimizations →](megaeth-optimizations.md)
+[Contract Addresses →](contract-addresses.md)
 
 ### Gas Optimizations
 
@@ -284,14 +233,14 @@ Layer 5: Oracle Manipulation Protection
 Layer 6: Pause Mechanisms
 ```
 
-### Audit Coverage
+### Security Planning
 
-All components audited:
+Security measures in development:
 
-- Smart contracts: 3 independent audits
-- Frontend: Security review
-- Backend: Penetration testing
-- Infrastructure: DevSecOps
+- Smart contracts: Audits planned before mainnet
+- Frontend: Security review planned
+- Backend: Security testing in progress
+- Infrastructure: DevSecOps practices
 
 [Security Details →](security-audits.md)
 
@@ -406,10 +355,10 @@ Planned improvements:
 ## FAQ
 
 **Is the architecture open source?**  
-Smart contracts are open source. Frontend and backend will be open-sourced gradually.
+Smart contracts are open source.
 
 **Can I build on top of MegaFi?**  
-Yes. Use SDK or interact with contracts directly.
+Yes. Interact with contracts directly using standard web3 libraries.
 
 **How are upgrades handled?**  
 Via proxy pattern. Governance will control upgrades eventually.
@@ -417,16 +366,13 @@ Via proxy pattern. Governance will control upgrades eventually.
 **What happens if MegaETH goes down?**  
 Transactions halt but funds remain safe. Resume when network returns.
 
-**Are there API rate limits?**  
-Yes. Public API: 100 req/min. Higher limits available for partners.
-
 ## Next Steps
 
 Dive deeper into technical details:
 
 - [Smart Contracts](smart-contracts.md) - Contract specifications
-- [SDK Reference](sdk-reference.md) - Developer SDK
-- [Integration Guide](integration-guide.md) - Build on MegaFi
+- [Contract Addresses](contract-addresses.md) - Deployed addresses
+- [Security Audits](security-audits.md) - Security information
 
 ---
 

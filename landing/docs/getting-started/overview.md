@@ -27,15 +27,11 @@ Before using MegaFi, prepare the following:
 
 ### 1. Connect Your Wallet
 
-Visit [megafi.app](https://megafi.app) and click "Connect Wallet". Select your wallet provider from the list. Approve the connection request in your wallet.
-
-[Detailed wallet guide →](connect-wallet.md)
+Visit [megafi.app](https://www.megafi.app/) and click "Connect Wallet". Select your wallet provider from the list. Approve the connection request in your wallet.
 
 ### 2. Add MegaETH Network
 
 After connecting, MegaFi will prompt you to add the MegaETH network if it's not already configured. Click "Add Network" and approve in your wallet. The network configuration is added automatically.
-
-[Network setup guide →](megaeth-setup.md)
 
 ### 3. Bridge Assets
 
@@ -76,9 +72,7 @@ These metrics are possible because MegaETH processes transactions continuously r
 
 MegaFi provides three ways to interact with the protocol:
 
-**Web Application**: Full-featured interface at [megafi.app](https://megafi.app). Works on desktop and mobile browsers.
-
-**SDK**: TypeScript/JavaScript SDK for developers building on MegaFi. Install via npm and integrate in minutes.
+**Web Application**: Full-featured interface at [megafi.app](https://www.megafi.app/). Works on desktop and mobile browsers.
 
 **Smart Contracts**: Direct contract interaction for advanced users and protocols. ABIs and addresses documented in technical section.
 
@@ -94,22 +88,22 @@ MegaETH is a separate Layer 2 chain. Your wallet needs the network configuration
 No minimum deposit or balance required. Even $10 worth of tokens is enough to begin swapping and exploring features.
 
 **Are my funds at risk?**  
-All DeFi protocols involve risk. MegaFi smart contracts are audited, but users should understand DeFi risks before depositing significant amounts.
+All DeFi protocols involve risk. MegaFi smart contracts are in development and have not yet been audited. Current deployments are for testing purposes only. Users should understand DeFi risks before depositing funds.
 
 ## Next Steps
 
 After completing setup:
 
 1. Try a small swap to experience the interface
-2. [Provide liquidity](../dex/providing-liquidity.md) to earn fees
-3. Explore [Strategy Modes](../clm/strategy-modes.md) for automation
+2. [Trade options](../hedge/options-trading.md) to protect positions or generate yield
+3. [Provide liquidity](../dex/providing-liquidity.md) to earn fees
+4. Explore [Strategy Modes](../clm/strategy-modes.md) for automation
 
 ## Support
 
 If you encounter issues during setup:
 
-- Review [FAQs](../reference/faqs.md) for detailed answers
-- Join our Discord for community support
+- Join our [Discord](https://discord.gg/YDUx3J3F7y) for community support
 
 ---
 

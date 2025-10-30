@@ -403,7 +403,7 @@ Build your own strategies (coming soon):
 ## FAQ
 
 **Are strategies audited?**  
-Yes. All strategy contracts undergo thorough security audits.
+Not yet. Security audits are planned before mainnet launch. Current deployments are for testing only.
 
 **Can I withdraw from a strategy anytime?**  
 Yes. No lock periods. Exit whenever you want.

@@ -164,7 +164,7 @@ DEX leverages MegaETH's unique capabilities:
 
 ### As a Trader
 
-1. [Connect wallet](../getting-started/connect-wallet.md)
+1. [Connect wallet](../getting-started/overview.md)
 2. [Make your first swap](swapping.md)
 3. Explore available pools and routes
 
@@ -183,7 +183,7 @@ Providing liquidity involves risks:
 
 **Impermanent Loss**: When token prices diverge, your position value may be lower than simply holding the tokens. More pronounced with volatile pairs.
 
-**Smart Contract Risk**: Although audited, smart contracts may contain undiscovered vulnerabilities.
+**Smart Contract Risk**: Smart contracts are in development and have not yet been audited. Use testnet deployments with caution.
 
 **Liquidity Risk**: In low-liquidity pools, your trades may experience higher slippage.
 
