@@ -1,6 +1,6 @@
-# Liquidity Layer
+# MEGA DEX
 
-The foundation of MegaFi's trading infrastructure. The Liquidity Layer enables instant token swaps and efficient capital deployment through MegaPools powered by concentrated liquidity.
+The trading core of MegaFi. MEGA DEX enables instant token swaps and efficient capital deployment through MegaPools powered by concentrated liquidity.
 
 ## At a Glance
 
@@ -96,16 +96,11 @@ This enables features impossible on block-based chains:
 - Real-time fee accrual tracking
 - Instant position rebalancing
 
-### Composability
-
-MegaPools integrate with MEGA CLM and MEGA Hedge:
-- Deploy automated strategies that rebalance your Liquidity Zones
-- Hedge liquidity positions with options from MEGA Hedge
-- Combine multiple positions for complex yield strategies
+ 
 
 ## For Traders
 
-Use the Liquidity Layer to:
+Use MEGA DEX to:
 
 **Swap Tokens**: Trade any supported token pair with minimal slippage and instant execution.
 
@@ -125,7 +120,7 @@ Provide liquidity to:
 
 **Custom Zones**: Choose where to concentrate liquidity for optimal returns.
 
-**Automated Management**: Deploy strategies that rebalance positions automatically.
+ 
 
 **Flexible Withdrawal**: Remove liquidity anytime. No lock periods or penalties.
 
@@ -153,7 +148,7 @@ Result: Same fee earnings with 50-70% less capital deployed.
 
 ## MegaETH Advantages
 
-The Liquidity Layer leverages MegaETH's unique capabilities:
+MEGA DEX leverages MegaETH's unique capabilities:
 
 **Sub-10ms Finality**: Swaps execute and finalize before traditional chains process a single block.
 
@@ -180,11 +175,7 @@ The Liquidity Layer leverages MegaETH's unique capabilities:
 3. [Deposit liquidity](providing-liquidity.md) and receive LP NFT
 4. Monitor fees and rebalance as needed
 
-### With Strategies
-
-1. Deploy an automated strategy from Strategy Layer
-2. Let algorithms manage your Liquidity Zones
-3. Focus on high-level decisions, not manual rebalancing
+ 
 
 ## Risk Considerations
 
@@ -216,7 +207,7 @@ MegaPools are deployed as smart contracts on MegaETH. Key components:
 
 ## Performance Metrics
 
-Real-world Liquidity Layer performance on MegaETH:
+Real-world MEGA DEX performance on MegaETH:
 
 - **Swap Latency**: 10-50ms (submission to finality)
 - **Pool Update Frequency**: Continuous (real-time state changes)
@@ -244,7 +235,7 @@ Yes. They're standard ERC-721 tokens. Sell or transfer like any NFT.
 
 ## Next Steps
 
-Dive deeper into Liquidity Layer components:
+Dive deeper into MEGA DEX components:
 
 - [MegaPools](megapools.md) - Pool mechanics and pricing
 - [Liquidity Zones](liquidity-zones.md) - Range selection strategies
