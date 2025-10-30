@@ -1,0 +1,78 @@
+// @ts-check
+
+/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+const sidebars = {
+  docs: [
+    'intro',
+    {
+      type: 'category',
+      label: 'Getting Started',
+      collapsed: false,
+      items: [
+        'getting-started/welcome',
+        'getting-started/overview',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Hedge (Options Trading)',
+      collapsed: false,
+      items: [
+        'hedge/overview',
+        'hedge/options-trading',
+        'hedge/hedging-strategies',
+        'hedge/risk-management',
+        'hedge/pricing-models',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'DEX (Trading & Liquidity)',
+      collapsed: false,
+      items: [
+        'dex/overview',
+        'dex/megapools',
+        'dex/liquidity-zones',
+        'dex/swapping',
+        'dex/providing-liquidity',
+        'dex/lp-nfts',
+        'dex/fees-and-rewards',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'CLM (Automated Management)',
+      collapsed: false,
+      items: [
+        'clm/overview',
+        'clm/strategy-modes',
+        'clm/automated-rebalancing',
+        'clm/range-optimization',
+        'clm/performance-tracking',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Technical Documentation',
+      collapsed: true,
+      items: [
+        'technical/architecture',
+        'technical/smart-contracts',
+        'technical/contract-addresses',
+        'technical/security-audits',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Reference',
+      collapsed: true,
+      items: [
+        'reference/glossary',
+        'reference/limits-and-constraints',
+        'reference/supported-tokens',
+      ],
+    },
+  ],
+};
+
+export default sidebars;

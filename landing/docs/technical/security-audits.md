@@ -428,7 +428,7 @@ Security-related inquiries:
 
 ## Resources
 
-**Audit Reports**: [GitHub/audits](https://github.com/megafi/audits)
+**Audit Reports**: [GitHub/audits](https://github.com/Mega-Fi/audits)
 
 **Bug Bounty**: [megafi.app/bounty](https://megafi.app/bounty)
 

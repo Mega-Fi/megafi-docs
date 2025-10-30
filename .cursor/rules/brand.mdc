@@ -2,6 +2,44 @@
 alwaysApply: true
 ---
 
+# MegaFi Brand Guidelines
+
+## Documentation Landing Page Colors
+
+### Primary Color: Full Moon
+- **Hex**: #DFD9D9
+- **RGB**: rgb(223, 217, 217)
+- **Usage**: Primary backgrounds, main text on dark backgrounds, hero sections
+
+### Secondary Color: Night Sky
+- **Hex**: #19191A
+- **RGB**: rgb(25, 25, 26)
+- **Usage**: Dark backgrounds, headers, footer, text on light backgrounds
+
+### Accent Color: MEGA Orange
+- **Hex**: #FF3A1E
+- **RGB**: rgb(255, 58, 30)
+- **Usage**: Call-to-action buttons, highlights, links, important elements
+
+### Color Application
+
+**Hero Section**:
+- Background: Night Sky (#19191A) with gradient
+- Text: Full Moon (#DFD9D9)
+- CTA Buttons: MEGA Orange (#FF3A1E)
+
+**Content Sections**:
+- Background: Full Moon (#DFD9D9)
+- Text: Night Sky (#19191A)
+- Accents: MEGA Orange (#FF3A1E)
+
+**Footer**:
+- Background: Night Sky (#19191A)
+- Text: Full Moon (#DFD9D9)
+- Links hover: MEGA Orange (#FF3A1E)
+
+---
+
 # Competitive Metrics — Mega SuperApp vs Major DeFi Platforms
 
 _All figures are drawn from public benchmarks and real testnet or on-chain data as of Q4 2025. Where MegaETH or Mega SuperApp performance is projected, assumptions are based on the verified whitepaper metrics: 100 000+ TPS and sub-10 ms latency._
