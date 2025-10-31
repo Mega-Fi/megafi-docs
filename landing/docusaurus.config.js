@@ -123,7 +123,7 @@ const config = {
             items: [
               {
                 label: 'Discord',
-                href: 'https://discord.gg/YDUx3J3F7y',
+                href: 'https://discord.gg/aaA7YPTW',
               },
               {
                 label: 'Twitter',
