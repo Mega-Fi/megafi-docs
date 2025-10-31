@@ -1,15 +1,15 @@
 # Risk Management
 
-Understand and control risk in Hedge. Learn about position sizing, collateral requirements, liquidations, and automated risk controls that protect your capital.
+Understand and control risk in Hedge. Learn about position sizing, liquidity limits, collateral requirements, and safety mechanisms that protect your capital and the protocol.
 
 ## At a Glance
 
-- Position limits prevent excessive risk exposure
-- Collateral requirements ensure solvency
-- Automated liquidations protect system integrity
-- Stop-loss and take-profit orders manage positions
+- Strategy-level exposure limits prevent over-concentration
+- CoverPool provides backup liquidity for settlements
+- Exercise windows enforce timing constraints
+- Collateral requirements ensure seller solvency
 - Real-time risk metrics track exposure
-- Portfolio-level risk monitoring
+- Treasury safety checks validate every transaction
 
 ## Risk Metrics
 
@@ -21,9 +21,10 @@ Understand and control risk in Hedge. Learn about position sizing, collateral re
 
 ```
 Example:
-10 ETH call contracts at $2,000/ETH
+10 ETH call options at $2,000/ETH
 Notional: 10 × $2,000 = $20,000
-Position Value: $1,000 (premium value)
+Position Value: $800 (premium value)
+Leverage: 25x ($20,000 / $800)
 ```
 
 **Delta Exposure**: Net directional risk.
@@ -31,14 +32,18 @@ Position Value: $1,000 (premium value)
 ```
 Long 10 calls (delta 0.5 each): +5 ETH delta
 Short 5 puts (delta -0.4 each): +2 ETH delta
-Net Delta: +7 ETH
+Net Delta: +7 ETH (equivalent exposure)
 ```
 
 **Gamma Risk**: Delta change sensitivity.
 
 ```
 High Gamma: Position delta changes rapidly with price
+- Risky near expiration
+- Requires active management
+
 Low Gamma: Position delta relatively stable
+- Safer for passive holding
 ```
 
 **Theta**: Daily time decay.
@@ -46,6 +51,9 @@ Low Gamma: Position delta relatively stable
 ```
 Portfolio Theta: -$50
 Losing $50/day to time if price unchanged
+
+Option Buyers: Negative theta (time works against)
+Option Sellers: Positive theta (time works for)
 ```
 
 **Vega**: Volatility exposure.
@@ -54,6 +62,9 @@ Losing $50/day to time if price unchanged
 Portfolio Vega: +500
 If IV rises 1%, portfolio gains $500
 If IV falls 1%, portfolio loses $500
+
+Long Options: Positive vega (want volatility)
+Short Options: Negative vega (want calm)
 ```
 
 ### Portfolio Greeks
@@ -61,407 +72,572 @@ If IV falls 1%, portfolio loses $500
 Aggregate metrics across all positions:
 
 ```
+Portfolio View:
 Total Delta: +15 ETH (net long equivalent)
 Total Gamma: +2.5 (moderate sensitivity)
-Total Theta: -$75/day (time working against)
+Total Theta: -$75/day (time decay cost)
 Total Vega: +1,200 (long volatility)
+
+Interpretation:
+- Bullish position (positive delta)
+- Time working against (negative theta)
+- Benefits from volatility increase (positive vega)
 ```
 
-Interface displays portfolio-level Greeks in real-time.
+Interface displays portfolio-level Greeks in real-time on MegaETH.
+
+## Protocol-Level Limits
+
+### Strategy Exposure Limits
+
+Each strategy has maximum locked liquidity:
+
+**Per-Strategy Limit**:
+```
+Example Configuration:
+ETH Call Strategy: 50,000 USDC max locked
+ETH Put Strategy: 50,000 USDC max locked
+BTC Call Strategy: 30,000 USDC max locked
+
+Purpose: Prevent over-concentration in single strategy
+Admin Configurable: Yes, via LimitController
+```
+
+**How Limits Work**:
+```
+Before Option Purchase:
+1. Calculate negativePNL (max potential loss)
+2. Check: currentLocked + negativePNL ≤ strategyLimit
+3. If exceeded: Transaction reverts
+4. If within limit: Proceed with purchase
+
+Example:
+ETH Call Limit: 50,000 USDC
+Currently Locked: 45,000 USDC
+New Option: 8,000 USDC negativePNL
+Check: 45,000 + 8,000 = 53,000 > 50,000
+Result: Transaction fails - limit exceeded
+```
+
+**Why Limits Matter**:
+- Diversify risk across strategies
+- Ensure sufficient liquidity for settlements
+- Prevent single-strategy dominance
+- Protect liquidity providers
+
+### Treasury Liquidity Checks
+
+OperationalTreasury validates liquidity before every option purchase:
+
+**Safety Formula**:
+```
+Required:
+Treasury Balance + CoverPool Available ≥ 
+  Total Locked + Locked Premium + New Option NegativePNL
+
+Components:
+- Treasury Balance: Current USDC in Treasury
+- CoverPool Available: Backup liquidity from LPs
+- Total Locked: Sum of all active option max losses
+- Locked Premium: Premiums for active options
+- New Option: NegativePNL of option being purchased
+
+If insufficient: Transaction reverts
+```
+
+**Example**:
+```
+Treasury Balance: 100,000 USDC
+CoverPool Available: 50,000 USDC
+Total Available: 150,000 USDC
+
+Currently Locked: 80,000 USDC
+Locked Premium: 15,000 USDC
+Benchmark Reserve: 10,000 USDC
+Total Committed: 105,000 USDC
+
+New Option NegativePNL: 20,000 USDC
+
+Check: 150,000 ≥ 80,000 + 15,000 + 10,000 + 20,000
+       150,000 ≥ 125,000 ✓ Approved
+
+If New Option was 50,000:
+       150,000 ≥ 155,000 ✗ Denied
+```
+
+### Benchmark Reserve
+
+Treasury maintains reserve capital:
+
+**Purpose**: Safety buffer for unexpected scenarios.
+
+**Mechanism**:
+```
+Benchmark: Minimum USDC Treasury should maintain
+Initial: 0 USDC (zero capital launch)
+Growth: 20% of weekly profits retained in Treasury
+
+Example Timeline:
+Week 1: $10k profit → $2k to benchmark ($2k total)
+Week 2: $15k profit → $3k to benchmark ($5k total)
+Week 3: $12k profit → $2.4k to benchmark ($7.4k total)
+
+Over time: Benchmark grows to substantial reserve
+```
+
+**Admin Configurable**: Yes, can adjust benchmark target.
+
+## CoverPool Safety Net
+
+### Backup Liquidity
+
+CoverPool provides emergency liquidity:
+
+**How It Works**:
+```
+Normal Settlement:
+1. Option exercised
+2. Calculate profit
+3. Pay from Treasury balance
+4. Complete settlement
+
+If Treasury Insufficient:
+1. Option exercised
+2. Calculate profit
+3. Treasury balance < profit
+4. Call coverPool.payOut(deficit)
+5. CoverPool transfers USDC to Treasury
+6. Complete settlement
+```
+
+**Example**:
+```
+Option Profit: 15,000 USDC
+Treasury Balance: 8,000 USDC
+Deficit: 7,000 USDC
+
+Flow:
+1. Treasury attempts payment
+2. Detects insufficient balance
+3. Requests 7,000 USDC from CoverPool
+4. CoverPool transfers 7,000 USDC
+5. Treasury pays full 15,000 USDC to trader
+6. Settlement complete
+
+Trader receives full profit, no delays
+```
+
+**LP Incentive**: LPs earn 70% of profits in exchange for providing this backup.
+
+### LP Risk Management
+
+Liquidity providers face limited risk:
+
+**Profit Participation**:
+```
+Weekly Distribution:
+- 70% of net profits → LPs
+- 20% retained in Treasury
+- 10% protocol fee
+
+Net Profit = Premiums Collected - Options Paid Out
+```
+
+**Capital Protection**:
+```
+LP Deposit: 100,000 USDC
+Worst Case: All options ITM and exercised
+
+Protection Mechanisms:
+1. Strategy limits cap exposure
+2. Benchmark reserve provides buffer
+3. Diversified strategies reduce concentration
+4. Premium income offsets payouts
+
+Realistic Scenario: LPs earn steady returns from premium income
+```
+
+**Two-Step Withdrawals**:
+```
+LPs cannot instant withdraw (prevents gaming):
+
+Step 1: Mark for withdrawal (during 5-day window)
+Step 2: Complete withdrawal after epoch ends (7 days min)
+
+Ensures capital stability for option backing
+```
+
+## Exercise Window Requirements
+
+### Timing Constraints
+
+Options have strict exercise timing:
+
+**Exercise Window**: 1 hour before expiry.
+
+```
+Option Timeline:
+Created → Active Period → Exercise Window (1h) → Expiry
+                           └─ Can exercise here
+                           
+Example:
+Created: Monday 10:00 AM
+Expiry: Monday next week 10:00 AM
+Exercise Window: Monday 9:00-10:00 AM
+
+Manual Exercise: Only during 9:00-10:00 AM
+Auto-Exercise: At 10:00 AM if ITM
+```
+
+**Why the Window?**:
+- Prevents gaming the system
+- Aligns with epoch profit calculations
+- Ensures predictable liquidity needs
+- Fair distribution of profits
+
+**Attempting Early Exercise**:
+```
+If attempt to exercise before window:
+- Transaction reverts
+- Error: "Exercise window not open"
+- Must wait until window opens
+```
+
+### Auto-Exercise at Expiration
+
+System automatically exercises profitable options:
+
+**Auto-Exercise Logic**:
+```
+At Expiration Timestamp:
+1. Check if option ITM
+2. Calculate profit = max(0, currentPrice - strike)
+3. If profit > 0:
+   - Execute payoff automatically
+   - Transfer USDC to owner
+   - Burn NFT
+4. If profit = 0:
+   - Mark option expired
+   - No payment
+   - NFT becomes inactive
+```
+
+**Benefit**: Holders never lose ITM value by forgetting to exercise.
+
+**Example**:
+```
+Option: ETH $2,000 call
+Expiry: 7 days from creation
+Current Price at Expiry: $2,300
+
+Auto-Exercise:
+- Profit: ($2,300 - $2,000) per ETH
+- Automatically calculated
+- USDC profit transferred to holder
+- No manual action required
+```
+
+## Collateral Requirements
+
+### For Option Sellers
+
+Selling options requires collateral deposit:
+
+**Covered Calls**:
+```
+Requirement: Must own underlying tokens
+
+Example:
+Sell 10 ETH calls:
+- Must deposit 10 ETH as collateral
+- Collateral locked until expiry or close
+- If exercised: ETH used to fulfill obligation
+
+Purpose: Ensure ability to deliver
+```
+
+**Cash-Secured Puts**:
+```
+Requirement: Must hold USDC equal to strike × amount
+
+Example:
+Sell 10 ETH $1,800 puts:
+- Must deposit $18,000 USDC
+- Locked until expiry or close
+- If exercised: USDC used for settlement
+
+Purpose: Ensure ability to pay
+```
+
+**Naked Selling Not Supported**:
+```
+Uncollateralized options = unlimited risk
+Protocol requires full collateral
+Protects both seller and protocol
+```
+
+### Collateral Management
+
+**Locked Until Resolution**:
+```
+Collateral locked from sale through:
+1. Option expiry (if OTM), or
+2. Option exercise (if ITM), or
+3. Buy-back to close position
+
+Cannot withdraw collateral while position open
+```
+
+**Margin Calls**:
+```
+No traditional margin calls in current implementation
+
+Collateral fully locked at sale
+No partial liquidations
+Clear, defined risk from start
+```
 
 ## Position Limits
 
-### Account Limits
+### Account-Level Limits
 
-Prevent excessive concentration:
+Prevent excessive concentration per account:
 
-**Maximum Notional**: $500k per account (adjustable based on collateral).
-
-**Maximum Contracts per Expiration**: 1,000 contracts.
-
-**Maximum Delta**: ±100 ETH equivalent.
-
-**Maximum Short Gamma**: -10 (prevents unlimited risk scenarios).
-
-Limits prevent single accounts from dominating markets or taking excessive risk.
-
-### Per-Pool Limits
-
-Protect overall system:
-
-**Open Interest Cap**: Maximum contracts outstanding.
-
-**Delta Limits**: Prevents one-sided market.
-
-**Concentration Limits**: Max % of pool held by single account.
-
-When limits approached, new positions restricted until open interest reduces.
-
-## Collateral Management
-
-### Collateral Requirements
-
-Different positions need different collateral:
-
-**Long Options**:
+**Notional Limits** (implementation dependent):
 ```
-Collateral: Premium paid upfront
-Risk: Limited to premium
-Additional Margin: None
+Example Configuration:
+Max Notional per Account: $500,000
+Max Contracts per Strategy: 1,000
+Max Delta Exposure: ±100 ETH
+
+Purpose: Prevent single account from dominating
 ```
 
-**Covered Options**:
+**Enforcement**:
 ```
-Sell Covered Call:
-- Collateral: 1 ETH per contract
-- Risk: Opportunity cost if assigned
-- Must own underlying tokens
+Before Option Purchase:
+1. Check account's total notional
+2. Check account's contracts in this strategy
+3. Check account's net delta
+4. If any limit exceeded: Revert
 
-Sell Cash-Secured Put:
-- Collateral: Strike price in USDC per contract
-- Risk: Buy at strike if assigned
-- Must have USDC collateral
+Ensures diversified participant base
 ```
 
-**Important**: MegaFi requires full collateralization for all sold options. Naked (uncollateralized) options are not supported to ensure system safety and user protection.
+### Strategy Utilization
 
+Monitor strategy capacity:
 
-### Collateral Monitoring
-
-Real-time collateral tracking for sold options:
-
+**Utilization Ratio**:
 ```
-Sold 10 ETH $2,000 covered calls
-Collateral: 10 ETH (locked)
-ETH Price: $1,900
+Utilization = Locked Liquidity / Strategy Limit
 
-Position Status: Fully collateralized
-No additional margin required
-```
+Example:
+ETH Call Locked: 35,000 USDC
+ETH Call Limit: 50,000 USDC
+Utilization: 70%
 
-**For Covered Calls**:
-- Collateral: Must hold underlying tokens
-- Locked until position closed or expired
-- No margin calls (fully backed)
-
-**For Cash-Secured Puts**:
-- Collateral: USDC equal to strike × contracts
-- Locked until position closed or expired
-- No margin calls (fully backed)
-
-Interface shows collateral status and locked amounts in real-time.
-
-## Position Management
-
-### Fully Collateralized Model
-
-MegaFi uses full collateralization, which means:
-
-**No Liquidation Risk for Sellers**:
-- Covered calls: Backed by tokens you own
-- Cash-secured puts: Backed by USDC you deposit
-- Collateral locked, not at risk of liquidation
-
-**Buyers Have Defined Risk**:
-- Maximum loss = premium paid
-- No additional margin requirements
-- No liquidation possible
-
-### Position Monitoring
-
-**For Option Sellers**:
-```
-Monitor:
-- Collateral locked amount
-- Position P&L
-- Time to expiration
-- Assignment risk
-
-Actions Available:
-- Close position early (buy back)
-- Let expire (keep premium if OTM)
-- Roll to new expiration
+High utilization (>90%): Limited capacity
+Low utilization (<50%): Ample capacity
 ```
 
-**For Option Buyers**:
+**Display to Users**:
 ```
-Monitor:
-- Position value
-- Greeks (delta, theta, vega)
-- Time decay
-- Profit/loss
+Strategy Card:
+ETH Call Options
+Available Capacity: 15,000 USDC (30% remaining)
+Current Premium: $80 per ETH
 
-Actions Available:
-- Sell to close (take profit/cut loss)
-- Exercise if ITM
-- Let expire if OTM
+Helps users understand liquidity availability
 ```
 
-### Risk Management Best Practices
+## Real-Time Risk Monitoring
 
-**Position Sizing**: Don't allocate more than 20% of portfolio to any single strategy.
+### Live Position Tracking
 
-**Diversification**: Spread across multiple strikes and expirations.
+MegaETH enables continuous risk monitoring:
 
-**Time Management**: Be aware of theta decay on long positions.
-
-**Set Targets**: Define profit targets and loss limits before entering.
-
-## Automated Risk Controls
-
-### Stop-Loss Orders
-
-Automatically close losing positions:
-
+**Real-Time Updates**:
 ```
-Setup:
-Position: Long 10 ETH $2,000 calls at $100 each
-Stop-Loss: $50 (50% loss)
+Every relevant event triggers recalculation:
+- Price changes (Chainlink updates)
+- Position opened/closed
+- Time decay (continuous)
+- Volatility adjustments
 
-Execution:
-If calls drop to $50: Automatically sell
-Loss Capped: $500 (vs unlimited without stop)
+Greeks update continuously, not per block
 ```
 
-**Trailing Stop-Loss**:
+**Dashboard Metrics**:
 ```
-Position at $100
-Trailing Stop: $20 below highest
+Portfolio Risk View:
+Current Value: $15,420
+Total Notional: $200,000
+Net Delta: +12.3 ETH
+P&L Today: +$340 (+2.25%)
+Time Decay: -$65/day
+Break-Even Move: +3.2%
 
-Price rises to $150:
-Stop moves to $130
-
-Price drops to $130:
-Position sold, lock in $30 profit per contract
-```
-
-### Take-Profit Orders
-
-Lock in gains automatically:
-
-```
-Position: Long 10 calls at $80 each
-Take-Profit: $150 (87.5% gain)
-
-If calls reach $150:
-Automatically sell
-Profit secured: $700
+Updated continuously on MegaETH
 ```
 
-### Position Hedging
+### Risk Alerts
 
-Automatic hedge when risk exceeds threshold:
-
-```
-Delta Exposure: +20 ETH
-Delta Limit: ±10 ETH
-Trigger: Auto-hedge excess
-
-Action:
-System sells 10 ETH delta in options
-Brings portfolio to +10 ETH delta
-Risk: Controlled within limits
-```
-
-## Risk Scenarios
-
-### Scenario Analysis
-
-See how positions perform under various conditions:
+Monitor key thresholds:
 
 ```
-Current: ETH $2,000
-Portfolio: Mixed options position
+Alert Conditions:
+- Position approaching expiry (< 24h)
+- Delta exposure exceeds target
+- Negative P&L threshold reached
+- Exercise window opening soon
+- Collateral utilization high
 
-Scenario 1: ETH drops to $1,800
-- Portfolio Value: $8,500
-- P&L: -$1,500
-- Greeks: Delta -5, Gamma +1
-
-Scenario 2: ETH rises to $2,200
-- Portfolio Value: $12,000
-- P&L: +$2,000
-- Greeks: Delta +8, Gamma -0.5
-
-Scenario 3: Volatility doubles
-- Portfolio Value: $11,500
-- P&L: +$1,500
-- All else equal
+Enables proactive risk management
 ```
 
-Run scenarios before entering positions.
+## Risk Control Best Practices
 
-### Stress Testing
+### Position Sizing
 
-Test portfolio against extreme moves:
-
-**Flash Crash (-30% in 1 hour)**:
+**Never Over-Leverage**:
 ```
-Impact: Protective puts gain significantly
-Risk: Short positions may liquidate
-Recommendation: Maintain high collateral buffer
-```
+Conservative: 10-20% of portfolio in options
+Moderate: 20-40% in options
+Aggressive: 40%+ (high risk)
 
-**Volatility Spike (IV doubles)**:
-```
-Impact: Long vol positions profit
-Risk: Short vol positions lose
-Recommendation: Monitor vega exposure
+Example:
+Portfolio: $100,000
+Max Options Exposure: $20,000 (20%)
+Leaves 80% in spot holdings/stable positions
 ```
 
-**Low Liquidity Event**:
+**Diversification**:
 ```
-Impact: Wider spreads, higher slippage
-Risk: Liquidations at unfavorable prices
-Recommendation: Don't max out leverage
-```
+Don't concentrate in single strategy:
+- Mix calls and puts
+- Different expirations
+- Multiple strikes
+- Various underlyings
 
-## Portfolio-Level Risk
-
-### Correlation Risk
-
-Multiple positions may move together:
-
-```
-Portfolio:
-- Long ETH calls
-- Long WBTC calls
-- Long several alt coin calls
-
-Correlation: 0.8 (highly correlated)
-
-Risk: All positions lose if crypto market drops
-Mitigation: Add uncorrelated hedges or reduce size
+Reduces correlation risk
 ```
 
-### Concentration Risk
+### Hedging Your Hedges
 
-Too much exposure to single asset or strategy:
-
+**Delta Neutral Strategies**:
 ```
-Portfolio Value: $50,000
-ETH Option Exposure: $45,000 (90%)
-
-Risk: Over-concentrated in ETH
-Recommendation: Limit single asset to 50% max
-```
-
-### Liquidity Risk
-
-Ability to exit positions:
-
-```
-Position: 100 contracts in low-volume option
-Daily Volume: 20 contracts
-Exit Time: 5 days to fully close
-
-Risk: Forced to hold or accept poor prices
-Mitigation: Size based on daily volume
+If selling options:
+- Hedge with opposite positions
+- Maintain near-zero delta
+- Profit from theta and vega
+- Reduce directional risk
 ```
 
-## Risk Limits Best Practices
-
-### Conservative Risk Profile
-
+**Example**:
 ```
-Max Position Size: 20% of portfolio per strategy
-Max Delta: ±20% of portfolio
-Strategy Types: Covered calls, cash-secured puts only
-Diversification: Minimum 5 different positions
-Time Horizon: 30+ days to expiration
+Sell 10 ETH $2,200 calls (delta 0.3): -3 delta
+Buy 6 ETH at spot: +6 delta
+Net Delta: +3 (partially hedged)
+
+Benefit: Reduced directional exposure
 ```
 
-### Moderate Risk Profile
+### Stop Losses
 
+**Mental Stop Losses**:
 ```
-Max Position Size: 40% of portfolio per strategy
-Max Delta: ±50% of portfolio
-Strategy Types: All covered strategies + protective puts
-Diversification: Minimum 3 different positions
-Time Horizon: 7-30 days to expiration
-```
+Set threshold before entering:
+"If P&L drops below -$500, close position"
 
-### Aggressive Risk Profile
-
-```
-Max Position Size: 60% of portfolio per strategy
-Max Delta: ±100% of portfolio
-Strategy Types: All available strategies
-Diversification: Minimum 2 different positions
-Time Horizon: 1-7 days to expiration
+Enforced manually (current implementation)
+Prevents emotional decision-making
 ```
 
-**Note**: All profiles use fully collateralized positions only. Choose based on your experience and risk tolerance.
+**Example**:
+```
+Buy option for $800 premium
+Stop Loss: -50% = -$400 loss
+Close position if value drops to $400
+```
 
-## Monitoring and Alerts
+## Emergency Scenarios
 
-### Real-Time Monitoring
+### High Volatility Events
 
-Dashboard shows:
+Protocol handles extreme conditions:
 
-**Portfolio Health**:
-- Collateral ratio
-- Margin available
-- Liquidation distance
+**Scenario: Major Price Crash**:
+```
+ETH drops 40% in 1 hour
 
-**Risk Metrics**:
-- Current Greeks
-- P&L (realized and unrealized)
-- Position concentration
+Impact:
+- All put options ITM
+- Treasury may need full payout capacity
+- CoverPool activated for backup
 
-**Market Conditions**:
-- Implied volatility
-- Volume trends
-- Liquidity depth
+Protection:
+- Strategy limits cap max exposure
+- Benchmark reserve provides buffer
+- CoverPool ensures settlements
+- LPs bear some risk (their role)
 
-### Alert Configuration
+Result: All settlements completed
+```
 
-Set notifications for:
+### Liquidity Crunch
 
-**Margin Alerts**:
-- Collateral < 150% maintenance
-- Approaching liquidation (< 125%)
-- Margin call issued
+**If capacity reached**:
+```
+All Strategy Limits Hit:
+- No new options can be purchased
+- Existing options remain valid
+- Wait for options to expire/exercise
+- Liquidity freed up gradually
+- New capacity becomes available
 
-**Position Alerts**:
-- P&L exceeds ±X%
-- Position size limit reached
-- Stop-loss/take-profit triggered
-
-**Market Alerts**:
-- Volatility spikes/drops
-- Large price movements
-- Liquidity drops below threshold
+User Impact: Temporary buying pause
+```
 
 ## FAQ
 
-**Can my sold options be liquidated?**  
-No. Covered calls and cash-secured puts are fully collateralized. No liquidation risk.
+**What if Treasury runs out of USDC?**  
+CoverPool provides backup liquidity. LPs stake capital specifically for this purpose and earn 70% of profits.
 
-**What happens if I'm assigned on a sold option?**  
-Covered calls: Your tokens are sold at strike price. Cash-secured puts: You buy tokens at strike price using your USDC collateral.
+**Can I lose more than my premium as a buyer?**  
+No. Maximum loss when buying options = premium paid. Risk is defined and limited.
 
-**Can I lose more than my collateral?**  
-No. Sellers: Risk limited to collateral. Buyers: Risk limited to premium paid.
+**What happens if I sell options without collateral?**  
+Transaction will revert. Protocol requires full collateral before allowing option sale.
 
-**How do I unlock my collateral?**  
-Close the position (buy back the option) or wait for expiration. If option expires OTM, collateral unlocks automatically.
+**Are there liquidations?**  
+Not in traditional sense. Collateral is locked upfront. If exercised against you, collateral is used for settlement.
 
-**What if I can't afford to be assigned?**  
-Close the position before expiration to avoid assignment. Monitor positions actively.
+**Can the protocol become insolvent?**  
+Highly unlikely due to:
+- Strategy limits
+- Treasury reserves
+- CoverPool backup
+- Premium income
+- Careful risk management
 
-**Can I set custom risk limits?**  
-Yes. Set personal limits stricter than system limits for extra safety.
+**What if I forget to exercise ITM option?**  
+Auto-exercise at expiration ensures you receive profit automatically.
+
+**Can LPs lose their principal?**  
+Theoretically yes if payouts exceed premiums long-term, but multiple protection mechanisms make this unlikely. LPs earn from protocol profits and provide backstop in exchange.
+
+**How do I reduce risk?**  
+Size positions appropriately, diversify strategies, use stop losses, monitor Greeks, don't over-leverage.
 
 ## Next Steps
 
-Manage risk effectively:
+Deepen risk understanding:
 
-- [Options Trading](options-trading.md) - Understand position risks
+- [Options Trading](options-trading.md) - Understand position mechanics
 - [Hedging Strategies](hedging-strategies.md) - Reduce portfolio risk
-- [Pricing Models](pricing-models.md) - Value risk accurately
+- [Pricing Models](pricing-models.md) - Evaluate option values
 
 ---
 
-**Know your risk. Control your fate.**
-
+**Understand risk. Control outcomes.**

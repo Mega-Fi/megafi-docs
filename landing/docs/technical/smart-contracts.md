@@ -1,332 +1,645 @@
 # Smart Contracts
 
-Technical reference for MegaFi smart contracts. Understand contract architecture, key functions, and integration patterns.
+Technical reference for MegaFi smart contracts. Understand contract architecture, key functions, and integration patterns for the pool-based options protocol.
 
-> **Note**: Smart contracts are currently in development and testing. Security audits are planned before mainnet deployment. Contract addresses will be published upon mainnet launch. Testnet contracts are available for development and testing.
+> **Note**: Smart contracts are built on audited code and currently in development for MegaETH deployment. Security audits planned before mainnet launch. Contract addresses will be published upon deployment. Testnet contracts available for development.
 
 ## At a Glance
 
-- All contracts are open source and will be verified upon deployment
-- EVM-compatible Solidity contracts
-- Upgradeable proxy pattern for core contracts
-- Security audits planned before mainnet
-- Optimized for MegaETH's continuous execution
-- Complete ABIs available for integration
+- Pool-based liquidity architecture with USDC-only model
+- OperationalTreasury manages option lifecycle
+- CoverPool provides LP staking and backup liquidity
+- 8+ strategy contracts implement different option types
+- ERC721 NFTs for both options and LP positions
+- Transparent on-chain pricing via Black-Scholes
 
 ## Contract Architecture
 
-### Core Contracts
+### Core System
 
-**MegaPoolFactory**
-- Creates new token pair pools
-- Manages fee tier configurations
-- Emits pool creation events
-- Enforces pool uniqueness
+```mermaid
+graph TD
+    A[Options Trader] --> B[OperationalTreasury]
+    B --> C{Strategy Contracts}
+    C --> D[Chainlink Oracles]
+    B --> E[PositionsManager]
+    E --> F[Option NFTs]
+    
+    G[Liquidity Provider] --> H[CoverPool]
+    H -.Backup.-> B
+    H --> E
+    E --> I[LP NFTs]
+    
+    style B fill:#4F46E5
+    style H fill:#10B981
+    style C fill:#FF3A1E
+```
 
-**MegaPool**
-- Core AMM logic with concentrated liquidity
-- Handles swaps and liquidity provision
-- Manages tick-based liquidity distribution
-- Real-time fee accrual
+### Contract Hierarchy
 
-**PositionManager**
-- Manages LP positions as NFTs (ERC-721)
-- Tracks liquidity zones and ownership
-- Handles fee collection
-- Supports position transfers
+**Core Contracts**:
+- **OperationalTreasury**: Central hub for option creation and settlement
+- **CoverPool**: LP liquidity pool with epoch-based profit distribution
+- **PositionsManager**: ERC721 NFT manager for all positions
+- **LimitController**: Per-strategy exposure limit enforcement
 
-**SwapRouter**
-- Optimized swap routing
-- Multi-hop support
-- Slippage protection
-- Batch operations
+**Strategy Contracts** (8+ implementations):
+- HegicStrategyCall (ETH, BTC)
+- HegicStrategyPut (ETH, BTC)
+- HegicStrategyStraddle (ETH, BTC)
+- HegicStrategyStrangle (ETH, BTC)
+- HegicStrategySpreadCall (ETH, BTC)
+- HegicStrategySpreadPut (ETH, BTC)
+- Inverse strategies (optional)
 
-### Strategy Contracts
+**External Dependencies**:
+- USDC (ERC20 token)
+- Chainlink Price Feeds (ETH/USD, BTC/USD)
 
-**StrategyManager**
-- Deploys and manages automated strategies
-- Executes rebalancing operations
-- Tracks strategy performance
-- Enforces risk parameters
+## OperationalTreasury
 
-**RebalanceExecutor**
-- Calculates optimal liquidity zones
-- Executes position adjustments
-- Manages gas efficiency
-- Emits rebalance events
+**Purpose**: Central hub managing option lifecycle from creation to settlement.
 
-### Risk Contracts
-
-**OptionFactory**
-- Creates option contracts
-- Manages strike prices and expirations
-- Tracks open interest
-- Enforces position limits
-
-**OptionContract**
-- Handles option lifecycle
-- Manages collateral
-- Executes settlements
-- Calculates Greeks in real-time
-
-**CollateralManager**
-- Manages option collateral
-- Enforces margin requirements
-- Handles liquidations
-- Tracks health ratios
-
-## Key Interfaces
-
-### IMegaPool
+### Key State Variables
 
 ```solidity
-interface IMegaPool {
-    function swap(
-        address recipient,
-        bool zeroForOne,
-        int256 amountSpecified,
-        uint160 sqrtPriceLimitX96,
-        bytes calldata data
-    ) external returns (int256 amount0, int256 amount1);
+// Immutable
+IERC20 public immutable token;                 // USDC address
+IPositionsManager public immutable manager;    // NFT manager
+ICoverPool public immutable coverPool;        // Backup liquidity
+uint256 public immutable maxLockupPeriod;     // 30 days (2,592,000s)
 
-    function mint(
-        address recipient,
-        int24 tickLower,
-        int24 tickUpper,
-        uint128 amount,
-        bytes calldata data
-    ) external returns (uint256 amount0, uint256 amount1);
+// Mutable
+uint256 public benchmark;                      // Reserve target
+uint256 public lockedPremium;                 // Active premiums
+uint256 public totalLocked;                   // Locked liquidity
+mapping(uint256 => LockedLiquidity) public lockedLiquidity;
+mapping(IHegicStrategy => uint256) public lockedByStrategy;
+mapping(IHegicStrategy => bool) public acceptedStrategy;
+```
 
-    function burn(
-        int24 tickLower,
-        int24 tickUpper,
-        uint128 amount
-    ) external returns (uint256 amount0, uint256 amount1);
+### Data Structures
 
-    function collect(
-        address recipient,
-        int24 tickLower,
-        int24 tickUpper,
-        uint128 amount0Requested,
-        uint128 amount1Requested
-    ) external returns (uint128 amount0, uint128 amount1);
+```solidity
+enum LockedLiquidityState {
+    Unlocked,  // 0
+    Locked     // 1
+}
+
+struct LockedLiquidity {
+    LockedLiquidityState state;
+    IHegicStrategy strategy;
+    uint128 negativepnl;    // Max loss
+    uint128 positivepnl;    // Premium paid
+    uint32 expiration;      // Unix timestamp
 }
 ```
 
-### IPositionManager
+### Core Functions
+
+#### buy() - Purchase Option
 
 ```solidity
-interface IPositionManager {
-    struct MintParams {
-        address token0;
-        address token1;
-        uint24 fee;
-        int24 tickLower;
-        int24 tickUpper;
-        uint256 amount0Desired;
-        uint256 amount1Desired;
-        uint256 amount0Min;
-        uint256 amount1Min;
-        address recipient;
-        uint256 deadline;
-    }
+function buy(
+    IHegicStrategy strategy,
+    address holder,
+    uint256 amount,
+    uint256 period,
+    bytes[] calldata additional
+) external nonReentrant
+```
 
-    function mint(MintParams calldata params)
+**Parameters**:
+- `strategy`: Strategy contract address
+- `holder`: Address receiving option NFT
+- `amount`: Size in asset decimals (e.g., 1e18 for 1 ETH)
+- `period`: Duration in seconds (86400 to 2592000)
+- `additional`: Strategy-specific parameters (encoded bytes)
+
+**Flow**:
+1. Validate strategy is accepted
+2. Calculate premium via strategy.create()
+3. Transfer premium (USDC) from msg.sender
+4. Lock liquidity (negativePNL)
+5. Mint option NFT to holder
+6. Emit Acquired event
+
+**Requirements**:
+- msg.sender approved USDC ≥ premium
+- period within allowed range
+- strategy limit not exceeded
+- sufficient liquidity available
+
+**Gas**: ~250,000-350,000
+
+---
+
+#### payOff() - Exercise Option
+
+```solidity
+function payOff(uint256 positionID, address account) 
+    external 
+    nonReentrant
+```
+
+**Parameters**:
+- `positionID`: Option NFT token ID
+- `account`: Address receiving profit
+
+**Flow**:
+1. Verify option not expired
+2. Calculate profit via strategy.payOffAmount()
+3. Unlock liquidity from Treasury
+4. If Treasury balance < profit: call coverPool.payOut(deficit)
+5. Transfer profit (USDC) to account
+6. Emit Paid event
+
+**Requirements**:
+- msg.sender is owner or approved
+- Within exercise window (1 hour before expiry)
+- Option is in-the-money (profit > 0)
+
+**Gas**: ~200,000-400,000
+
+---
+
+#### unlock() - Expire Option
+
+```solidity
+function unlock(uint256 lockedLiquidityID) 
+    public 
+    virtual
+```
+
+**Parameters**:
+- `lockedLiquidityID`: Option NFT token ID
+
+**Flow**:
+1. Check option expired
+2. Unlock liquidity back to Treasury
+3. Emit Expired event
+
+**Requirements**:
+- block.timestamp > expiration
+
+**Gas**: ~50,000-80,000
+
+**Note**: Anyone can call after expiration
+
+---
+
+### Admin Functions
+
+```solidity
+function setBenchmark(uint256 value) external onlyAdmin;
+function withdraw(address to, uint256 amount) external onlyAdmin;
+function setStrategy(IHegicStrategy strategy, bool value) external onlyAdmin;
+```
+
+### Events
+
+```solidity
+event Acquired(
+    uint256 indexed id,
+    IHegicStrategy indexed strategy,
+    address indexed holder,
+    uint256 amount,
+    uint256 premium
+);
+
+event Paid(
+    uint256 indexed id,
+    address indexed account,
+    uint256 amount
+);
+
+event Expired(uint256 indexed id);
+```
+
+## CoverPool
+
+**Purpose**: LP staking pool providing backup liquidity and profit distribution via 7-day epochs.
+
+### Key State Variables
+
+```solidity
+// Immutable
+IERC20 public immutable coverToken;      // USDC
+IERC20 public immutable profitToken;     // USDC
+
+// Constants
+uint256 constant CHANGING_PRICE_DECIMALS = 1e30;
+uint256 constant MINIMAL_EPOCH_DURATION = 7 days;
+
+// Mutable
+uint32 public windowSize;                // 5 days (entry/exit window)
+uint256 public cumulativeProfit;        // Profit per share
+uint256 public totalShare;              // Total LP shares
+uint256 public currentEpoch;            // Current epoch number
+address public payoffPool;              // Backup USDC source
+
+mapping(uint256 => uint256) public shareOf;
+mapping(uint256 => uint256) public bufferredUnclaimedProfit;
+mapping(uint256 => uint256) public cumulativePoint;
+mapping(uint256 => Epoch) public epoch;
+```
+
+### Data Structures
+
+```solidity
+struct Epoch {
+    uint256 start;                      // Start timestamp
+    uint256 changingPrice;              // 1e30 (USDC/USDC)
+    uint256 cumulativePoint;            // Profit checkpoint
+    uint256 totalShareOut;              // Shares withdrawing
+    uint256 coverTokenOut;              // USDC withdrawing
+    uint256 profitTokenOut;             // Profits distributing
+    mapping(uint256 => uint256) outShare;
+}
+```
+
+### Core Functions
+
+#### provide() - Deposit Liquidity
+
+```solidity
+function provide(uint256 amount, uint256 positionId)
+    external
+    returns (uint256)
+```
+
+**Parameters**:
+- `amount`: USDC to deposit (6 decimals)
+- `positionId`: 0 for new, existing ID to add
+
+**Flow**:
+1. Check within entry window (first 5 days of epoch)
+2. Transfer USDC from msg.sender
+3. Calculate share: (amount × totalShare) / totalCoverToken
+4. Mint or update LP NFT
+5. Emit Provided event
+
+**Returns**: Position ID (NFT token ID)
+
+**Gas**: ~200,000-300,000
+
+---
+
+#### claim() - Claim Profits
+
+```solidity
+function claim(uint256 positionId)
+    external
+    returns (uint256 amount)
+```
+
+**Parameters**:
+- `positionId`: LP NFT token ID
+
+**Flow**:
+1. Calculate claimable: buffered + ((cumulativeProfit - cumulativePoint) × share)
+2. Transfer USDC to msg.sender
+3. Update cumulativePoint
+4. Reset buffered profit
+
+**Returns**: USDC claimed (6 decimals)
+
+**Gas**: ~100,000-150,000
+
+---
+
+#### withdraw() - Mark for Withdrawal
+
+```solidity
+function withdraw(uint256 positionId, uint256 shareAmount)
+    external
+```
+
+**Parameters**:
+- `positionId`: LP NFT token ID
+- `shareAmount`: Share amount to withdraw
+
+**Flow**:
+1. Check within withdrawal window (first 5 days)
+2. Mark shares for withdrawal in current epoch
+3. Emit Withdrawn event
+
+**Requirements**:
+- Within window
+- shareAmount ≤ position share
+
+**Gas**: ~80,000-120,000
+
+**Note**: Step 1 of 2-step withdrawal
+
+---
+
+#### withdrawEpoch() - Complete Withdrawal
+
+```solidity
+function withdrawEpoch(uint256 positionId, uint256[] calldata epochs)
+    external
+```
+
+**Parameters**:
+- `positionId`: LP NFT token ID
+- `epochs`: Array of epoch IDs to withdraw
+
+**Flow**:
+1. For each closed epoch with outShare
+2. Calculate USDC + profits to return
+3. Transfer tokens
+4. Clear epoch withdrawal data
+
+**Requirements**:
+- Epochs must be closed
+- Position must have outShare in epoch
+
+**Gas**: ~150,000 per epoch
+
+**Note**: Step 2 of 2-step withdrawal
+
+---
+
+#### fixProfit() - Close Epoch
+
+```solidity
+function fixProfit() external
+```
+
+**Flow**:
+1. Calculate net profit: balance - profitTokenBalance
+2. Update cumulativeProfit += (profit / totalShare)
+3. Close current epoch
+4. Start next epoch
+5. Emit EpochClosed event
+
+**Requirements**:
+- Called by admin weekly
+- Previous epoch duration ≥ 7 days
+
+**Gas**: ~100,000-150,000
+
+---
+
+### Backup Function
+
+#### payOut() - Provide Emergency Liquidity
+
+```solidity
+function payOut(uint256 amount) 
+    external 
+    onlyRole(OPERATIONAL_TREASURY_ROLE)
+```
+
+**Parameters**:
+- `amount`: USDC needed (6 decimals)
+
+**Flow**:
+1. Transfer USDC to Treasury
+2. Update internal accounting
+
+**Use**: Called by Treasury when balance insufficient for option payoff
+
+---
+
+### Events
+
+```solidity
+event Provided(
+    uint256 indexed id,
+    address indexed account,
+    uint256 amount,
+    uint256 share
+);
+
+event Withdrawn(
+    uint256 indexed id,
+    address indexed account,
+    uint256 share
+);
+
+event Paid(
+    uint256 indexed id,
+    address indexed account,
+    uint256 amount
+);
+
+event EpochClosed(
+    uint256 indexed epochId,
+    uint256 profit,
+    uint256 cumulativeProfit
+);
+```
+
+## Strategy Contracts
+
+**Purpose**: Implement option pricing and payoff logic for different strategy types.
+
+### IHegicStrategy Interface
+
+```solidity
+interface IHegicStrategy {
+    function create(
+        uint256 id,
+        address holder,
+        uint256 amount,
+        uint256 period,
+        bytes[] calldata additional
+    ) external returns (
+        uint32 expiration,
+        uint256 positivepnl,
+        uint256 negativepnl
+    );
+    
+    function calculateNegativepnlAndPositivepnl(
+        uint256 amount,
+        uint256 period,
+        bytes[] calldata additional
+    ) external view returns (
+        uint128 negativepnl,
+        uint128 positivepnl
+    );
+    
+    function payOffAmount(uint256 optionID)
         external
-        payable
-        returns (
-            uint256 tokenId,
-            uint128 liquidity,
-            uint256 amount0,
-            uint256 amount1
-        );
-
-    function increaseLiquidity(
-        uint256 tokenId,
-        uint256 amount0Desired,
-        uint256 amount1Desired,
-        uint256 amount0Min,
-        uint256 amount1Min,
-        uint256 deadline
-    ) external payable returns (uint128 liquidity, uint256 amount0, uint256 amount1);
-
-    function decreaseLiquidity(
-        uint256 tokenId,
-        uint128 liquidity,
-        uint256 amount0Min,
-        uint256 amount1Min,
-        uint256 deadline
-    ) external payable returns (uint256 amount0, uint256 amount1);
-
-    function collect(
-        uint256 tokenId,
-        address recipient,
-        uint128 amount0Max,
-        uint128 amount1Max
-    ) external payable returns (uint256 amount0, uint256 amount1);
+        view
+        returns (uint256 profit);
 }
 ```
 
-### ISwapRouter
+### Strategy Implementations
+
+**Call Options**:
+```solidity
+contract HegicStrategyCall is IHegicStrategy {
+    IPriceProvider public priceProvider;  // Chainlink
+    uint256 public K;                      // Volatility param
+    uint32 public minPeriod;              // 1 day
+    uint32 public maxPeriod;              // 30 days
+    
+    // Implements Black-Scholes pricing
+    function calculateNegativepnlAndPositivepnl(...)
+        external view returns (uint128, uint128);
+}
+```
+
+**Put Options**:
+```solidity
+contract HegicStrategyPut is IHegicStrategy {
+    // Similar structure to Call
+    // Different payoff calculation
+}
+```
+
+**Straddle**:
+```solidity
+contract HegicStrategyStraddle is IHegicStrategy {
+    // Combines call + put at same strike
+    // Premium = call premium + put premium
+}
+```
+
+**Strangle**:
+```solidity
+contract HegicStrategyStrangle is IHegicStrategy {
+    // Call + put at different strikes
+    // Requires spread% parameter in additional bytes
+}
+```
+
+**Spreads**:
+```solidity
+contract HegicStrategySpreadCall is IHegicStrategy {
+    // Bull or bear call spread
+    // Limited profit and loss
+}
+```
+
+### Strategy Parameters
+
+Each strategy configures:
 
 ```solidity
-interface ISwapRouter {
-    struct ExactInputSingleParams {
-        address tokenIn;
-        address tokenOut;
-        uint24 fee;
-        address recipient;
-        uint256 deadline;
-        uint256 amountIn;
-        uint256 amountOutMinimum;
-        uint160 sqrtPriceLimitX96;
-    }
+struct StrategyParams {
+    uint256 K;                  // Volatility coefficient
+    uint32 minPeriod;          // Min duration (e.g., 1 day)
+    uint32 maxPeriod;          // Max duration (e.g., 30 days)
+    uint32 exerciseWindowDuration;  // Exercise window (e.g., 1 hour)
+    uint8 spotDecimals;        // Asset decimals (18 for ETH, 8 for BTC)
+}
+```
 
-    function exactInputSingle(ExactInputSingleParams calldata params)
+## PositionsManager
+
+**Purpose**: ERC721 NFT manager for options and LP positions.
+
+### Key Functions
+
+```solidity
+contract PositionsManager is ERC721, AccessControl {
+    function mint(address to) external returns (uint256 id);
+    function burn(uint256 id) external;
+    
+    // Standard ERC721
+    function ownerOf(uint256 id) external view returns (address);
+    function transferFrom(address from, address to, uint256 id) external;
+    function approve(address to, uint256 id) external;
+}
+```
+
+**Features**:
+- Each position (option or LP) is an NFT
+- Transferable between addresses
+- Composable with other protocols
+- Standard ERC721 interface
+
+## LimitController
+
+**Purpose**: Enforce per-strategy exposure limits.
+
+### Functions
+
+```solidity
+contract LimitController is AccessControl {
+    mapping(IHegicStrategy => uint256) public limit;
+    
+    function setLimit(IHegicStrategy strategy, uint256 amount)
         external
-        payable
-        returns (uint256 amountOut);
-
-    struct ExactInputParams {
-        bytes path;
-        address recipient;
-        uint256 deadline;
-        uint256 amountIn;
-        uint256 amountOutMinimum;
-    }
-
-    function exactInput(ExactInputParams calldata params)
-        external
-        payable
-        returns (uint256 amountOut);
+        onlyRole(DEFAULT_ADMIN_ROLE);
+        
+    function checkLimit(
+        IHegicStrategy strategy,
+        uint256 amount
+    ) external view returns (bool);
 }
 ```
 
-## Events
-
-### Pool Events
-
-```solidity
-event Swap(
-    address indexed sender,
-    address indexed recipient,
-    int256 amount0,
-    int256 amount1,
-    uint160 sqrtPriceX96,
-    uint128 liquidity,
-    int24 tick
-);
-
-event Mint(
-    address sender,
-    address indexed owner,
-    int24 indexed tickLower,
-    int24 indexed tickUpper,
-    uint128 amount,
-    uint256 amount0,
-    uint256 amount1
-);
-
-event Burn(
-    address indexed owner,
-    int24 indexed tickLower,
-    int24 indexed tickUpper,
-    uint128 amount,
-    uint256 amount0,
-    uint256 amount1
-);
-
-event Collect(
-    address indexed owner,
-    address recipient,
-    int24 indexed tickLower,
-    int24 indexed tickUpper,
-    uint128 amount0,
-    uint128 amount1
-);
+**Usage**:
+```
+Before option purchase:
+1. Treasury checks: lockedByStrategy[strategy] + negativePNL
+2. Compare to: limitController.limit(strategy)
+3. If exceeded: revert
 ```
 
-### Strategy Events
+## Integration Patterns
 
-```solidity
-event StrategyDeployed(
-    uint256 indexed strategyId,
-    address indexed owner,
-    address pool,
-    uint8 mode
+### Buying Options
+
+```typescript
+// 1. Approve USDC
+await usdc.approve(treasury.address, premium);
+
+// 2. Buy option
+const tx = await treasury.buy(
+    strategyAddress,
+    userAddress,
+    parseEther("1"),      // 1 ETH
+    7 * 24 * 60 * 60,     // 7 days
+    []                     // No additional params
 );
 
-event Rebalanced(
-    uint256 indexed strategyId,
-    int24 oldTickLower,
-    int24 oldTickUpper,
-    int24 newTickLower,
-    int24 newTickUpper,
-    uint256 gasUsed
-);
+// 3. Get option ID from event
+const receipt = await tx.wait();
+const acquiredEvent = receipt.events.find(e => e.event === "Acquired");
+const optionId = acquiredEvent.args.id;
 ```
 
-## Access Control
+### Exercising Options
 
-### Role-Based Permissions
+```typescript
+// 1. Check payoff amount
+const profit = await strategy.payOffAmount(optionId);
 
-```solidity
-// Owner role
-bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
-
-// Operator role
-bytes32 public constant OPERATOR_ROLE = keccak256("OPERATOR_ROLE");
-
-// Strategy role
-bytes32 public constant STRATEGY_ROLE = keccak256("STRATEGY_ROLE");
-```
-
-**OWNER_ROLE**: Deploy contracts, manage upgrades, configure parameters
-
-**OPERATOR_ROLE**: Execute administrative functions, pause in emergencies
-
-**STRATEGY_ROLE**: Execute automated rebalancing operations
-
-## Security Features
-
-### Reentrancy Protection
-
-All external functions with state changes use `nonReentrant` modifier:
-
-```solidity
-modifier nonReentrant() {
-    require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
-    _status = _ENTERED;
-    _;
-    _status = _NOT_ENTERED;
+// 2. Exercise if profitable
+if (profit > 0) {
+    await treasury.payOff(optionId, userAddress);
 }
 ```
 
-### Integer Overflow Protection
+### Providing Liquidity
 
-Solidity 0.8+ automatic overflow checking:
+```typescript
+// 1. Approve USDC
+await usdc.approve(coverPool.address, amount);
 
-```solidity
-// Automatic revert on overflow
-uint256 result = a + b;
+// 2. Provide liquidity
+const positionId = await coverPool.provide(
+    amount,
+    0  // 0 for new position
+);
 ```
 
-### Pause Mechanism
+### Claiming LP Profits
 
-Emergency pause functionality:
+```typescript
+// 1. Check claimable amount
+const claimable = await coverPool.availableToClaim(positionId);
 
-```solidity
-function pause() external onlyOwner {
-    _pause();
-}
-
-function unpause() external onlyOwner {
-    _unpause();
-}
-
-modifier whenNotPaused() {
-    require(!paused(), "Pausable: paused");
-    _;
+// 2. Claim if profitable
+if (claimable > 0) {
+    await coverPool.claim(positionId);
 }
 ```
 
@@ -334,121 +647,114 @@ modifier whenNotPaused() {
 
 ### Storage Packing
 
-Efficient storage slot usage:
+Efficient slot usage:
 
 ```solidity
-struct Position {
-    uint128 liquidity;      // 16 bytes
-    uint128 feeGrowthInside0LastX128; // 16 bytes (packed in slot 1)
-    uint128 feeGrowthInside1LastX128; // 16 bytes
-    uint128 tokensOwed0;    // 16 bytes (packed in slot 2)
-    uint128 tokensOwed1;    // 16 bytes
+struct LockedLiquidity {
+    LockedLiquidityState state;  // 1 byte
+    IHegicStrategy strategy;     // 20 bytes
+    uint128 negativepnl;         // 16 bytes (slot 2)
+    uint128 positivepnl;         // 16 bytes (slot 2)
+    uint32 expiration;           // 4 bytes (slot 3)
 }
+// Total: 3 storage slots (optimized)
 ```
 
-### Calldata vs Memory
+### View Functions
 
-Use `calldata` for read-only parameters:
+Premium calculations are view functions (zero gas):
 
 ```solidity
-function exampleFunction(bytes calldata data) external {
-    // More gas efficient than bytes memory
-}
+function calculateNegativepnlAndPositivepnl(...)
+    external
+    view  // No gas cost
+    returns (uint128, uint128);
 ```
 
 ### Batch Operations
 
-Multicall support for gas savings:
+Query multiple positions efficiently:
+
+```typescript
+// Use multicall for batch reads
+const calls = optionIds.map(id => 
+    treasury.interface.encodeFunctionData("lockedLiquidity", [id])
+);
+const results = await multicall.aggregate(calls);
+```
+
+## Security Features
+
+### Reentrancy Protection
+
+All state-changing functions use `nonReentrant`:
 
 ```solidity
-function multicall(bytes[] calldata data)
-    external
-    payable
-    returns (bytes[] memory results)
-{
-    results = new bytes[](data.length);
-    for (uint256 i = 0; i < data.length; i++) {
-        (bool success, bytes memory result) = address(this).delegatecall(data[i]);
-        require(success, "Multicall failed");
-        results[i] = result;
-    }
+function buy(...) external nonReentrant {
+    // Safe from reentrancy attacks
 }
 ```
 
-## Upgrade Mechanism
+### Access Control
 
-### Proxy Pattern
-
-Transparent upgradeable proxy:
-
-```
-User → Proxy Contract → Implementation Contract
-
-Proxy: Holds state, delegates calls
-Implementation: Contains logic, upgradeable
-```
-
-### Upgrade Process
+Role-based permissions:
 
 ```solidity
-function upgradeTo(address newImplementation) external onlyOwner {
-    require(Address.isContract(newImplementation), "Invalid implementation");
-    _upgradeTo(newImplementation);
-    emit Upgraded(newImplementation);
+bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
+bytes32 public constant OPERATIONAL_TREASURY_ROLE = keccak256("OPERATIONAL_TREASURY_ROLE");
+
+function fixProfit() external onlyRole(DEFAULT_ADMIN_ROLE) {
+    // Only admin can close epochs
 }
 ```
 
-## Testing
+### Integer Safety
 
-### Test Coverage
+Solidity 0.8+ automatic overflow protection:
 
-- Unit tests: 100% coverage
-- Integration tests: All user flows
-- Fuzz tests: Edge cases
-- Invariant tests: Protocol invariants
+```solidity
+uint256 result = a + b;  // Reverts on overflow
+```
 
-### Audit Status
+## Contract Addresses
 
-**Current Status**: Pre-audit phase. Security audits are planned and will be completed before mainnet deployment.
+See [Contract Addresses](contract-addresses.md) for deployed addresses.
 
-**Timeline**: Audits to be conducted by multiple independent security firms prior to production launch.
+**Development Status**: Contracts in development. Addresses will be published upon deployment to MegaETH.
 
-Reports available on [GitHub/website].
+## Audit Status
 
-## Contract Verification
+**Current**: Pre-audit phase. Built on audited Hegic protocol foundations.
 
-All contracts are verified on MegaETH block explorer:
-- Source code published
-- Compiler version documented
-- Constructor arguments public
-- ABIs available
+**Planned**: Multi-firm security audits before mainnet launch.
+
+**Bug Bounty**: Will be available post-audit.
 
 ## FAQ
 
 **Are contracts upgradeable?**  
-Core contracts use upgradeable proxies. Peripheral contracts may be immutable.
+Core protocol uses transparent upgradeable proxies for future improvements.
 
-**How are upgrades governed?**  
-Currently admin multi-sig. Moving toward decentralized governance.
+**Can I verify contracts?**  
+Yes. All contracts will be verified on MegaETH block explorer with source code published.
 
-**Can I fork the contracts?**  
-Yes. Open source under [License]. Attribution required.
+**Where are ABIs?**  
+Will be available on GitHub and npm package upon deployment.
 
-**Where are ABIs hosted?**  
-GitHub repository and npm package. Also on block explorer.
+**How do I report security issues?**  
+Contact security@megafi.app with responsible disclosure.
 
-**How do I report vulnerabilities?**  
-security@megafi.app with responsible disclosure. Bug bounty available.
+**Are contract names final?**  
+Yes. Contract names (including "Hegic" prefix) are the actual deployed names from the audited codebase.
 
 ## Next Steps
 
-Explore contract integration:
+Explore technical documentation:
 
-- [Contract Addresses](contract-addresses.md) - Deployed addresses
 - [Architecture](architecture.md) - System design
+- [Contract Addresses](contract-addresses.md) - Deployed addresses
 - [Security Audits](security-audits.md) - Security information
 
 ---
 
-**Open source. Battle tested. Ready to build.**
-
+**Open source. Transparent. Secure.**

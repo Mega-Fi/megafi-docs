@@ -1,162 +1,246 @@
 # Contract Addresses
 
-Deployed smart contract addresses on MegaETH. Use these addresses to interact with MegaFi programmatically.
+Deployed smart contract addresses for MegaFi on MegaETH. Use these addresses to interact with the protocol programmatically.
+
+> **Note**: Contracts are currently in development. Addresses will be published upon mainnet deployment. Testnet addresses will be available for development and testing.
 
 ## At a Glance
 
-- All addresses are for MegaETH mainnet
-- Contracts are verified on block explorer
-- Testnet addresses available separately
+- All addresses are for MegaETH mainnet (when deployed)
+- Contracts will be verified on block explorer
+- Testnet addresses available for development
 - Always verify addresses from official sources
-- Never send tokens to contract addresses directly (use interfaces)
+- Never send tokens directly to contract addresses
 
-## Core Contracts
+## Core Protocol Contracts
 
-### Factory Contracts
+### OperationalTreasury
 
-**MegaPoolFactory**
+**Purpose**: Central hub for option lifecycle management
+
 ```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Purpose: Creates new token pair pools
-Verified: Yes
-```
-
-**StrategyFactory**
-```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Purpose: Deploys automated strategies
-Verified: Yes
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: Manages option creation, premium collection, and settlement
+Verified: Yes (upon deployment)
+Upgradeable: Yes (Transparent Proxy)
 ```
 
-**OptionFactory**
+**Functions**:
+- `buy()` - Purchase options
+- `payOff()` - Exercise options
+- `unlock()` - Expire options
+
+---
+
+### CoverPool
+
+**Purpose**: LP liquidity pool with epoch-based profit distribution
+
 ```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Purpose: Creates option contracts
-Verified: Yes
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: Manages LP deposits, profits, and backup liquidity
+Verified: Yes (upon deployment)
+Upgradeable: Yes (Transparent Proxy)
 ```
 
-### Router Contracts
+**Functions**:
+- `provide()` - Deposit USDC
+- `claim()` - Claim profits
+- `withdraw()` - Request withdrawal
+- `withdrawEpoch()` - Complete withdrawal
+- `fixProfit()` - Close epoch (admin)
 
-**SwapRouter**
-```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Purpose: Optimized swap routing
-Verified: Yes
-```
+---
 
-**PositionManager**
-```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Purpose: Manages LP NFT positions
-Verified: Yes
-```
+### PositionsManager
 
-### Periphery Contracts
+**Purpose**: ERC721 NFT manager for options and LP positions
 
-**Quoter**
 ```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Purpose: Off-chain swap quotations
-Verified: Yes
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: Mints and manages position NFTs
+Verified: Yes (upon deployment)
+Standard: ERC721
 ```
 
-**Multicall**
+**Functions**:
+- `mint()` - Create position NFT
+- `burn()` - Destroy position NFT
+- Standard ERC721 functions
+
+---
+
+### LimitController
+
+**Purpose**: Per-strategy exposure limit enforcement
+
 ```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Purpose: Batch operations
-Verified: Yes
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: Manages and enforces strategy liquidity limits
+Verified: Yes (upon deployment)
+Admin Controlled: Yes
 ```
 
-## Token Addresses
+**Functions**:
+- `setLimit()` - Set strategy limit (admin)
+- `limit()` - Query strategy limit
 
-### Native Wrapped Token
+---
 
-**Wrapped MEGA (WMEGA)**
+## Strategy Contracts
+
+### ETH Strategies
+
+**HegicStrategyCall_ETH**
 ```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Symbol: WMEGA
-Decimals: 18
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: ETH call options with Black-Scholes pricing
+Underlying: ETH
+Oracle: Chainlink ETH/USD
 ```
 
-### Stablecoins
-
-**USD Coin (USDC)**
+**HegicStrategyPut_ETH**
 ```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: ETH put options
+Underlying: ETH
+Oracle: Chainlink ETH/USD
+```
+
+**HegicStrategyStraddle_ETH**
+```
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: ETH straddle (call + put)
+Underlying: ETH
+Oracle: Chainlink ETH/USD
+```
+
+**HegicStrategyStrangle_ETH**
+```
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: ETH strangle (call + put, different strikes)
+Underlying: ETH
+Oracle: Chainlink ETH/USD
+```
+
+**HegicStrategySpreadCall_ETH**
+```
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: ETH call spread
+Underlying: ETH
+Oracle: Chainlink ETH/USD
+```
+
+**HegicStrategySpreadPut_ETH**
+```
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: ETH put spread
+Underlying: ETH
+Oracle: Chainlink ETH/USD
+```
+
+### BTC Strategies (If Deployed)
+
+**HegicStrategyCall_BTC**
+```
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: BTC call options
+Underlying: WBTC
+Oracle: Chainlink BTC/USD
+```
+
+**HegicStrategyPut_BTC**
+```
+Address: [TO BE ANNOUNCED AT DEPLOYMENT]
+Description: BTC put options
+Underlying: WBTC
+Oracle: Chainlink BTC/USD
+```
+
+**Additional BTC Strategies**
+```
+Straddle, Strangle, Spreads
+Addresses: [TO BE ANNOUNCED]
+```
+
+### Inverse Strategies (Optional)
+
+**HegicStrategyInverseBearCallSpread**
+```
+Address: [TO BE ANNOUNCED IF DEPLOYED]
+Description: Inverse bear call spread
+```
+
+**HegicStrategyInverseBullPutSpread**
+```
+Address: [TO BE ANNOUNCED IF DEPLOYED]
+Description: Inverse bull put spread
+```
+
+---
+
+## External Dependencies
+
+### USDC (Stablecoin)
+
+**USDC on MegaETH**
+```
+Address: [TO BE ANNOUNCED]
 Symbol: USDC
 Decimals: 6
 Bridged from: Ethereum
+Purpose: Primary protocol currency
 ```
 
-**Tether USD (USDT)**
-```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Symbol: USDT
-Decimals: 6
-Bridged from: Ethereum
-```
+**Note**: All premiums, settlements, and LP operations use USDC.
 
-**Dai Stablecoin (DAI)**
-```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Symbol: DAI
-Decimals: 18
-Bridged from: Ethereum
-```
+---
 
-### Major Tokens
+### Chainlink Price Feeds
 
-**Wrapped Ethereum (WETH)**
+**ETH/USD Price Feed**
 ```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Symbol: WETH
-Decimals: 18
-Bridged from: Ethereum
-```
-
-**Wrapped Bitcoin (WBTC)**
-```
-Address: [TO BE ANNOUNCED AT MAINNET LAUNCH]
-Symbol: WBTC
+Address: [TO BE ANNOUNCED]
+Description: Real-time ETH price oracle
 Decimals: 8
-Bridged from: Ethereum
+Update Frequency: Sub-second
 ```
 
-## Pool Addresses
-
-Pools are deterministically created. Calculate pool address using:
-
-```javascript
-const poolAddress = computePoolAddress(
-  factoryAddress,
-  token0,
-  token1,
-  fee
-);
+**BTC/USD Price Feed**
+```
+Address: [TO BE ANNOUNCED]
+Description: Real-time BTC price oracle
+Decimals: 8
+Update Frequency: Sub-second
 ```
 
-### Major Pools
+**Arbitrum Mainnet Reference** (for context):
+- ETH/USD: `0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612`
+- BTC/USD: `0x6ce185860a4963106506C203335A2910413708e9`
 
-**ETH/USDC (0.3%)**
+*MegaETH will have its own oracle deployments*
+
+---
+
+## Utility Contracts
+
+### ProfitCalculator (Library)
+
 ```
-Address: [Deterministic - compute from factory]
-Fee Tier: 0.3%
-Tick Spacing: 60
+Address: [TO BE ANNOUNCED]
+Description: Profit calculation logic
+Type: Library
 ```
 
-**WBTC/ETH (0.3%)**
+### PayoffPool
+
 ```
-Address: [Deterministic - compute from factory]
-Fee Tier: 0.3%
-Tick Spacing: 60
+Address: [TO BE ANNOUNCED]
+Description: Backup USDC source for CoverPool
+Purpose: Emergency liquidity reserve
 ```
 
-**USDC/USDT (0.05%)**
-```
-Address: [Deterministic - compute from factory]
-Fee Tier: 0.05%
-Tick Spacing: 10
-```
+---
 
 ## Testnet Addresses
 
@@ -165,186 +249,288 @@ Tick Spacing: 10
 **Network Details**
 ```
 Network Name: MegaETH Testnet
-RPC URL: https://testnet-rpc.megaeth.io
-Chain ID: [TESTNET CHAIN ID]
-Explorer: https://testnet-explorer.megaeth.io
+RPC URL: [TO BE ANNOUNCED]
+Chain ID: [TO BE ANNOUNCED]
+Explorer: [TO BE ANNOUNCED]
+Faucet: [TO BE ANNOUNCED]
 ```
 
 **Core Contracts** (Testnet)
 ```
-MegaPoolFactory: [TESTNET ADDRESS]
-SwapRouter: [TESTNET ADDRESS]
-PositionManager: [TESTNET ADDRESS]
-StrategyFactory: [TESTNET ADDRESS]
-OptionFactory: [TESTNET ADDRESS]
+OperationalTreasury: [TESTNET ADDRESS TBA]
+CoverPool: [TESTNET ADDRESS TBA]
+PositionsManager: [TESTNET ADDRESS TBA]
+LimitController: [TESTNET ADDRESS TBA]
 ```
 
-## Address Verification
+**Strategy Contracts** (Testnet)
+```
+HegicStrategyCall_ETH: [TESTNET ADDRESS TBA]
+HegicStrategyPut_ETH: [TESTNET ADDRESS TBA]
+[Additional strategies...]
+```
 
-### How to Verify
+**Test Tokens** (Testnet)
+```
+USDC (Test): [TESTNET ADDRESS TBA]
+WETH (Test): [TESTNET ADDRESS TBA]
+```
 
-1. **Official Sources Only**: Get addresses from:
-   - This documentation
-   - Official MegaFi website
-   - GitHub repository
-   - Official announcements
+---
 
-2. **Check Block Explorer**: Verify contract on [explorer.megaeth.io](https://explorer.megaeth.io):
-   - Contract verified (green checkmark)
-   - Source code matches repository
-   - Deployment date matches announcements
+## Contract Verification
 
-3. **Compare Multiple Sources**: Cross-reference addresses across:
+### How to Verify Addresses
+
+1. **Official Sources Only**:
+   - This documentation (docs.megafi.app)
+   - Official website (megafi.app)
+   - GitHub repository (github.com/Mega-Fi)
+   - Official Discord announcements
+
+2. **Block Explorer Verification**:
+   - Check verified status (green checkmark)
+   - Review source code matches GitHub
+   - Verify deployment date matches announcements
+   - Check contract creator address
+
+3. **Cross-Reference Multiple Sources**:
    - Documentation
-   - GitHub
+   - GitHub README
    - Block explorer
-   - Official Discord
+   - Official social media
 
 ### Warning Signs
 
 ⚠️ **Never trust addresses from:**
-- Unofficial websites
-- Social media DMs
-- Unverified Telegram/Discord messages
+- Unofficial websites or domains
+- Private messages (Discord, Telegram, Twitter)
 - Email (MegaFi never sends addresses via email)
+- Unverified social media accounts
+- Third-party aggregators (without verification)
 
-## Using Addresses
+---
 
-### In Web3 Libraries
+## Integration Examples
 
-**Ethers.js**
-```javascript
+### Using Addresses in Code
+
+**TypeScript/JavaScript (ethers.js)**
+```typescript
 import { ethers } from 'ethers';
+import OperationalTreasuryABI from './abis/OperationalTreasury.json';
 
-const SWAP_ROUTER_ADDRESS = '0x...'; // Use official address
-const provider = new ethers.providers.JsonRpcProvider('https://rpc.megaeth.io');
+// Official address (use from this documentation)
+const TREASURY_ADDRESS = '0x...'; 
 
-const swapRouter = new ethers.Contract(
-  SWAP_ROUTER_ADDRESS,
-  SwapRouterABI,
+const provider = new ethers.providers.JsonRpcProvider(
+  'https://rpc.megaeth.io'
+);
+
+const treasury = new ethers.Contract(
+  TREASURY_ADDRESS,
+  OperationalTreasuryABI,
   provider
 );
-```
 
-**Web3.js**
-```javascript
-const Web3 = require('web3');
-
-const SWAP_ROUTER_ADDRESS = '0x...'; // Use official address
-const web3 = new Web3('https://rpc.megaeth.io');
-
-const swapRouter = new web3.eth.Contract(
-  SwapRouterABI,
-  SWAP_ROUTER_ADDRESS
+// Buy option
+const tx = await treasury.buy(
+  strategyAddress,
+  holder,
+  amount,
+  period,
+  []
 );
 ```
 
-### In Smart Contracts
-
+**Solidity Integration**
 ```solidity
-// Import interfaces
-import '@megafi/contracts/interfaces/ISwapRouter.sol';
+pragma solidity ^0.8.0;
 
-contract YourContract {
-    ISwapRouter public immutable swapRouter;
+import "@megafi/contracts/interfaces/IOperationalTreasury.sol";
+import "@megafi/contracts/interfaces/ICoverPool.sol";
+
+contract YourProtocol {
+    IOperationalTreasury public immutable treasury;
+    ICoverPool public immutable coverPool;
     
-    constructor(address _swapRouter) {
-        swapRouter = ISwapRouter(_swapRouter);
+    constructor(
+        address _treasury,
+        address _coverPool
+    ) {
+        treasury = IOperationalTreasury(_treasury);
+        coverPool = ICoverPool(_coverPool);
     }
     
-    function executeSwap(...) external {
-        swapRouter.exactInputSingle(...);
+    function buyOption(
+        address strategy,
+        uint256 amount,
+        uint256 period
+    ) external {
+        // Your logic here
+        treasury.buy(strategy, msg.sender, amount, period, new bytes[](0));
     }
 }
 ```
 
+---
+
+## ABIs and Interfaces
+
+### Where to Find ABIs
+
+**NPM Package** (upon release):
+```bash
+npm install @megafi/contracts
+```
+
+**GitHub Repository**:
+```
+https://github.com/Mega-Fi/contracts/tree/main/abis
+```
+
+**Block Explorer**:
+```
+Copy ABI directly from verified contract page
+```
+
+### Interface Imports
+
+```solidity
+// Core interfaces
+import "@megafi/contracts/interfaces/IOperationalTreasury.sol";
+import "@megafi/contracts/interfaces/ICoverPool.sol";
+import "@megafi/contracts/interfaces/IHegicStrategy.sol";
+import "@megafi/contracts/interfaces/IPositionsManager.sol";
+
+// External interfaces
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+```
+
+---
+
 ## Address Updates
 
+### When Addresses Change
+
 Addresses may change due to:
-- Contract upgrades (proxy remains same)
-- New deployments (major versions)
-- Network upgrades
+- **Proxy Upgrades**: Implementation addresses change, proxy stays same
+- **Major Versions**: New deployments for breaking changes
+- **Network Migrations**: Moving to different chain
 
-**Stay Updated:**
+**Stay Updated**:
 - Watch GitHub releases
-- Follow official announcements
+- Follow @MegaFiApp on Twitter
+- Join official Discord
+- Subscribe to newsletter
 - Check documentation regularly
-- Subscribe to developer newsletter
 
-## Emergency Contacts
+### Version Tracking
 
-If you suspect fraudulent addresses:
+```
+V1.0 (Initial Deployment):
+- All core contracts
+- 6-8 strategy types
+- Basic functionality
 
-**Report to:**
+V1.1 (Future):
+- Additional strategies
+- Optimizations
+- New features
+
+V2.0 (Future):
+- Major upgrades
+- New architecture
+- Enhanced features
+```
+
+---
+
+## Security Considerations
+
+### Before Using Addresses
+
+1. **Verify from multiple official sources**
+2. **Check contract is verified on explorer**
+3. **Review contract code matches GitHub**
+4. **Test with small amounts first**
+5. **Use testnet before mainnet**
+
+### Reporting Suspicious Addresses
+
+If you encounter fraudulent addresses:
+
+**Contact:**
 - Email: security@megafi.app
 - Discord: #security channel
-- Twitter: @MegaFiApp
+- Twitter: @MegaFiApp (DMs open for security)
 
-**Do not:**
-- Interact with suspicious contracts
-- Send tokens without verification
-- Trust unverified sources
+**Provide:**
+- Suspicious address
+- Where you found it
+- Any transaction hashes
+- Screenshots if applicable
 
-## Deployment Information
+---
+
+## Deployment Timeline
 
 ### Mainnet Launch
 
-**Date**: [TO BE ANNOUNCED]
+**Expected**: Q1 2026 (subject to audits and testing)
 
-**Initial Contracts**:
-- All core contracts deployed
-- Major token pools created
-- Strategy and option contracts live
+**Deployment Order**:
+1. Core contracts (Treasury, CoverPool, PositionsManager)
+2. Strategy contracts (Call, Put, Straddle, Strangle)
+3. Utility contracts (LimitController, ProfitCalculator)
+4. Initial USDC liquidity seeding
+5. First epoch initialization
 
 **Announcement Channels**:
-- Official blog
-- Twitter
-- Discord
-- Documentation
+- Official blog (blog.megafi.app)
+- Twitter (@MegaFiApp)
+- Discord (discord.gg/aaA7YPTW)
+- Documentation (docs.megafi.app)
 
-### Version History
-
-Track contract versions:
-
-**V1.0** (Launch)
-- Initial deployment
-- Core functionality
-- Base strategies
-
-**V1.x** (Future)
-- Additional features
-- Optimizations
-- New strategies
+---
 
 ## FAQ
 
-**When will mainnet addresses be available?**  
-At mainnet launch. Follow official channels for announcement.
-
-**Can I use these addresses on other chains?**  
-No. These are MegaETH-specific. Other chains have different addresses.
-
-**What if I sent tokens to wrong address?**  
-Blockchain transactions are irreversible. Always verify addresses.
-
-**How do I know an address is official?**  
-Check multiple official sources and verify on block explorer.
+**When will contract addresses be available?**  
+Upon mainnet deployment. Follow official channels for announcements.
 
 **Are testnet addresses the same as mainnet?**  
 No. Testnet and mainnet have completely different addresses.
 
-**Will addresses change?**  
-Proxy addresses remain constant. Implementation addresses may change with upgrades.
+**Can I use these addresses on Ethereum or other chains?**  
+No. These contracts are specific to MegaETH network only.
+
+**What if I send USDC to the wrong address?**  
+Blockchain transactions are irreversible. Always verify addresses before sending.
+
+**How do I know an address is official?**  
+Check multiple official sources, verify on block explorer, and review source code.
+
+**Will proxy addresses ever change?**  
+No. Proxy addresses remain constant. Only implementation addresses change during upgrades.
+
+**Where can I get test USDC for testnet?**  
+Testnet faucet will be provided (link TBA).
+
+**Can I verify contracts myself?**  
+Yes. All source code will be published on GitHub and verified on block explorer.
+
+---
 
 ## Next Steps
 
 Use addresses for integration:
 
-- [Smart Contracts](smart-contracts.md) - Contract details
-- [Architecture](architecture.md) - System design
+- [Smart Contracts](smart-contracts.md) - Contract interfaces and functions
+- [Architecture](architecture.md) - System design overview
 - [Security Audits](security-audits.md) - Security information
 
 ---
 
-**Always verify. Never trust.**
-
+**Always verify. Never trust blindly.**

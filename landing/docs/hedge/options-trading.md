@@ -1,41 +1,44 @@
 # Options Trading
 
-Buy and sell call and put options on major token pairs. Options provide leveraged exposure, hedging capabilities, and income generation through premium collection.
+Buy and sell call and put options on major token pairs. Options provide leveraged exposure, hedging capabilities, and defined risk through transparent on-chain pricing.
 
 ## At a Glance
 
-- Trade call and put options on major token pairs
-- RFQ system provides competitive pricing from market makers
-- Real-time execution with sub-10ms settlement on MegaETH
-- Covered calls and cash-secured puts for yield generation
-- Protective puts for hedging and risk management
+- Trade call and put options on major token pairs (ETH, BTC)
+- Direct pool-based purchasing with instant premium calculation
+- Options as ERC721 NFTs - transferable and composable
+- Exercise window: 1 hour before expiry
+- Auto-exercise for in-the-money options at expiration
+- On-chain settlement in USDC
 - Defined maximum loss for option buyers
 
 ## Option Basics
 
 ### What Are Options?
 
-Options give the right, but not obligation, to buy or sell a token at a specific price:
+Options give the right, but not obligation, to profit from price movements:
 
-**Call Option**: Right to BUY token at strike price.
+**Call Option**: Profit when price rises above strike price.
 
-**Put Option**: Right to SELL token at strike price.
+**Put Option**: Profit when price falls below strike price.
 
 ### Key Terms
 
-**Strike Price**: Price at which you can exercise the option.
+**Strike Price**: Price at which profit is calculated.
 
-**Expiration**: Date when option expires (becomes worthless if not exercised).
+**Expiration**: Date when option expires.
 
-**Premium**: Price paid to buy the option or received when selling.
+**Premium**: Price paid upfront to buy the option.
 
 **Underlying**: The token the option is based on (e.g., ETH).
 
-**In-the-Money (ITM)**: Option has intrinsic value.
+**Exercise Window**: 1-hour period before expiry when option can be exercised.
+
+**In-the-Money (ITM)**: Option has profit potential.
 - Call: Underlying price > strike
 - Put: Underlying price < strike
 
-**Out-of-the-Money (OTM)**: Option has no intrinsic value, only time value.
+**Out-of-the-Money (OTM)**: Option has no intrinsic value.
 - Call: Underlying price < strike
 - Put: Underlying price > strike
 
@@ -49,7 +52,7 @@ Options give the right, but not obligation, to buy or sell a token at a specific
 
 ```
 Own 10 ETH: Costs $20,000
-Buy 10 call options: Costs $800
+Buy 10 call options: Costs $500-800
 Exposure: Same upside, 96% less capital
 ```
 
@@ -62,25 +65,23 @@ Exposure: Same upside, 96% less capital
 1. Navigate to Hedge → Options
 2. Select token pair (e.g., ETH/USDC)
 3. Choose option type:
-   - Call (bullish or selling covered)
-   - Put (bearish or protective)
-4. Set strike price:
-   - ITM strikes: Higher premium, more likely to profit
-   - ATM strikes: Balanced risk/reward
-   - OTM strikes: Lower premium, less likely to profit
-5. Choose expiration:
-   - Daily: High gamma, fast decay
-   - Weekly: Standard term
-   - Monthly: Longer-term plays
-6. Enter size (number of contracts)
-7. Review quote:
-   - Premium cost
-   - Greeks (delta, gamma, theta, vega)
+   - Call (profit from price increase)
+   - Put (profit from price decrease)
+4. Enter amount (e.g., 1 ETH)
+5. Select duration:
+   - Minimum: 1 day
+   - Maximum: 30 days
+   - Common: 7 days, 14 days, 30 days
+6. Review quote:
+   - Premium cost (USDC)
+   - Max profit potential
+   - Max loss (premium paid)
    - Break-even price
-   - Max profit/loss
+7. Approve USDC spending
 8. Confirm purchase
+9. Receive option as ERC721 NFT
 
-Premium deducted immediately. Option appears in your positions.
+Premium deducted immediately. Option NFT appears in wallet and portfolio.
 
 ### Call Option Example
 
@@ -89,8 +90,8 @@ Buy Call:
 - Underlying: ETH at $2,000
 - Strike: $2,200
 - Expiration: 30 days
-- Premium: $80 per contract
-- Size: 5 contracts
+- Premium: $80 per ETH
+- Size: 5 ETH worth
 
 Cost: $80 × 5 = $400
 
@@ -101,14 +102,12 @@ ETH at $1,800:
 - Loss: $400 (premium paid)
 
 ETH at $2,200:
-- At strike, no intrinsic value
+- At strike, no profit
 - Loss: $400 (premium paid)
 
 ETH at $2,500:
-- Intrinsic value: $300 per contract
-- Exercise: Receive 5 ETH for $11,000 ($2,200 × 5)
-- Market value: $12,500
-- Profit: $1,500 - $400 premium = $1,100
+- Profit: ($2,500 - $2,200) × 5 = $1,500
+- Net: $1,500 - $400 premium = $1,100
 - ROI: 275%
 
 Break-even: $2,280 ($2,200 strike + $80 premium)
@@ -121,8 +120,8 @@ Buy Put:
 - Underlying: ETH at $2,000
 - Strike: $1,800
 - Expiration: 30 days
-- Premium: $50 per contract
-- Size: 10 contracts
+- Premium: $50 per ETH
+- Size: 10 ETH worth
 
 Cost: $50 × 10 = $500
 
@@ -133,58 +132,172 @@ ETH at $2,500:
 - Loss: $500 (premium paid)
 
 ETH at $1,800:
-- At strike, no intrinsic value
+- At strike, no profit
 - Loss: $500 (premium paid)
 
 ETH at $1,500:
-- Intrinsic value: $300 per contract
-- Exercise: Sell 10 ETH for $18,000 ($1,800 × 10)
-- Market value: $15,000
-- Profit: $3,000 - $500 premium = $2,500
+- Profit: ($1,800 - $1,500) × 10 = $3,000
+- Net: $3,000 - $500 premium = $2,500
 - ROI: 500%
 
 Break-even: $1,750 ($1,800 strike - $50 premium)
 ```
 
+## NFT-Based Positions
+
+Options are ERC721 tokens with unique benefits:
+
+### Transferability
+
+```
+Option as NFT:
+- Transfer to another wallet
+- Sell on NFT marketplaces
+- Gift or delegate to others
+- Use as collateral (where supported)
+```
+
+**No lockup**: Options can be traded anytime before expiry.
+
+### Position Tracking
+
+Each NFT contains option data:
+
+```
+Option NFT Metadata:
+- Strategy type (Call, Put, Straddle, etc.)
+- Underlying asset (ETH, BTC)
+- Strike price
+- Expiration timestamp
+- Amount/size
+- Purchase premium
+```
+
+Query on-chain via `PositionsManager` contract.
+
+### Composability
+
+NFTs enable DeFi composability:
+
+```
+Possible Use Cases:
+- Collateralize in lending protocols
+- Bundle multiple options in vaults
+- Create option indices
+- Automated trading strategies
+```
+
+## Exercise Mechanics
+
+### Exercise Window
+
+Options can only be exercised during the 1-hour window before expiry:
+
+```
+Option Timeline:
+Created → Active Period → Exercise Window (1h) → Expiry
+                           └─ Can exercise here
+```
+
+**Why the window?**
+- Prevents gaming the system
+- Ensures fair profit distribution
+- Aligns with epoch mechanics
+
+### Manual Exercise
+
+Exercise during the window:
+
+1. Navigate to active position
+2. Check current profit (if ITM)
+3. Click "Exercise"
+4. System calculates profit based on current price
+5. Confirm transaction
+6. Receive USDC profit
+7. NFT burns
+
+**When to exercise early**:
+- Option is deep in-the-money
+- Want to lock in profits before expiry
+- Need liquidity immediately
+
+### Auto-Exercise
+
+System automatically exercises ITM options at expiration:
+
+```
+At Expiration:
+1. System checks if option is ITM
+2. If profit > 0:
+   - Calculates profit automatically
+   - Transfers USDC to owner
+   - Burns NFT
+3. If profit = 0:
+   - Option expires worthless
+   - NFT becomes inactive
+```
+
+**No action required**: Profitable options automatically settled.
+
+### Settlement Process
+
+```
+Exercise Flow:
+1. Exercise submitted (manual or auto)
+2. Strategy contract queries Chainlink price
+3. Profit calculated: max(0, currentPrice - strike) for calls
+4. Treasury unlocks liquidity
+5. If Treasury insufficient: CoverPool provides backup
+6. USDC transferred to option holder
+7. Position marked as exercised
+8. NFT burns
+
+Total time: < 10ms on MegaETH
+```
+
 ## Selling Options
+
+Advanced strategy for earning premium income.
 
 ### Why Sell Options?
 
 **Premium Income**: Collect premium upfront.
 
-**Statistical Edge**: Most options expire worthless. Sellers win probabilistically.
+**Statistical Edge**: Most options expire worthless. Sellers profit from time decay.
 
-**Generate Yield**: Extra income on held assets.
+**Yield on Holdings**: Generate income on assets you already own.
 
 ### Risks
 
-**Assignment Risk**: May be forced to buy/sell underlying at unfavorable prices.
+**Assignment Risk**: Obligation to fulfill if exercised against you.
 
-**Collateral Requirement**: Must lock capital as collateral.
+**Collateral Requirement**: Must lock assets as collateral.
+
+**Unlimited Risk**: Selling naked calls can have unlimited losses (not recommended).
 
 ### Selling Process
 
 1. Navigate to Sell Options
-2. Select token pair and option type
-3. Set strike and expiration
-4. Enter size
-5. Review collateral requirement:
-   - Covered: Must own underlying (e.g., hold ETH to sell calls)
-   - Cash-secured: Must have USDC (e.g., hold USDC to sell puts)
-6. Deposit collateral
-7. Review premium received
-8. Confirm sale
+2. Select strategy and underlying
+3. Enter parameters (strike, expiration, amount)
+4. Review collateral requirement:
+   - **Covered Call**: Must own underlying tokens
+   - **Cash-Secured Put**: Must have USDC equal to strike × amount
+5. Deposit collateral
+6. Review premium received
+7. Confirm sale
+8. Receive premium immediately
+9. Collateral locked until expiry or close
 
-Premium credited immediately. Position shows in sold options.
+Premium credited immediately. Position shows in portfolio as "sold option."
 
 ### Covered Call Example
 
 ```
 Sell Covered Call:
 - Hold: 10 ETH at $2,000
-- Strike: $2,200
-- Expiration: 30 days
-- Premium: $80 per contract × 10 = $800
+- Sell: 10 ETH calls at $2,200 (30 days)
+- Premium: $80 per ETH × 10 = $800
 
 Collateral: 10 ETH (already owned)
 
@@ -194,7 +307,7 @@ ETH at $1,800:
 - Option expires worthless
 - Keep: 10 ETH + $800 premium
 - Unrealized loss on ETH: $2,000
-- Net: Loss $1,200 (but premium helped)
+- Net: Loss $1,200 (premium helped cushion)
 
 ETH at $2,100:
 - Option expires worthless
@@ -203,12 +316,12 @@ ETH at $2,100:
 - Net: Gain $1,800
 
 ETH at $2,500:
-- Option exercised against you
-- Sell 10 ETH at $2,200 ($22,000)
-- Plus premium: $800
-- Total: $22,800
-- vs Holding: $25,000
-- Missed upside: $2,200
+- Buyer exercises option
+- Calculate profit: ($2,500 - $2,200) × 10 = $3,000
+- You pay: $3,000 from ETH value
+- Keep: Original ETH ($20,000) + premium ($800)
+- vs Market value: $25,000
+- Opportunity cost: $2,200 (missed upside)
 
 Outcome: Generate income, cap upside
 ```
@@ -218,9 +331,8 @@ Outcome: Generate income, cap upside
 ```
 Sell Cash-Secured Put:
 - Underlying: ETH at $2,000
-- Strike: $1,800
-- Expiration: 30 days
-- Premium: $50 per contract × 10 = $500
+- Sell: 10 ETH puts at $1,800 (30 days)
+- Premium: $50 per ETH × 10 = $500
 
 Collateral: $18,000 USDC
 
@@ -234,93 +346,105 @@ ETH at $2,500:
 ETH at $1,900:
 - Option expires worthless
 - Keep: $18,000 + $500
-- Could have bought ETH cheaper but made premium
+- Could have bought ETH cheaper but earned premium
 
 ETH at $1,500:
-- Assigned: Buy 10 ETH at $1,800
-- Cost: $18,000
-- Market value: $15,000
-- Loss: $3,000
-- But received $500 premium
-- Net cost basis: $1,750/ETH ($18,000 - $500) / 10
-- Still underwater but better than $1,800
+- Buyer exercises option
+- Profit to buyer: ($1,800 - $1,500) × 10 = $3,000
+- You pay: $3,000 from collateral
+- Effective cost: $18,000 - $500 premium = $17,500
+- If you wanted ETH: Got better entry than $1,800
 
-Outcome: Get paid to wait for desired entry price
+Outcome: Get paid to set limit buy order
 ```
 
 ## Managing Positions
 
+### Position Overview
+
+View all active options in portfolio:
+
+```
+Position Dashboard:
+- Option ID (NFT token ID)
+- Strategy type
+- Underlying asset
+- Strike price
+- Expiration date
+- Current profit/loss
+- Time remaining
+- Exercise availability
+```
+
 ### Closing Before Expiration
 
-Bought option:
-1. Click position
-2. Select "Sell to Close"
-3. Receive current market price
-4. Lock in profit or cut loss
+**Bought Option**:
+- Transfer/sell NFT on secondary market
+- Exercise early if in exercise window
+- Let expire if OTM
 
-Sold option:
-1. Click position
-2. Select "Buy to Close"
-3. Pay current market price
-4. Close obligation and free collateral
+**Sold Option**:
+- Buy back the option to close obligation
+- Reduces exposure
+- Frees collateral early
 
-### Rolling Positions
+### Position Monitoring
 
-Extend expiration by closing current and opening new:
+Track key metrics:
 
 ```
-Current: ETH $2,000 call expiring in 3 days, worth $50
-Roll: Close for $50, open $2,000 call 30 days out for $100
-Net cost: $50 to extend position
+Real-Time Metrics:
+- Current P&L
+- Break-even price
+- Days to expiration
+- Greeks (Delta, Gamma, Theta, Vega)
+- Probability of profit
 ```
 
-Automated roll available: Set parameters and system rolls automatically.
-
-### Early Exercise
-
-Exercise options before expiration when beneficial:
-
-1. Click "Exercise" on ITM option
-2. System calculates intrinsic value
-3. Confirm exercise
-4. Receive payout instantly
-
-Usually better to sell option than exercise early (preserves time value), but flexibility exists.
+MegaETH's continuous execution enables real-time updates.
 
 ## Option Strategies
 
 ### Single-Leg Strategies
 
-**Long Call**: Bullish speculation.
+**Long Call**: Bullish speculation or hedging short position.
 
-**Long Put**: Bearish speculation or hedging.
+**Long Put**: Bearish speculation or protecting holdings.
 
-**Covered Call**: Income on holdings.
+**Covered Call**: Income generation on holdings.
 
 **Cash-Secured Put**: Income while waiting to buy.
 
-### Combined Strategies
+### Multi-Leg Strategies
 
-**Collar (Protective Put + Covered Call)**:
+**Straddle (Call + Put, same strike)**:
 ```
-Risk management strategy:
-- Hold underlying asset
-- Buy protective put (downside protection)
-- Sell covered call (generate income)
-- Net cost reduced or zero
+Buy both call and put at $2,000
 
-Example:
-Hold 10 ETH at $2,000
-Buy $1,800 put for $50
-Sell $2,200 call for $80
-Net credit: $30 per ETH
+Profit if:
+- Large move either direction
+- Volatility increases
 
-Result: Protected between $1,800-$2,200 with income
+Loss if:
+- Price stays near strike
+- Time decay exceeds moves
 ```
 
-**Note**: Advanced multi-leg strategies like vertical spreads, iron condors, and butterflies may be added in future releases. Current focus is on core strategies: covered calls, cash-secured puts, protective puts, and collars.
+**Strangle (Call + Put, different strikes)**:
+```
+Buy $2,200 call + $1,800 put
 
-[More hedging strategies →](hedging-strategies.md)
+Lower cost than straddle
+Requires larger move to profit
+Wider break-even range
+```
+
+**Spreads** (Multiple options to limit risk):
+- Call Spreads (bull or bear)
+- Put Spreads (bull or bear)
+- Vertical spreads reduce premium cost
+
+[More strategies →](hedging-strategies.md)
 
 ## Greeks and Risk Metrics
 
@@ -337,25 +461,24 @@ Call options: Delta 0 to 1
 Put options: Delta -1 to 0
 ```
 
-Use delta for position sizing:
+Use for position sizing:
 
 ```
 Want 10 ETH delta exposure:
-Buy 10 calls with 0.5 delta = 5 delta
-Need 20 contracts for 10 delta (20 × 0.5)
+Option has delta 0.5
+Need: 20 contracts (20 × 0.5 = 10 delta)
 ```
 
 ### Gamma
 
-Delta sensitivity:
+Delta change rate:
 
 ```
 Gamma 0.02 means:
-- If ETH moves $1 up, delta increases by 0.02
-- Position becomes more sensitive to further moves
+- If ETH moves $1, delta increases by 0.02
 
-High gamma: Near ATM, short dated
-Low gamma: Deep ITM/OTM, long dated
+High Gamma: Near ATM, short expiry
+Low Gamma: Deep ITM/OTM, long expiry
 ```
 
 ### Theta
@@ -367,8 +490,8 @@ Theta -2 means:
 - Option loses $2 value per day
 - All else equal
 
-Option buyers: Negative theta (lose from time)
-Option sellers: Positive theta (profit from time)
+Option buyers: Negative theta (time works against)
+Option sellers: Positive theta (time works for)
 ```
 
 ### Vega
@@ -377,38 +500,103 @@ Volatility sensitivity:
 
 ```
 Vega 5 means:
-- If IV increases 1%, option value increases $5
-- If IV decreases 1%, option value decreases $5
+- If implied volatility rises 1%, option gains $5
+- If implied volatility falls 1%, option loses $5
 
 Long options: Positive vega (want volatility)
-Short options: Negative vega (want calm)
+Short options: Negative vega (want calm markets)
 ```
 
-Interface displays all Greeks in real-time.
+Interface displays all Greeks in real-time for every position.
+
+## Premium Calculation
+
+### How Premiums Are Determined
+
+Options priced on-chain using Black-Scholes model:
+
+```
+Premium Inputs:
+1. Current price (from Chainlink oracle)
+2. Strike price (user selected)
+3. Time to expiration (user selected)
+4. Implied volatility (strategy parameter)
+5. Risk-free rate (minimal in DeFi)
+
+Calculation:
+Strategy contract computes Black-Scholes formula
+Returns premium in USDC (6 decimals)
+```
+
+### Real-Time Pricing
+
+```
+Pricing Flow:
+1. User enters parameters
+2. Frontend calls strategy.calculateNegativepnlAndPositivepnl()
+3. Strategy queries Chainlink for current price
+4. Black-Scholes calculation executes on-chain
+5. Premium displayed to user
+6. Updates dynamically as parameters change
+
+Latency: < 50ms
+```
+
+Transparent, deterministic pricing with no hidden fees.
+
+## Transaction Fees
+
+### Fee Structure
+
+**Protocol Fee**: 0.03% of notional value
+
+**Gas Cost**: ~ $0.005 on MegaETH (negligible)
+
+**Total Cost**: Premium + Protocol Fee + Gas
+
+```
+Example:
+Option: 1 ETH at $2,000
+Premium: $80
+Protocol Fee: $2,000 × 0.0003 = $0.60
+Gas: $0.005
+Total: $80.605
+```
+
+Ultra-low fees compared to traditional options exchanges.
 
 ## FAQ
 
 **What's the minimum trade size?**  
-0.1 contracts (0.1 ETH notional).
+Varies by strategy. Typically 0.1 ETH or equivalent (implementation dependent).
 
-**Can I exercise options before expiration?**  
-Most options can be closed or exercised before expiration. Check specific option terms when trading.
+**Can I exercise options before the exercise window?**  
+No. Options can only be exercised during the 1-hour window before expiry or via auto-exercise at expiration.
 
-**What if I don't have tokens to deliver on assigned put?**  
-Position automatically closes at market with P&L settled in USDC.
+**What if I don't exercise during the window?**  
+System auto-exercises ITM options at expiration. You receive profit automatically.
+
+**What if option expires OTM?**  
+Option expires worthless. You lose the premium paid. NFT becomes inactive.
+
+**Can I sell my option before expiry?**  
+Yes. Options are ERC721 NFTs and can be transferred or sold on secondary markets.
 
 **Are there fees to trade options?**  
-Small trading fee (0.03% of notional) + minimal gas (~ $0.005).
+Small protocol fee (0.03% of notional) + minimal gas (~$0.005 on MegaETH).
 
 **Can I see historical option prices?**  
-Yes. Charts show price, implied volatility, and Greeks over time.
+Yes. On-chain data enables tracking premium values, Greeks, and P&L over time.
 
 **What happens at expiration if I do nothing?**  
-ITM options auto-exercise. OTM options expire worthless.
+ITM options auto-exercise and pay profit. OTM options expire worthless.
+
+**How is profit calculated?**  
+Based on Chainlink oracle price at exercise time vs strike price, settled in USDC.
 
 ## Next Steps
 
-Apply options knowledge:
+Deepen options knowledge:
 
 - [Hedging Strategies](hedging-strategies.md) - Protect positions
 - [Risk Management](risk-management.md) - Control risk
@@ -417,4 +605,3 @@ Apply options knowledge:
 ---
 
 **Trade smart. Trade options.**
-

@@ -1,15 +1,15 @@
 # Pricing Models
 
-Understand how options are priced on MegaFi. Learn the factors that determine option values, how the pricing model works, and how to evaluate whether options are fairly priced.
+Understand how options are priced on MegaFi. Learn the factors that determine option values, how on-chain pricing works, and how to evaluate fair value.
 
 ## At a Glance
 
-- Black-Scholes model adapted for DeFi and crypto markets
-- Real-time pricing updates with every MegaPool state change
-- Implied volatility derived from market prices
-- On-chain calculation ensures transparency
-- Arbitrage mechanisms keep prices efficient
-- Historical volatility and pricing data available
+- Black-Scholes model implemented in strategy contracts
+- On-chain premium calculation with transparent parameters
+- Real-time pricing updates from Chainlink oracles
+- Implied volatility configured per strategy
+- Pool liquidity determines available sizes
+- Instant quote generation (< 50ms)
 
 ## Option Value Components
 
@@ -61,7 +61,7 @@ Time value decreases as expiration approaches
 
 ## Black-Scholes Model
 
-Core pricing model used by MegaFi:
+Core pricing model implemented in strategy contracts:
 
 ### Formula
 
@@ -85,255 +85,191 @@ d2 = d1 - σ × √T
 
 Put price derived via put-call parity.
 
-### Inputs
+### On-Chain Implementation
 
-**Underlying Price (S)**: Real-time from MegaPools.
-
-**Strike Price (K)**: Pre-defined by option contract.
-
-**Time to Expiration (T)**: Days remaining / 365.
-
-**Risk-Free Rate (r)**: DeFi lending rate (USDC yield).
-
-**Implied Volatility (σ)**: Market expectation of future volatility.
-
-### RFQ Pricing System
-
-MegaFi uses a Request for Quote (RFQ) system for competitive options pricing:
+Strategy contracts implement Black-Scholes:
 
 ```
-1. User requests option quote (strike, expiration, size)
-2. Multiple market makers provide competitive quotes
-3. Best price automatically selected
-4. User reviews and confirms
-5. Trade executes instantly on MegaETH
-Total time: < 100ms
+Premium Calculation Flow:
+
+1. User requests quote with parameters:
+   - Amount (e.g., 1 ETH)
+   - Period (e.g., 7 days)
+   - Additional params (e.g., spread for strangles)
+
+2. Strategy contract executes:
+   - Query Chainlink for current price
+   - Get configured implied volatility
+   - Calculate time to expiration
+   - Execute Black-Scholes formula
+   - Return premium (positivePNL) and max loss (negativePNL)
+
+3. Result returned to user:
+   - Premium in USDC (6 decimals)
+   - Max potential loss
+   - Calculated on-chain, transparent
 ```
 
-**Benefits of RFQ**:
-- Competitive pricing from multiple professional market makers
-- Deep liquidity across all strikes and expirations
-- Fast execution leveraging MegaETH's sub-10ms finality
-- Transparent quote comparison
+### Pricing Inputs
 
-**How It Works**:
-Market makers continuously monitor markets and provide real-time quotes. When you request a price, the system queries multiple makers simultaneously and presents the best available price. MegaETH's speed ensures quotes remain fresh and execution is near-instant.
+**Underlying Price (S)**: Real-time from Chainlink oracles.
+
+```
+Chainlink Price Feeds:
+- ETH/USD: 8 decimal precision
+- BTC/USD: 8 decimal precision
+- Updates: Multiple times per block
+- Source: Aggregated from multiple data providers
+```
+
+**Strike Price (K)**: Current spot price at option creation.
+
+```
+Strike = Current Chainlink Price
+All options are at-the-money at creation
+```
+
+**Time to Expiration (T)**: User-selected duration.
+
+```
+Minimum: 1 day (86,400 seconds)
+Maximum: 30 days (2,592,000 seconds)
+Typical: 7 days, 14 days, 30 days
+
+Converted to years: seconds / 31,536,000
+```
+
+**Risk-Free Rate (r)**: DeFi lending rate.
+
+```
+Typical: 0-5% annually
+Impact: Minimal in crypto options
+Usually approximated as 0 for simplicity
+```
+
+**Implied Volatility (σ)**: Configured per strategy.
+
+```
+Strategy Parameter: K (volatility coefficient)
+Example: K = 85000000 (represents ~85% annual volatility)
+
+Admin configurable per strategy
+Affects premium amount significantly
+```
+
+## On-Chain Pricing
+
+### Strategy Contract Calculation
+
+Each strategy implements pricing:
+
+```solidity
+// Pseudo-code for strategy pricing
+
+function calculateNegativepnlAndPositivepnl(
+    uint256 amount,      // Option size (e.g., 1e18 for 1 ETH)
+    uint256 period,      // Duration in seconds
+    bytes[] calldata additional  // Extra params
+) public view returns (
+    uint128 negativepnl,  // Max loss / locked liquidity
+    uint128 positivepnl   // Premium to pay
+) {
+    // 1. Get current price from Chainlink
+    uint256 currentPrice = priceProvider.latestRoundData();
+    
+    // 2. Calculate time factor
+    uint256 timeInYears = period / 31536000;
+    
+    // 3. Get volatility parameter
+    uint256 volatility = K; // Strategy-specific
+    
+    // 4. Execute Black-Scholes
+    // ... mathematical calculation ...
+    
+    // 5. Return premium and max loss
+    return (negativepnl, positivepnl);
+}
+```
+
+### Real-Time Updates
+
+Pricing updates continuously:
+
+```mermaid
+graph LR
+    A[Chainlink Oracle] -->|Price Feed| B[Strategy Contract]
+    B -->|Calculate| C[Black-Scholes]
+    C -->|Return| D[Premium Quote]
+    D -->|Display| E[User Interface]
+    
+    style B fill:#4F46E5
+    style D fill:#10B981
+```
+
+**Update Frequency**:
+- Chainlink prices: Continuous (sub-second updates)
+- Premium calculation: On-demand (instant)
+- User quotes: Real-time as parameters change
+
+**MegaETH Advantage**:
+MegaETH's sub-10ms finality means pricing and execution happen nearly instantaneously with no stale price risk.
 
 ## Implied Volatility
 
-Most important input to option pricing:
+Key parameter in option pricing:
 
 ### What Is IV?
 
 Market's expectation of future price volatility:
 
 ```
-High IV (e.g., 80%):
-- Market expects large price swings
+High IV (e.g., 100%):
+- Expects large price swings
 - Options expensive
-- Good for sellers, bad for buyers
+- Good for sellers
 
-Low IV (e.g., 30%):
-- Market expects calm price action
+Low IV (e.g., 40%):
+- Expects calm price action
 - Options cheap
-- Good for buyers, bad for sellers
+- Good for buyers
 ```
 
-### IV Calculation
+### IV Configuration
 
-Derived by reversing Black-Scholes:
-
-```
-Given:
-- Option market price
-- Underlying price
-- Strike
-- Time to expiration
-- Risk-free rate
-
-Solve for: σ (implied volatility)
-```
-
-Cannot be solved algebraically. Iterative numerical methods used.
-
-### IV Surface
-
-IV varies by strike and expiration:
+Set per strategy by protocol:
 
 ```
-         Strikes
-       $1800  $1900  $2000  $2100  $2200
-7d:     65%    60%    55%    60%    65%  (vol smile)
-30d:    55%    52%    50%    52%    55%
-90d:    50%    48%    47%    48%    50%
+Strategy Parameters:
+- K (volatility): Determines IV used in pricing
+- Configurable by admin
+- Reflects market conditions
+- Updated periodically based on realized volatility
 
-Observations:
-- OTM options: Higher IV (smile)
-- ATM options: Lower IV (smile bottom)
-- Shorter expiration: Higher IV (more uncertainty)
+Example:
+ETH Call Strategy: K = 85000000 (~85% annualized)
+ETH Put Strategy: K = 90000000 (~90% annualized)
 ```
 
-Interface displays IV surface for visualization.
+**Admin Adjustable**: IV parameters can be updated to reflect changing market conditions.
 
-### Historical vs Implied Volatility
+### IV and Premium
 
-**Historical Volatility (HV)**: Actual past price fluctuations.
-
-```
-Last 30 days ETH price moves:
-Calculate standard deviation
-Annualize: HV = 45%
-```
-
-**Implied Volatility (IV)**: Market's future expectation.
+IV directly affects premium cost:
 
 ```
-30-day ATM options trading at IV = 55%
+Example: ETH $2,000, 7-day Call
+
+IV 40%: Premium ~$35
+IV 60%: Premium ~$65
+IV 80%: Premium ~$95
+IV 100%: Premium ~$125
+
+Higher volatility → Higher premiums
 ```
 
-**Comparison**:
-```
-If IV > HV: Options relatively expensive
-If IV < HV: Options relatively cheap
-```
+Traders can evaluate if premiums are relatively high or low based on recent volatility.
 
-Traders sell when IV > HV, buy when IV < HV.
-
-## Greeks Pricing Impact
-
-### Delta
-
-Option price change for $1 underlying move:
-
-```
-Call delta ranges: 0 to 1
-Put delta ranges: -1 to 0
-
-ATM options: Delta ≈ ±0.5
-Deep ITM: Delta → ±1
-Deep OTM: Delta → 0
-```
-
-**Delta in pricing**:
-```
-ETH call with delta 0.6
-If ETH rises $10:
-Option value increases ≈ $6 (0.6 × $10)
-```
-
-### Gamma
-
-Rate of delta change:
-
-```
-High Gamma: Delta changes rapidly
-- ATM options near expiration
-- Small price moves cause large delta shifts
-
-Low Gamma: Delta stable
-- ITM/OTM options
-- Long-dated options
-```
-
-**Gamma in pricing**:
-```
-Option has gamma 0.05
-ETH moves $10:
-Delta increases 0.5 (0.05 × 10)
-```
-
-### Theta
-
-Time decay per day:
-
-```
-Option value = Intrinsic + Time Value
-Each day: Time value decreases
-
-Theta accelerates near expiration:
-90 days out: -$1/day
-30 days out: -$2/day
-7 days out: -$8/day
-1 day out: -$20/day
-```
-
-**Theta in pricing**:
-```
-Option worth $100 with theta -$2
-Tomorrow (all else equal):
-Option worth $98
-```
-
-### Vega
-
-Sensitivity to volatility:
-
-```
-High Vega: Sensitive to IV changes
-- Long-dated options
-- ATM options
-
-Low Vega: Less sensitive
-- Short-dated options
-- Deep ITM/OTM options
-```
-
-**Vega in pricing**:
-```
-Option has vega 5
-IV increases from 50% to 51%:
-Option value increases $5
-```
-
-## Pricing Dynamics
-
-### Real-Time Updates
-
-MegaFi pricing updates continuously through the RFQ system:
-
-```mermaid
-graph LR
-    A[Market Conditions Change] --> B[Market Makers Update Quotes]
-    B --> C[RFQ System Aggregates]
-    C --> D[Best Prices Available]
-    D --> E[User Requests Quote]
-    E --> F[Instant Response]
-    
-    style C fill:#4F46E5
-    style F fill:#10B981
-```
-
-**Update Frequency**:
-- Market maker quotes: Continuous (sub-second)
-- User quote requests: On-demand (< 100ms response)
-- Underlying price feeds: Real-time from MegaPools
-
-**MegaETH Advantage**:
-MegaETH's sub-10ms finality means once you accept a quote, execution and settlement happen almost instantly. No waiting for block confirmations or dealing with stale prices.
-
-### Competitive Pricing and Efficiency
-
-RFQ system ensures competitive pricing:
-
-```
-Scenario:
-User requests ETH $2,000 call quote
-
-Market Maker A: $100
-Market Maker B: $98
-Market Maker C: $99
-
-System automatically selects: $98 (best price)
-User gets competitive execution
-```
-
-**Why RFQ is Efficient**:
-- Market makers compete for your order
-- Professional pricing from experienced traders
-- Tight spreads due to competition
-- MegaETH's low costs enable market makers to offer better prices
-
-## Factors Affecting Price
+## Pricing Factors
 
 ### Underlying Price
 
@@ -349,6 +285,8 @@ Put options:
 - Price down = Value up
 ```
 
+**Continuous Updates**: Chainlink oracles provide frequent price updates, enabling precise pricing.
+
 ### Time Remaining
 
 More time = More value:
@@ -358,11 +296,13 @@ ETH at $2,000
 $2,200 calls:
 
 7 days: $30
-30 days: $80
-90 days: $140
+14 days: $55
+30 days: $90
 
-Longer duration: More opportunity for favorable moves
+Longer duration = More opportunity for moves
 ```
+
+**Time Decay**: Value decreases as expiration approaches.
 
 ### Volatility
 
@@ -370,127 +310,313 @@ Higher volatility = Higher value (both calls and puts):
 
 ```
 ETH at $2,000
-$2,000 ATM call
+7-day ATM call
 
-IV 40%: $70
-IV 60%: $110
-IV 80%: $150
+IV 40%: $45
+IV 60%: $75
+IV 80%: $105
+IV 100%: $135
 
-More volatility: Greater chance of large moves
+More volatility = Greater chance of large moves
 ```
 
-### Interest Rates
+### Amount
 
-Higher rates increase call value, decrease put value:
+Larger positions require more liquidity:
 
 ```
-Usually minimal impact in crypto (1-2% effect)
-Risk-free rate based on stablecoin lending yields
+ETH Call at $2,000:
+
+0.1 ETH: Premium $8
+1 ETH: Premium $80
+10 ETH: Premium $800
+
+Linear scaling (generally)
 ```
+
+**Liquidity Constraint**: Very large orders may approach pool limits.
+
+## Chainlink Price Feeds
+
+### Oracle Integration
+
+Strategy contracts query Chainlink:
+
+```solidity
+// Price feed query
+(
+    uint80 roundId,
+    int256 answer,        // Price (8 decimals)
+    uint256 startedAt,
+    uint256 updatedAt,
+    uint80 answeredInRound
+) = priceProvider.latestRoundData();
+
+uint256 currentPrice = uint256(answer);
+// Example: 200000000000 = $2,000.00 (8 decimals)
+```
+
+### Feed Characteristics
+
+**ETH/USD**:
+- Decimals: 8
+- Update Frequency: Every price deviation or time threshold
+- Example: 200000000000 = $2,000.00
+
+**BTC/USD**:
+- Decimals: 8
+- Update Frequency: Every price deviation or time threshold
+- Example: 6500000000000 = $65,000.00
+
+**Reliability**: Chainlink aggregates from multiple data providers for accurate pricing.
+
+### Price Staleness
+
+Safety checks prevent stale prices:
+
+```
+Contract Validation:
+- Check updatedAt timestamp
+- Require recent update (< threshold)
+- Revert if price too old
+
+Ensures pricing uses current market data
+```
+
+## Premium Quotes
+
+### Getting a Quote
+
+Real-time quote generation:
+
+```
+Quote Request Flow:
+
+1. User inputs:
+   - Strategy type (Call, Put, Straddle, etc.)
+   - Amount (1 ETH)
+   - Duration (7 days)
+
+2. Frontend calls:
+   strategy.calculateNegativepnlAndPositivepnl(1e18, 604800, [])
+
+3. Contract returns:
+   - negativePNL: 200000000 (200 USDC max loss)
+   - positivePNL: 80000000 (80 USDC premium)
+
+4. Display to user:
+   - Premium: $80.00 USDC
+   - Max Loss: $200.00 USDC
+
+Total latency: < 50ms
+```
+
+### Quote Validity
+
+Quotes remain valid briefly:
+
+```
+Quote Lifespan:
+- Generated: On-demand
+- Valid: Until next Chainlink update or parameter change
+- Execution: Must approve and purchase quickly
+
+Recommended: Review and purchase within 1-2 minutes
+```
+
+Price can change if underlying asset moves significantly.
+
+## Greeks Impact on Pricing
+
+### Delta
+
+Option price change per $1 underlying move:
+
+```
+Delta 0.5:
+- ETH rises $10 → Option value +$5
+- ETH falls $10 → Option value -$5
+
+Calls: Delta 0 to 1
+Puts: Delta -1 to 0
+```
+
+### Gamma
+
+Delta change rate:
+
+```
+Gamma 0.02:
+- ETH moves $10 → Delta changes by 0.2
+
+High Gamma: Near ATM, short expiry
+Low Gamma: Far ITM/OTM, long expiry
+```
+
+### Theta
+
+Time decay per day:
+
+```
+Theta -2:
+- Option loses $2 value per day
+- All else equal
+
+Accelerates near expiration
+```
+
+### Vega
+
+Volatility sensitivity:
+
+```
+Vega 5:
+- IV rises 1% → Option value +$5
+- IV falls 1% → Option value -$5
+
+Long options: Positive vega
+```
+
+Greeks calculated continuously on MegaETH, updated with every relevant state change.
 
 ## Evaluating Fair Value
 
-### Is an Option Cheap or Expensive?
+### Historical vs Implied Volatility
 
-**Method 1: Historical IV Percentile**
+Compare IV to recent realized volatility:
+
 ```
-Current IV: 55%
-52-week range: 30% - 90%
-Percentile: 42nd percentile
+Historical Volatility (30-day): 55%
+Implied Volatility (30-day options): 75%
 
-Interpretation: Below median, relatively cheap
-```
-
-**Method 2: HV vs IV**
-```
-Historical Volatility (30-day): 40%
-Implied Volatility (30-day options): 55%
-
-Interpretation: IV > HV, options expensive
+Analysis: IV > HV suggests options expensive
+Strategy: Consider selling options
 ```
 
-**Method 3: Put-Call Parity**
+### Premium as % of Underlying
+
+Relative premium cost:
+
 ```
-Verify: Call - Put = Underlying - Strike × e^(-r×T)
+ETH at $2,000
+7-day call premium: $80
 
-If unequal: Arbitrage opportunity exists
+Premium %: $80 / $2,000 = 4%
+Annualized: 4% × 52 = 208%
+
+Evaluation: Compare to historical norms
 ```
 
-### Pricing Tools
+### Break-Even Analysis
 
-Interface provides:
+Required move to profit:
 
-**Option Calculator**: Input parameters, see fair value.
+```
+Buy ETH $2,000 call for $80
 
-**IV Charts**: Historical IV by strike and expiration.
+Break-even: $2,080
+Required move: +4% in chosen timeframe
 
-**Skew Visualizer**: See IV smile/skew.
+Question: Is 4% move likely?
+```
 
-**Comparisons**: Compare IV across expirations and strikes.
+## Pricing Transparency
 
-## Advanced Pricing Concepts
+### On-Chain Verification
+
+All pricing is transparent:
+
+```
+Verifiable Data:
+- Strategy contract source code
+- Chainlink price feeds (public)
+- Volatility parameters (on-chain)
+- Black-Scholes formula (open source)
+- Historical premiums (query on-chain)
+```
+
+No hidden fees or opaque pricing.
+
+### Gas Efficiency
+
+Optimized calculations:
+
+```
+Gas Costs:
+- Premium quote: 0 gas (view function)
+- Option purchase: ~250,000-350,000 gas
+- On MegaETH: ~$0.005 total cost
+
+Ultra-low overhead
+```
+
+## Advanced Concepts
 
 ### Volatility Smile
 
-IV varies by strike:
+IV varies by moneyness (distance from spot):
 
 ```
-Strike:  $1800  $2000  $2200
-IV:       62%    50%    62%
+Strike:  $1800  $1900  $2000  $2100  $2200
+IV:       90%    75%    60%    75%    90%
 
 Shape: Smile (higher at extremes)
 
-Reason:
-- Fat tails in crypto (more large moves than normal distribution predicts)
-- Demand for OTM puts (protection)
-- Supply/demand dynamics
+Reason in crypto:
+- Fat tails (more extreme moves than normal distribution)
+- Demand for OTM protection
 ```
 
-### Term Structure
+### Volatility Term Structure
 
 IV varies by expiration:
 
 ```
-Expiration:  7d    30d    90d
-IV:          55%   48%    45%
+Expiration:  7d    14d    30d
+IV:          75%   65%    55%
 
-Shape: Downward sloping (backwardation)
+Shape: Downward sloping
 
 Interpretation: Near-term uncertainty higher
 ```
 
-### Volatility Skew
+### Put-Call Relationships
 
-Asymmetric IV:
+Price relationships ensure consistency:
 
 ```
-OTM Puts: 65% IV
-ATM: 50% IV
-OTM Calls: 52% IV
+Put-Call Parity (theoretical):
+Call - Put = Underlying - Strike × e^(-r×T)
 
-Put Skew: Puts more expensive than calls
-Reason: Downside protection demand
+On-chain pricing maintains consistency
+Arbitrage opportunities minimal due to instant execution
 ```
 
 ## FAQ
 
-**Why do option prices change when underlying doesn't?**  
-Time decay, volatility changes, or interest rate changes affect value.
+**Who sets the option prices?**  
+Prices calculated on-chain via Black-Scholes formula implemented in strategy contracts. No human intermediary.
 
-**How does RFQ pricing compare to on-chain pricing?**  
-RFQ provides competitive quotes from professional market makers. While Black-Scholes principles guide pricing, market makers factor in real-time supply/demand and risk management.
+**Can prices be manipulated?**  
+No. Prices derive from Chainlink oracles (decentralized) and transparent on-chain math.
 
-**How accurate is the pricing model?**  
-Market makers use sophisticated pricing models based on Black-Scholes and other factors. RFQ competition ensures fair market pricing.
+**How often do prices update?**  
+Continuously. Chainlink provides sub-second price updates. Premiums recalculate instantly.
 
-**What if I think an option is mispriced?**  
-Arbitrage opportunity. Trade against it and potentially profit.
+**What if Chainlink price is wrong?**  
+Chainlink aggregates from multiple providers with outlier detection. Circuit breakers prevent stale prices.
 
-**Do all strikes use same IV?**  
-No. IV varies by strike (smile/skew). Each strike has its own IV.
+**Do all strikes use the same IV?**  
+Options created at-the-money at spot price. IV parameter is per-strategy, affecting all options from that strategy similarly.
 
-**Can I see historical pricing data?**  
-Yes. Charts show option prices, IV, and Greeks over time.
+**Can I see historical pricing?**  
+Yes. All on-chain transactions are recorded. Query past premium values and Greeks via blockchain explorers or indexers.
+
+**Why does my quote change?**  
+Underlying price changes (via Chainlink updates) affect premiums. Request fresh quote if price moves.
+
+**Are there hidden fees?**  
+No. Premium is transparent. Small protocol fee (0.03% of notional) disclosed upfront.
 
 ## Next Steps
 
@@ -503,4 +629,3 @@ Apply pricing knowledge:
 ---
 
 **Price is what you pay. Value is what you get.**
-

@@ -1,374 +1,697 @@
 # Architecture
 
-Technical overview of MegaFi's system architecture. Understand how components interact to deliver real-time DeFi on MegaETH.
+Technical overview of MegaFi's system architecture. Understand how pool-based options trading works with USDC-only liquidity and epoch-based profit distribution.
 
 ## At a Glance
 
-- Three-layer architecture: Liquidity, Strategy, Risk
-- Smart contracts deployed on MegaETH
-- Real-time state synchronization
-- Modular design for composability
-- Event-driven architecture
+- USDC-only architecture for simplified risk management
+- Pool-based liquidity model with OperationalTreasury and CoverPool
+- 7-day epoch system for fair profit distribution
+- Options as ERC721 NFTs for composability
+- Real-time pricing via Chainlink oracles
 - Optimized for MegaETH's continuous execution
 
 ## System Overview
 
 ```mermaid
 graph TD
-    A[User Interface] --> B[RPC Layer]
-    B --> C[Smart Contracts]
-    C --> D[MegaETH Network]
+    A[Options Trader] --> B[OperationalTreasury]
+    B --> C{Strategy Contracts}
+    C --> D[Chainlink Oracles]
+    B --> E[PositionsManager]
+    E --> F[Option NFTs]
     
-    E[DEX] --> C
-    F[CLM] --> C
-    G[Hedge] --> C
+    G[Liquidity Provider] --> H[CoverPool]
+    H -.Backup Liquidity.-> B
+    H --> E
+    E --> I[LP NFTs]
     
-    C --> H[State Manager]
-    H --> I[Event Emitter]
-    I --> J[Indexer]
-    J --> A
+    J[Admin] --> K[LimitController]
+    K --> B
     
-    style C fill:#4F46E5
+    style B fill:#4F46E5
     style H fill:#10B981
+    style C fill:#FF3A1E
 ```
+
+## USDC-Only Architecture
+
+### Core Concept
+
+MegaFi uses a single-asset model for simplicity and transparency:
+
+```
+Traditional Options Platforms:
+- Multiple collateral types
+- Complex conversion mechanisms
+- Impermanent loss risks
+- Price exposure to multiple assets
+
+MegaFi:
+- USDC only
+- No conversion needed
+- No impermanent loss (for options)
+- Pure 1:1 accounting
+```
+
+### Benefits
+
+**For Traders**:
+- Simple premium calculation (USDC)
+- Simple profit settlement (USDC)
+- No token price risk
+- Easy to understand P&L
+
+**For LPs**:
+- Deposit USDC, earn USDC
+- No impermanent loss from token conversion
+- Transparent 1:1 accounting
+- Predictable returns
+
+**For Protocol**:
+- Simplified liquidity management
+- Clear solvency metrics
+- Easy risk calculations
+- Reduced attack surface
 
 ## Core Components
 
-### DEX
+### OperationalTreasury
 
-**MegaPool Contracts**: Core AMM implementation with concentrated liquidity.
-
-```
-Components:
-- Pool Factory
-- Pool Implementation
-- Position Manager (NFT)
-- Router
-- Quoter
-```
-
-**Key Features**:
-- Concentrated liquidity zones
-- Real-time price updates
-- Fee accrual per transaction
-- LP NFT representation
-
-[Smart Contracts documentation →](smart-contracts.md)
-
-### CLM
-
-**Automation Engine**: Manages algorithmic liquidity strategies.
+**Purpose**: Central hub managing option lifecycle.
 
 ```
-Components:
-- Strategy Manager
-- Rebalance Oracle
-- Zone Calculator
-- Execution Engine
+Responsibilities:
+1. Accept option purchases
+2. Lock liquidity for options
+3. Manage premium collection
+4. Execute settlements
+5. Coordinate with CoverPool
 ```
 
-**Key Features**:
-- Multiple strategy modes
-- Automated rebalancing
-- Performance tracking
-- Risk management
-
-### Hedge
-
-**Options Protocol**: Handles options trading and settlement.
-
+**Key State**:
 ```
-Components:
-- Option Factory
-- Pricing Oracle
-- Collateral Manager
-- Settlement Engine
+- Current USDC balance
+- Total locked liquidity
+- Locked premium amounts
+- Per-strategy locked amounts
+- Benchmark reserve target
 ```
 
-**Key Features**:
-- American and European options
-- Real-time Greeks calculation
-- Automated exercise
-- Margin management
+**Safety Checks**:
+```
+Before Option Purchase:
+√ Strategy approved?
+√ Duration valid?
+√ Sufficient liquidity?
+√ Strategy limit not exceeded?
+```
+
+[Smart Contracts →](smart-contracts.md)
+
+### CoverPool
+
+**Purpose**: LP liquidity pool providing backup USDC and profit distribution.
+
+```
+Responsibilities:
+1. Accept LP deposits
+2. Provide backup liquidity to Treasury
+3. Calculate and distribute profits
+4. Manage epoch cycles
+5. Handle LP withdrawals
+```
+
+**Key State**:
+```
+- Total USDC deposited
+- Total shares issued
+- Cumulative profit per share
+- Current epoch number
+- Withdrawal queue
+```
+
+**Profit Distribution**:
+```
+Weekly Profits:
+70% → LPs (via CoverPool)
+20% → Treasury (benchmark growth)
+10% → Protocol (development)
+```
+
+### Strategy Contracts
+
+**Purpose**: Implement pricing and payoff logic for option types.
+
+```
+8+ Strategy Types:
+- HegicStrategyCall (ETH, BTC)
+- HegicStrategyPut (ETH, BTC)
+- HegicStrategyStraddle (ETH, BTC)
+- HegicStrategyStrangle (ETH, BTC)
+- HegicStrategySpreadCall
+- HegicStrategySpreadPut
+- Inverse strategies
+```
+
+**Each Strategy Provides**:
+```
+1. Premium calculation (Black-Scholes)
+2. Payoff calculation
+3. Exercise validation
+4. Strategy-specific parameters
+```
+
+**Integration**:
+```
+Strategy → Chainlink Oracle
+  ↓
+Current Price
+  ↓
+Black-Scholes Calculation
+  ↓
+Premium (positivePNL)
+Max Loss (negativePNL)
+```
+
+### PositionsManager
+
+**Purpose**: ERC721 NFT manager for all positions.
+
+```
+Manages:
+- Option NFTs (trader positions)
+- LP NFTs (provider positions)
+
+Benefits:
+- Transferable positions
+- Composable with DeFi
+- Standard ERC721 interface
+- On-chain ownership proof
+```
+
+### LimitController
+
+**Purpose**: Enforce per-strategy exposure limits.
+
+```
+Configuration Example:
+ETH Call: 50,000 USDC max
+ETH Put: 50,000 USDC max
+BTC Call: 30,000 USDC max
+
+Prevents over-concentration
+Admin configurable
+Checked on every purchase
+```
+
+## Actor Flows
+
+### Options Trader Flow
+
+```
+Purchase Flow:
+1. Trader selects strategy + parameters
+2. Frontend calls strategy.calculateNegativepnlAndPositivepnl()
+3. Premium displayed
+4. Trader approves USDC
+5. Trader calls treasury.buy()
+6. Premium transferred to Treasury
+7. Liquidity locked (negativePNL)
+8. Option NFT minted to trader
+9. Position active
+
+Exercise Flow:
+1. Option enters exercise window (1h before expiry)
+2. Trader calls treasury.payOff()
+3. Strategy calculates profit
+4. Treasury checks balance
+5. If insufficient: CoverPool.payOut(deficit)
+6. Profit transferred to trader
+7. NFT burns
+8. Liquidity unlocked
+
+Auto-Exercise Flow:
+1. Option reaches expiration
+2. System checks if ITM
+3. If profitable: Automatically execute payOff()
+4. Transfer profit to holder
+5. Clean up state
+```
+
+### Liquidity Provider Flow
+
+```
+Provide Flow:
+1. LP approves USDC
+2. LP calls coverPool.provide(amount, positionId)
+3. Check within entry window (first 5 days of epoch)
+4. USDC transferred to CoverPool
+5. Share calculated: (amount × totalShare) / totalUSDC
+6. LP NFT minted or updated
+7. LP earns from premiums
+
+Earn Flow (continuous):
+1. Options traders pay premiums → Treasury
+2. Options exercised → Payouts from Treasury
+3. Weekly: Admin calculates net profit
+4. Profit distribution:
+   - 70% transferred to CoverPool
+   - 20% retained in Treasury
+   - 10% protocol fee
+5. CoverPool updates cumulativeProfit
+6. LP's earnings accrue automatically
+
+Claim Flow:
+1. LP calls coverPool.claim(positionId)
+2. Calculate claimable: buffered + new profits
+3. Transfer USDC to LP
+4. Update LP's cumulative point
+5. Reset buffered amount
+
+Withdraw Flow (2-step):
+Step 1 - Request:
+1. LP calls coverPool.withdraw(positionId, amount)
+2. Check within withdrawal window (first 5 days)
+3. Mark shares for withdrawal in current epoch
+4. Wait for epoch to close (minimum 7 days)
+
+Step 2 - Complete:
+1. Epoch closes (admin calls fixProfit())
+2. LP calls coverPool.withdrawEpoch(positionId, [epochs])
+3. Calculate USDC + profits to return
+4. Transfer funds to LP
+5. Reduce LP's share
+```
+
+## Epoch System
+
+### 7-Day Profit Cycles
+
+```
+Epoch Timeline:
+
+Day 0 (Monday):      Epoch starts
+Day 0-5:             Entry/Exit window OPEN
+                     - LPs can deposit
+                     - LPs can request withdrawals
+Day 5-7:             Entry/Exit window CLOSED
+                     - No deposits allowed
+                     - No withdrawal requests allowed
+Day 7 (Monday):      Admin calls fixProfit()
+                     - Calculate net profit
+                     - Update cumulativeProfit
+                     - Close current epoch
+                     - Start next epoch
+                     Cycle repeats
+```
+
+### Why Epochs?
+
+**Fair Profit Distribution**:
+```
+Without epochs:
+- LPs could deposit right before profit distribution
+- Claim profits without bearing risk
+- Withdraw immediately (gaming)
+
+With epochs:
+- Must be in pool during active period
+- Cannot instant withdraw
+- Fair share based on time in pool
+```
+
+**Capital Stability**:
+```
+Two-step withdrawal ensures:
+- Liquidity remains stable
+- Options can be backed reliably
+- No bank run scenarios
+- Predictable liquidity
+```
+
+### Epoch Mechanics
+
+**fixProfit() Function**:
+```
+Called weekly by admin:
+
+1. Calculate profit:
+   profit = balance - profitTokenBalance
+
+2. Update cumulative:
+   cumulativeProfit += (profit / totalShare)
+
+3. Close current epoch:
+   epoch[currentEpoch].cumulativePoint = cumulativeProfit
+
+4. Process withdrawals:
+   - Calculate each withdrawal's share of profits
+   - Mark USDC available for claim
+
+5. Start next epoch:
+   currentEpoch++
+   epoch[currentEpoch].start = block.timestamp
+```
+
+## Transaction Lifecycle
+
+### Option Purchase
+
+```
+Step-by-Step:
+
+1. User Interface:
+   - User enters parameters (amount, duration)
+   - Frontend queries strategy premium
+   - Display quote to user
+
+2. Approval:
+   - User approves USDC spending
+   - Transaction confirmed
+
+3. Purchase:
+   - User calls treasury.buy()
+   - Treasury validates request
+   - Strategy.create() called
+   - Returns: expiration, positivePNL, negativePNL
+
+4. Treasury Actions:
+   - Transfer premium (positivePNL) from user
+   - Lock liquidity (negativePNL) internally
+   - Update lockedByStrategy mapping
+   - Update totalLocked
+
+5. NFT Minting:
+   - PositionsManager.mint(holder)
+   - Store option data in LockedLiquidity struct
+   - Return option ID
+
+6. Event Emission:
+   - Emit Acquired event
+   - Contains: optionId, strategy, holder, amount, premium
+
+7. Indexer Capture:
+   - Event captured by indexer
+   - Stored in database
+   - Available for frontend query
+
+8. UI Update:
+   - WebSocket pushes update
+   - Portfolio refreshes
+   - Position displayed
+
+Total Time: 10-50ms on MegaETH
+```
+
+### Option Exercise
+
+```
+Step-by-Step:
+
+1. Exercise Window Opens:
+   - 1 hour before expiry
+   - User can manually exercise
+
+2. Manual Exercise:
+   - User calls treasury.payOff(optionId, account)
+   - Or: Auto-exercise at expiration if ITM
+
+3. Treasury Actions:
+   - Verify within window or at expiry
+   - Get LockedLiquidity data
+   - Call strategy.payOffAmount(optionId)
+
+4. Strategy Calculation:
+   - Query Chainlink for current price
+   - Calculate profit: max(0, currentPrice - strike)
+   - Return profit amount
+
+5. Settlement:
+   - Check Treasury balance
+   - If balance ≥ profit: Pay directly
+   - If balance < profit:
+     * deficit = profit - balance
+     * Call coverPool.payOut(deficit)
+     * CoverPool transfers USDC
+   - Transfer full profit to account
+
+6. Cleanup:
+   - Unlock liquidity (negativePNL)
+   - Update totalLocked
+   - Update lockedByStrategy
+   - Burn or mark NFT as exercised
+
+7. Event Emission:
+   - Emit Paid event
+   - Contains: optionId, account, amount
+
+Total Time: 10-100ms on MegaETH
+```
 
 ## Data Flow
 
-### Transaction Lifecycle
+### Real-Time State Updates
 
 ```
-1. User submits transaction via Interface
-2. Wallet signs transaction
-3. RPC receives and validates
-4. Transaction forwarded to MegaETH sequencer
-5. Sequencer orders and executes
-6. Smart contract state updates
-7. Events emitted
-8. Indexer captures events
-9. Interface updates UI
-10. User sees confirmation
+MegaETH Advantage:
 
-Total time: 10-50ms
-```
+Traditional Blockchain (12s blocks):
+Action → Wait for block → Event emitted → Query → UI Update
+Total: 12+ seconds
 
-### State Synchronization
+MegaETH (<10ms finality):
+Action → Immediate finality → Event emitted → WebSocket push → UI Update
+Total: 50-100ms
 
-Real-time state updates:
-
-```
-State Change → Event Emission → WebSocket Push → UI Update
-
-Traditional:
-State Change → Wait for block → Poll → UI Update (12s+)
-
-MegaETH:
-State Change → Immediate event → Push → UI Update (< 100ms)
+Result: Near-instant feedback
 ```
 
 ### Event Architecture
 
-Event-driven updates:
-
 ```
 Smart Contract Events:
-- Swap
-- AddLiquidity
-- RemoveLiquidity
-- Rebalance
-- OptionTrade
-- Exercise
+├── Treasury Events
+│   ├── Acquired (option purchased)
+│   ├── Paid (option exercised)
+│   └── Expired (option expired)
+├── CoverPool Events
+│   ├── Provided (LP deposited)
+│   ├── Withdrawn (LP withdrew)
+│   ├── Paid (LP claimed profits)
+│   └── EpochClosed (epoch ended)
+└── Transfer Events (ERC721)
+    ├── Transfer (NFT moved)
+    ├── Approval (NFT approved)
+    └── ApprovalForAll (operator approved)
 
-Indexer captures all events
-Database stores historical data
-API serves to frontends
-WebSocket pushes real-time updates
+Indexer Pipeline:
+1. Listen to all events
+2. Parse event data
+3. Store in database
+4. Update aggregates
+5. Push via WebSocket
+6. Serve via API
 ```
 
-## Smart Contract Architecture
+## Security Architecture
 
-
-### Upgradeability
-
-Proxy pattern for upgrades:
+### Multi-Layer Protection
 
 ```
-User → Proxy Contract → Implementation Contract
+Layer 1 - Input Validation:
+- Parameter bounds checking
+- Address validation
+- Amount sanity checks
 
-Proxy: Immutable, stores state
-Implementation: Upgradeable logic
+Layer 2 - Access Control:
+- Role-based permissions
+- Owner-only functions
+- Treasury-only functions
 
-Upgrades via governance (future)
-Current: Admin multi-sig control
+Layer 3 - Reentrancy Guards:
+- nonReentrant modifiers
+- Checks-Effects-Interactions pattern
+
+Layer 4 - Liquidity Safety:
+- Strategy limits
+- Treasury balance checks
+- CoverPool backup
+
+Layer 5 - Time Constraints:
+- Exercise windows
+- Epoch boundaries
+- Expiration enforcement
+
+Layer 6 - Oracle Protection:
+- Chainlink price feeds
+- Staleness checks
+- Multiple data sources
 ```
 
-### Access Control
-
-Role-based permissions:
+### Solvency Guarantees
 
 ```
-Roles:
-- Owner: Deploy, upgrade contracts
-- Operator: Execute admin functions
-- Strategy: Rebalance positions
-- Oracle: Update prices
-- User: Standard operations
+Protocol Solvency Formula:
+
+Available = Treasury Balance + CoverPool Available
+Required = Total Locked + Locked Premium + Benchmark
+
+Invariant: Available ≥ Required
+
+Checked on:
+- Every option purchase
+- Every withdrawal from Treasury
+- Every admin operation
+
+If violated: Transaction reverts
 ```
-
-
-Direct smart contract integration for external developers:
-
-```
-Contract Interfaces
-  ├── Swap Functions
-  ├── Liquidity Functions
-  ├── Strategy Functions
-  ├── Options Functions
-  └── Utility Functions
-
-Easy integration for:
-- Wallets
-- Aggregators
-- Analytics platforms
-- Other protocols
-```
-
-[Smart Contracts →](smart-contracts.md)
 
 ## Performance Optimizations
 
 ### MegaETH-Specific
 
-Optimizations for continuous execution:
+**Continuous Execution**:
+```
+Traditional: Batch transactions every 12s
+MegaETH: Process transactions continuously
 
-**State Access**: Minimized storage reads/writes.
+Benefit: No queueing, instant execution
+```
 
-**Event Emission**: Efficient logging without excess gas.
+**Real-Time Greeks**:
+```
+Traditional: Greeks stale between blocks
+MegaETH: Greeks update continuously
 
-**Batch Operations**: Multi-call support for gas efficiency.
+Benefit: Accurate risk metrics always
+```
 
-**Parallel Execution**: State designed for parallel access.
+**Instant Settlement**:
+```
+Exercise option:
+0ms: Submit transaction
+5ms: Execute payoff calculation
+8ms: Transfer USDC
+10ms: Confirmed
 
-[Contract Addresses →](contract-addresses.md)
+Traditional: 15-30 seconds minimum
+```
 
 ### Gas Optimizations
 
-Standard Solidity optimizations:
-
-- Packed storage slots
-- Uint256 for most variables
-- View functions where possible
-- Efficient loops
-
-However, with sub-cent gas, optimizations less critical than on expensive chains.
-
-## Security Architecture
-
-### Multi-Layer Security
-
-```
-Layer 1: Input Validation
-Layer 2: Access Control
-Layer 3: Reentrancy Guards
-Layer 4: Overflow Protection
-Layer 5: Oracle Manipulation Protection
-Layer 6: Pause Mechanisms
+**Storage Packing**:
+```solidity
+struct LockedLiquidity {
+    LockedLiquidityState state;  // 1 byte
+    IHegicStrategy strategy;     // 20 bytes
+    uint128 negativepnl;         // 16 bytes
+    uint128 positivepnl;         // 16 bytes
+    uint32 expiration;           // 4 bytes
+}
+// Optimized to 3 storage slots
 ```
 
-### Security Planning
-
-Security measures in development:
-
-- Smart contracts: Audits planned before mainnet
-- Frontend: Security review planned
-- Backend: Security testing in progress
-- Infrastructure: DevSecOps practices
-
-[Security Details →](security-audits.md)
-
-### Emergency Procedures
-
-Incident response:
-
+**View Functions**:
+```solidity
+// Zero gas cost
+function calculateNegativepnlAndPositivepnl(...)
+    external
+    view
+    returns (uint128, uint128);
 ```
-Detection → Assessment → Action → Communication
 
-Actions Available:
-- Pause contracts
-- Emergency withdrawal
-- Parameter updates
-- Contract upgrades (if critical)
+**Batch Operations**:
+```
+Multicall support:
+- Query multiple positions
+- Execute multiple claims
+- Save gas vs individual calls
 ```
 
 ## Monitoring and Observability
 
-### Metrics Tracked
+### Key Metrics
 
-Real-time monitoring:
-
+**Protocol Health**:
 ```
-Contract Metrics:
-- Transaction success rate
-- Gas usage
-- State size
-- Event emissions
-
-Network Metrics:
-- RPC latency
-- Block time
-- Queue depth
-- Error rates
-
-Business Metrics:
-- TVL
-- Volume
-- User count
-- APRs
+- Treasury USDC balance
+- CoverPool USDC balance
+- Total locked liquidity
+- Available liquidity
+- Number of active options
+- Number of active LPs
 ```
 
-### Alerting
-
-Automated alerts for:
-
-- Contract anomalies
-- Performance degradation
-- Security events
-- Threshold breaches
-
-## Deployment Architecture
-
-### Environments
-
+**Risk Metrics**:
 ```
-Development:
-- Local testnet
-- Rapid iteration
-- Full logging
-
-Staging:
-- MegaETH testnet
-- Pre-production testing
-- Public access
-
-Production:
-- MegaETH mainnet
-- Battle-tested code
-- Monitored 24/7
+- Per-strategy utilization
+- Largest single position
+- Options approaching expiry
+- Pending withdrawals
+- Epoch progress
 ```
 
-### Deployment Process
-
+**Business Metrics**:
 ```
-1. Code changes
-2. Unit tests
-3. Integration tests
-4. Staging deployment
-5. Verification
-6. Production deployment
-7. Monitoring
-8. Post-deployment validation
+- Total Value Locked (TVL)
+- Daily volume
+- Premium collected
+- Options exercised
+- LP profits distributed
 ```
 
-### Rollback Procedures
-
-If issues detected:
+### Alerts
 
 ```
-Immediate: Pause affected contracts
-Investigation: Identify root cause
-Decision: Fix forward or rollback
-Execution: Deploy fix or revert
-Validation: Verify resolution
-Communication: Update users
+Critical Alerts:
+- Liquidity approaching limits
+- Large option purchases
+- Treasury balance low
+- CoverPool backup activated
+- Unusual activity patterns
+
+Info Alerts:
+- Epoch ending soon
+- Exercise windows opening
+- New LP deposits
+- Profit distribution completed
 ```
 
-## Future Architecture
+## Future Enhancements
 
-Planned improvements:
+**Planned Improvements**:
 
-**Decentralized Sequencing**: Multiple sequencers for increased decentralization.
-
-**Cross-Chain**: Native bridges to other chains.
-
-**Governance**: Decentralized protocol governance.
-
-**Layer 3**: Application-specific rollups on MegaETH.
+- Additional strategy types
+- Cross-chain options
+- Automated market making
+- Decentralized limit adjustment
+- Governance integration
+- Advanced risk management
 
 ## FAQ
 
-**Is the architecture open source?**  
-Smart contracts are open source.
+**Why USDC-only?**  
+Simplicity, no impermanent loss, transparent accounting, reduced risk.
 
-**Can I build on top of MegaFi?**  
-Yes. Interact with contracts directly using standard web3 libraries.
+**Can I use other stablecoins?**  
+Not currently. USDC is the single accepted collateral.
 
-**How are upgrades handled?**  
-Via proxy pattern. Governance will control upgrades eventually.
+**What if USDC depegs?**  
+Protocol uses USDC as unit of account. Depeg affects all positions equally.
 
-**What happens if MegaETH goes down?**  
-Transactions halt but funds remain safe. Resume when network returns.
+**How does CoverPool prevent losses?**  
+Strategy limits, benchmark reserves, and LP risk-sharing ensure solvency.
+
+**Can epochs be changed?**  
+Duration is 7 days minimum (hardcoded constant). Admin can adjust window size.
+
+**Are contract names final?**  
+Yes. Names like "HegicStrategy" and "OperationalTreasury" are the actual deployed contract names from the audited codebase.
 
 ## Next Steps
 
-Dive deeper into technical details:
+Explore technical details:
 
 - [Smart Contracts](smart-contracts.md) - Contract specifications
 - [Contract Addresses](contract-addresses.md) - Deployed addresses
@@ -376,5 +699,4 @@ Dive deeper into technical details:
 
 ---
 
-**Built for speed. Designed for scale.**
-
+**Built for speed. Designed for simplicity.**
