@@ -103,7 +103,7 @@ After completing setup:
 
 If you encounter issues during setup:
 
-- Join our [Discord](https://discord.gg/YDUx3J3F7y) for community support
+- Join our [Discord](https://discord.gg/aaA7YPTW) for community support
 
 ---
 
