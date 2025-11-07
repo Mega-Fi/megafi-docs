@@ -490,7 +490,7 @@ If you encounter fraudulent addresses:
 **Announcement Channels**:
 - Official blog (blog.megafi.app)
 - Twitter (@MegaFiApp)
-- Discord (discord.gg/aaA7YPTW)
+- Discord (https://discord.com/invite/EFTrPCREfZ)
 - Documentation (docs.megafi.app)
 
 ---

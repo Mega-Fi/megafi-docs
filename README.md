@@ -91,7 +91,7 @@ MegaFi is a decentralized protocol. Users interact directly with smart contracts
 
 - Website: [megafi.app](https://megafi.app)
 - GitHub: [github.com/Mega-Fi](https://github.com/Mega-Fi)
-- Discord: [discord.gg/aaA7YPTW](https://discord.gg/aaA7YPTW)
+- Discord: [discord.com/invite/EFTrPCREfZ](https://discord.com/invite/EFTrPCREfZ)
 - Twitter: Coming soon
 
 ---
