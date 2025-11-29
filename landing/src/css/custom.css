@@ -2,7 +2,7 @@
  * MegaFi Custom Styles
  * Brand Colors:
  * - Full Moon: #DFD9D9 (light backgrounds, text on dark)
- * - Night Sky: #19191A (dark backgrounds, text on light)
+ * - Black: #000000 (dark backgrounds, text on light)
  * - MEGA Orange: #FF3A1E (CTAs, highlights, links)
  */
 
@@ -18,12 +18,12 @@
 
   /* Background Colors */
   --ifm-background-color: #DFD9D9;
-  --ifm-navbar-background-color: #19191A;
-  --ifm-footer-background-color: #19191A;
+  --ifm-navbar-background-color: #000000;
+  --ifm-footer-background-color: #000000;
 
   /* Text Colors */
-  --ifm-font-color-base: #19191A;
-  --ifm-heading-color: #19191A;
+  --ifm-font-color-base: #000000;
+  --ifm-heading-color: #000000;
 
   /* Code */
   --ifm-code-font-size: 95%;
@@ -49,9 +49,9 @@
   --ifm-color-primary-lightest: #ff7d68;
 
   /* Background Colors */
-  --ifm-background-color: #19191A;
-  --ifm-background-surface-color: #1f1f20;
-  --ifm-navbar-background-color: #0f0f10;
+  --ifm-background-color: #000000;
+  --ifm-background-surface-color: #0a0a0a;
+  --ifm-navbar-background-color: #000000;
 
   /* Text Colors */
   --ifm-font-color-base: #DFD9D9;
@@ -61,7 +61,7 @@
   --docusaurus-highlighted-code-line-bg: rgba(255, 58, 30, 0.2);
 
   /* Cards and Panels */
-  --ifm-card-background-color: #1f1f20;
+  --ifm-card-background-color: #0a0a0a;
   
   /* Sidebar */
   --ifm-menu-color-background-active: rgba(255, 58, 30, 0.15);
@@ -166,6 +166,49 @@ table {
 /* Search */
 .navbar__search-input {
   border-radius: 20px;
+}
+
+/* Color Mode Toggle */
+.navbar__item--color-mode-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__item--color-mode-toggle button {
+  color: #DFD9D9;
+  background: transparent;
+  border: 1px solid rgba(223, 217, 217, 0.3);
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.navbar__item--color-mode-toggle button:hover {
+  background: rgba(255, 58, 30, 0.1);
+  border-color: #FF3A1E;
+  color: #FF3A1E;
+}
+
+[data-theme='light'] .navbar__item--color-mode-toggle button {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme='light'] .navbar__item--color-mode-toggle button:hover {
+  background: rgba(255, 58, 30, 0.1);
+  border-color: #FF3A1E;
+  color: #FF3A1E;
+}
+
+[data-theme='light'] .navbar__item--color-mode-toggle button svg {
+  fill: #ffffff;
+  stroke: #ffffff;
+}
+
+[data-theme='light'] .navbar__item--color-mode-toggle button:hover svg {
+  fill: #FF3A1E;
+  stroke: #FF3A1E;
 }
 
 /* Responsive adjustments */
