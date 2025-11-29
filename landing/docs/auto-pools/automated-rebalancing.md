@@ -72,10 +72,14 @@ New Price Range: 3109.06 – 3210.34 $USDC per $ETH
 
 This ensures your liquidity is positioned optimally for the updated market price.
 
+![Trailing Rebalancing - Price Increase Step 1](img/increase-1.png)
+
 **If $ETH's price continues to rise and touches the maximum rebalance trigger (3240.12 $USDC per $ETH):**
 
 **Rebalancing Execution:**
 The system swaps $ETH for $USDC, rebalancing your position automatically.
+
+![Trailing Rebalancing - Price Increase Step 2](img/increase-2.png)
 
 **What Happens When the $ETH Price Falls Back?**
 
@@ -116,10 +120,14 @@ New Price Range: 3050.24 – 3199.33 $USDC per $ETH
 
 This ensures your liquidity is positioned optimally for the updated market price.
 
+![Trailing Rebalancing - Price Decrease Step 1](img/decrease-1.png)
+
 **If $ETH's price continues to fall and touches the minimum rebalance trigger (2890.93 $USDC per $ETH):**
 
 **Rebalancing Execution:**
 The system swaps $USDC for $ETH, rebalancing your position automatically.
+
+![Trailing Rebalancing - Price Decrease Step 2](img/decrease-2.png)
 
 **What Happens When the $ETH Price Rises Back?**
 
