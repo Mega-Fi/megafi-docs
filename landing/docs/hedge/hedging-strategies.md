@@ -10,6 +10,7 @@ Protect your portfolio from adverse price movements using options-based hedging 
 - Combine multiple strategies for complex risk profiles
 - Pool-based execution with instant settlement
 - Real-time hedge effectiveness tracking
+- Strategies organized by market sentiment
 
 ## Why Hedge?
 
@@ -43,7 +44,382 @@ Net: +$150
 Hedged portfolio protected and profitable
 ```
 
-## Core Hedging Strategies
+## Strategies by Sentiment
+
+### Bullish Strategies
+
+Strategies for when you expect prices to rise.
+
+#### Call
+
+**Status**: Available
+
+**Description**: High profits if the price rises sharply.
+
+**Use Case**: Bullish outlook, expect significant upward price movement.
+
+**Setup**:
+```
+Buy: 10 ETH $2,200 calls (30 days)
+Premium: $80 per ETH = $800 total
+
+Execution:
+1. Select ETH Call strategy
+2. Enter 10 ETH amount
+3. Select 30-day duration
+4. Review premium: $800
+5. Approve USDm
+6. Purchase option
+7. Receive option NFT
+```
+
+**Payoff**:
+```
+ETH at $1,800:
+- Call expires worthless: -$800
+- Net loss: -$800 (premium paid)
+
+ETH at $2,200:
+- Call at break-even: $0
+- Net: -$800 (premium cost)
+
+ETH at $2,500:
+- Call profit: ($2,500 - $2,200) × 10 = +$3,000
+- Premium cost: -$800
+- Net gain: +$2,200
+```
+
+**When to Use**:
+- Strong bullish conviction
+- Expect significant price increase
+- Willing to pay premium for leveraged upside
+
+#### Strap
+
+**Status**: Coming Soon
+
+**Description**: High profits if the price rises sharply, reasonable profits if the price falls.
+
+**Use Case**: Expect high volatility with bullish bias.
+
+**Structure**:
+```
+Buy: 2 calls + 1 put at same strike
+Example: 2 ETH $2,000 calls + 1 ETH $2,000 put
+```
+
+**Payoff**:
+```
+Price rises: 2x call exposure, high profits
+Price falls: 1x put exposure, moderate profits
+Price stays flat: Loss premium (time decay)
+```
+
+**When to Use**:
+- Expect volatility with upward bias
+- Want asymmetric upside exposure
+- Accept higher premium cost
+
+#### Bull Call Spread
+
+**Status**: Coming Soon
+
+**Description**: Low cost, decent profits if the price rises to a certain level.
+
+**Use Case**: Moderately bullish, want to limit cost.
+
+**Structure**:
+```
+Buy: 1 ETH $2,000 call for $80
+Sell: 1 ETH $2,200 call for $40
+Net Cost: $40
+```
+
+**Payoff**:
+```
+ETH < $2,000: Lose $40 (net premium)
+ETH = $2,200: Max profit $200 - $40 = $160
+ETH > $2,200: Profit capped at $160
+```
+
+**When to Use**:
+- Moderately bullish
+- Want lower cost than straight call
+- Accept capped upside
+
+#### Bull Put Spread
+
+**Status**: Coming Soon
+
+**Description**: Low cost, decent profits if the price stays at a certain level or rises.
+
+**Use Case**: Neutral to bullish, want to collect premium.
+
+**Structure**:
+```
+Sell: 1 ETH $1,800 put for $50
+Buy: 1 ETH $1,700 put for $20
+Net Credit: $30
+```
+
+**Payoff**:
+```
+ETH > $1,800: Keep $30 credit (max profit)
+ETH = $1,800: Keep $30 credit
+ETH < $1,700: Max loss $100 - $30 = $70
+```
+
+**When to Use**:
+- Neutral to bullish
+- Want to collect premium
+- Accept limited downside risk
+
+### Bearish Strategies
+
+Strategies for when you expect prices to fall.
+
+#### Put
+
+**Status**: Available
+
+**Description**: High profits if the price falls sharply.
+
+**Use Case**: Bearish outlook, expect significant downward price movement.
+
+**Setup**:
+```
+Buy: 10 ETH $1,800 puts (30 days)
+Premium: $50 per ETH = $500 total
+
+Execution:
+1. Select ETH Put strategy
+2. Enter 10 ETH amount
+3. Select 30-day duration
+4. Review premium: $500
+5. Approve USDm
+6. Purchase option
+7. Receive option NFT
+```
+
+**Payoff**:
+```
+ETH at $2,200:
+- Put expires worthless: -$500
+- Net loss: -$500 (premium paid)
+
+ETH at $1,800:
+- Put at break-even: $0
+- Net: -$500 (premium cost)
+
+ETH at $1,500:
+- Put profit: ($1,800 - $1,500) × 10 = +$3,000
+- Premium cost: -$500
+- Net gain: +$2,500
+```
+
+**When to Use**:
+- Strong bearish conviction
+- Expect significant price decrease
+- Want to protect holdings or profit from decline
+
+#### Strip
+
+**Status**: Coming Soon
+
+**Description**: High profits if the price falls sharply, reasonable profits if the price rises.
+
+**Use Case**: Expect high volatility with bearish bias.
+
+**Structure**:
+```
+Buy: 2 puts + 1 call at same strike
+Example: 2 ETH $2,000 puts + 1 ETH $2,000 call
+```
+
+**Payoff**:
+```
+Price falls: 2x put exposure, high profits
+Price rises: 1x call exposure, moderate profits
+Price stays flat: Loss premium (time decay)
+```
+
+**When to Use**:
+- Expect volatility with downward bias
+- Want asymmetric downside exposure
+- Accept higher premium cost
+
+#### Bear Put Spread
+
+**Status**: Coming Soon
+
+**Description**: Low cost, decent profits if the price falls to a certain level.
+
+**Use Case**: Moderately bearish, want to limit cost.
+
+**Structure**:
+```
+Buy: 1 ETH $1,800 put for $50
+Sell: 1 ETH $1,700 put for $20
+Net Cost: $30
+```
+
+**Payoff**:
+```
+ETH > $1,800: Lose $30 (net premium)
+ETH = $1,700: Max profit $100 - $30 = $70
+ETH < $1,700: Profit capped at $70
+```
+
+**When to Use**:
+- Moderately bearish
+- Want lower cost than straight put
+- Accept capped downside profit
+
+#### Bear Call Spread
+
+**Status**: Coming Soon
+
+**Description**: Low cost, decent profits if the price stays at a certain level or falls.
+
+**Use Case**: Neutral to bearish, want to collect premium.
+
+**Structure**:
+```
+Sell: 1 ETH $2,200 call for $40
+Buy: 1 ETH $2,300 call for $20
+Net Credit: $20
+```
+
+**Payoff**:
+```
+ETH < $2,200: Keep $20 credit (max profit)
+ETH = $2,200: Keep $20 credit
+ETH > $2,300: Max loss $100 - $20 = $80
+```
+
+**When to Use**:
+- Neutral to bearish
+- Want to collect premium
+- Accept limited upside risk
+
+### High Volatility Strategies
+
+Strategies for when you expect significant price movement in either direction.
+
+#### Straddle
+
+**Status**: Coming Soon
+
+**Description**: High profits if the price rises or falls sharply during the period of holding.
+
+**Use Case**: Expect large price movement, direction unknown.
+
+**Structure**:
+```
+Buy: 1 ETH $2,000 call for $80
+Buy: 1 ETH $2,000 put for $50
+Net Cost: $130
+```
+
+**Payoff**:
+```
+ETH at $2,000: Lose $130 (both expire worthless)
+ETH at $1,700: Put profit $300 - $130 = $170
+ETH at $2,300: Call profit $300 - $130 = $170
+```
+
+**When to Use**:
+- Expect high volatility
+- Direction uncertain
+- Willing to pay premium for protection both ways
+
+#### Strangle
+
+**Status**: Coming Soon
+
+**Description**: Low cost, very high profits if the price rises or falls significantly.
+
+**Use Case**: Expect large price movement, want lower cost than straddle.
+
+**Structure**:
+```
+Buy: 1 ETH $2,200 call for $40
+Buy: 1 ETH $1,800 put for $30
+Net Cost: $70
+```
+
+**Payoff**:
+```
+ETH between $1,800-$2,200: Lose $70 (both expire worthless)
+ETH at $1,500: Put profit $300 - $70 = $230
+ETH at $2,500: Call profit $300 - $70 = $230
+```
+
+**When to Use**:
+- Expect high volatility
+- Want cheaper alternative to straddle
+- Accept need for larger move to profit
+
+### Low Volatility Strategies
+
+Strategies for when you expect prices to stay relatively stable.
+
+#### Long Butterfly
+
+**Status**: Coming Soon
+
+**Description**: Low cost, high profits if the price is about a strike price.
+
+**Use Case**: Expect price to stay near current level.
+
+**Structure**:
+```
+Buy: 1 ETH $1,900 call for $120
+Sell: 2 ETH $2,000 calls for $80 each = $160
+Buy: 1 ETH $2,100 call for $50
+Net Cost: $10
+```
+
+**Payoff**:
+```
+ETH at $2,000: Max profit $100 - $10 = $90
+ETH < $1,900 or > $2,100: Max loss $10
+```
+
+**When to Use**:
+- Expect low volatility
+- Price expected to stay near strike
+- Want defined risk and reward
+
+#### Long Condor
+
+**Status**: Coming Soon
+
+**Description**: Decent profits if the price changes slightly.
+
+**Use Case**: Expect price to stay within a range.
+
+**Structure**:
+```
+Buy: 1 ETH $1,900 call for $120
+Sell: 1 ETH $2,000 call for $80
+Sell: 1 ETH $2,100 call for $50
+Buy: 1 ETH $2,200 call for $30
+Net Cost: $20
+```
+
+**Payoff**:
+```
+ETH between $2,000-$2,100: Max profit $100 - $20 = $80
+ETH < $1,900 or > $2,200: Max loss $20
+```
+
+**When to Use**:
+- Expect low volatility
+- Price expected to stay in range
+- Want wider profit zone than butterfly
+
+## Core Hedging Applications
 
 ### Protective Put
 
@@ -237,60 +613,6 @@ ETH moves to $2,500:
 ```
 
 **Result**: IL largely offset by option gains during large price moves.
-
-## Advanced Strategies
-
-### Ratio Spread
-
-Unequal number of long and short options:
-
-**Example**:
-```
-Buy 1 ETH $2,000 call for $80
-Sell 2 ETH $2,200 calls for $40 each = $80
-Net Cost: $0
-
-Payoff:
-ETH < $2,000: Lose nothing (zero cost)
-ETH = $2,200: Profit $200 on long call
-ETH > $2,200: Profit capped, potential losses on excess short calls
-
-Use: Moderate bullish view, want free upside to a point
-```
-
-### Calendar Spread
-
-Same strike, different expirations:
-
-**Example**:
-```
-Sell 1 ETH $2,000 call (7 days) for $60
-Buy 1 ETH $2,000 call (30 days) for $100
-Net Cost: $40
-
-Payoff:
-Short-term call expires → Theta profit
-Long-term call retains value → Keep upside exposure
-
-Use: Expect short-term stability, long-term move
-```
-
-### Butterfly Spread
-
-Three strikes, limited risk and reward:
-
-**Example**:
-```
-Buy 1 ETH $1,900 call: $120
-Sell 2 ETH $2,000 calls: $80 × 2 = $160
-Buy 1 ETH $2,100 call: $50
-Net Cost: $10
-
-Max Profit: At $2,000 at expiration
-Max Loss: $10 (net premium)
-
-Use: Expect price to stay near $2,000
-```
 
 ## Hedging Calculations
 
@@ -547,6 +869,9 @@ Currently manual. Auto-Pools integration may enable automated hedging strategies
 
 **What if I can't afford to hedge?**  
 Use cheaper strategies: OTM options, collars (premium offset), or accept some risk unhedged.
+
+**When will "Coming Soon" strategies be available?**  
+Additional strategies are planned for future releases. Follow official channels for updates.
 
 ## Next Steps
 
