@@ -41,6 +41,8 @@ In Bull Mode, when the price of ETH increases and goes out of range, your liquid
 
 The rebalancing mechanism adjusts the price range to trail just behind the new price, ensuring your liquidity is positioned optimally for the updated market price.
 
+![Bull Mode Visualization](img/bull.png)
+
 ## Bear Mode
 
 ### Overview
@@ -62,6 +64,8 @@ Best for bear market. This mode functions like a dynamic range order that follow
 In Bear Mode, when the price of ETH decreases and goes out of range, your liquidity position trails the current ETH price downward. This helps protect yourself against decreasing prices during bearish market trends.
 
 The rebalancing mechanism adjusts the price range to trail just behind the new price, ensuring your liquidity is positioned optimally for the updated market price.
+
+![Bear Mode Visualization](img/bear.png)
 
 ## Dynamic Mode
 
@@ -85,6 +89,8 @@ In Dynamic Mode, your liquidity position trails the current ETH price as it incr
 
 The position adapts to price movements in both directions, keeping your liquidity active and earning fees regardless of whether price moves up or down.
 
+![Dynamic Mode Visualization](img/dynamic.png)
+
 ## Static Mode
 
 ### Overview
@@ -106,6 +112,8 @@ Best for advanced liquidity strategies. This mode features static ticks that you
 In Static Mode, your liquidity position remains fixed and does not trail the changing ETH price. This mode is best used with other parameters like liquidity distribution.
 
 You define the exact price range (ticks) where you want your liquidity to remain, and the position will not automatically rebalance based on price movements.
+
+![Static Mode Visualization](img/static.png)
 
 ## Choosing a Mode
 
