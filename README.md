@@ -7,7 +7,7 @@ MegaFi is a DeFi platform built on MegaETH that delivers institutional-grade opt
 ## At a Glance
 
 - **Real-Time Options**: Sub-10ms execution with continuous Greeks updates
-- **Complete DeFi Stack**: Options trading (Hedge), DEX, and automated management (CLM)
+- **Complete DeFi Stack**: Options trading (Hedge), DEX, and automated management (Auto-Pools)
 - **Capital Efficient**: Up to 95% optimized capital utilization
 - **Ultra-Low Cost**: Transaction fees under $0.005
 - **Built for MegaETH**: 100,000+ TPS with continuous execution
@@ -36,11 +36,11 @@ Token swaps and liquidity provision powered by concentrated liquidity. Provide l
 
 [Learn more →](docs/dex/overview.md)
 
-### CLM
+### Auto-Pools
 
 Automated liquidity management that works 24/7. Deploy strategies that continuously rebalance positions, optimize zones, and maximize yield without manual intervention.
 
-[Learn more →](docs/clm/overview.md)
+[Learn more →](docs/auto-pools/overview.md)
 
 ## Quick Start
 
@@ -79,7 +79,7 @@ MegaFi inherits MegaETH's exceptional performance:
 - **Getting Started**: Platform overview and basics
 - **Hedge**: Options trading and risk management
 - **DEX**: Trading, liquidity, fees, LP NFTs
-- **CLM**: Automated strategies and optimization
+- **Auto-Pools**: Automated strategies and optimization
 - **Technical Docs**: Architecture, smart contracts, audits
 - **Reference**: Glossary, supported tokens, limits
 

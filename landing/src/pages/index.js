@@ -52,17 +52,17 @@ function HomepageFeatures() {
       <div className="container">
         <div className="row">
           <Feature
-            title="🎯 Hedge - Options Trading"
+            title="Hedge - Options Trading"
             description="Trade options with sub-10ms execution, real-time Greeks, and capital-efficient collateral. Institutional-grade risk management for everyone."
             link="/hedge/overview"
           />
           <Feature
-            title="💱 DEX - Trading & Liquidity"
+            title="DEX - Trading & Liquidity"
             description="Swap tokens and provide liquidity with concentrated capital efficiency up to 95%. Earn fees on every trade through optimized zones."
             link="/dex/overview"
           />
           <Feature
-            title="🤖 Auto-Pools - Automated Strategies"
+            title="Auto-Pools - Automated Strategies"
             description="Deploy automated strategies that continuously rebalance positions, optimize ranges, and maximize yield 24/7 without manual intervention."
             link="/auto-pools/overview"
           />
