@@ -95,9 +95,9 @@ Each strategy has maximum locked liquidity:
 **Per-Strategy Limit**:
 ```
 Example Configuration:
-ETH Call Strategy: 50,000 USDC max locked
-ETH Put Strategy: 50,000 USDC max locked
-BTC Call Strategy: 30,000 USDC max locked
+ETH Call Strategy: 50,000 USDm max locked
+ETH Put Strategy: 50,000 USDm max locked
+BTC Call Strategy: 30,000 USDm max locked
 
 Purpose: Prevent over-concentration in single strategy
 Admin Configurable: Yes, via LimitController
@@ -112,9 +112,9 @@ Before Option Purchase:
 4. If within limit: Proceed with purchase
 
 Example:
-ETH Call Limit: 50,000 USDC
-Currently Locked: 45,000 USDC
-New Option: 8,000 USDC negativePNL
+ETH Call Limit: 50,000 USDm
+Currently Locked: 45,000 USDm
+New Option: 8,000 USDm negativePNL
 Check: 45,000 + 8,000 = 53,000 > 50,000
 Result: Transaction fails - limit exceeded
 ```
@@ -136,7 +136,7 @@ Treasury Balance + CoverPool Available ≥
   Total Locked + Locked Premium + New Option NegativePNL
 
 Components:
-- Treasury Balance: Current USDC in Treasury
+- Treasury Balance: Current USDm in Treasury
 - CoverPool Available: Backup liquidity from LPs
 - Total Locked: Sum of all active option max losses
 - Locked Premium: Premiums for active options
@@ -147,16 +147,16 @@ If insufficient: Transaction reverts
 
 **Example**:
 ```
-Treasury Balance: 100,000 USDC
-CoverPool Available: 50,000 USDC
-Total Available: 150,000 USDC
+Treasury Balance: 100,000 USDm
+CoverPool Available: 50,000 USDm
+Total Available: 150,000 USDm
 
-Currently Locked: 80,000 USDC
-Locked Premium: 15,000 USDC
-Benchmark Reserve: 10,000 USDC
-Total Committed: 105,000 USDC
+Currently Locked: 80,000 USDm
+Locked Premium: 15,000 USDm
+Benchmark Reserve: 10,000 USDm
+Total Committed: 105,000 USDm
 
-New Option NegativePNL: 20,000 USDC
+New Option NegativePNL: 20,000 USDm
 
 Check: 150,000 ≥ 80,000 + 15,000 + 10,000 + 20,000
        150,000 ≥ 125,000 ✓ Approved
@@ -173,8 +173,8 @@ Treasury maintains reserve capital:
 
 **Mechanism**:
 ```
-Benchmark: Minimum USDC Treasury should maintain
-Initial: 0 USDC (zero capital launch)
+Benchmark: Minimum USDm Treasury should maintain
+Initial: 0 USDm (zero capital launch)
 Growth: 20% of weekly profits retained in Treasury
 
 Example Timeline:
@@ -206,22 +206,22 @@ If Treasury Insufficient:
 2. Calculate profit
 3. Treasury balance < profit
 4. Call coverPool.payOut(deficit)
-5. CoverPool transfers USDC to Treasury
+5. CoverPool transfers USDm to Treasury
 6. Complete settlement
 ```
 
 **Example**:
 ```
-Option Profit: 15,000 USDC
-Treasury Balance: 8,000 USDC
-Deficit: 7,000 USDC
+Option Profit: 15,000 USDm
+Treasury Balance: 8,000 USDm
+Deficit: 7,000 USDm
 
 Flow:
 1. Treasury attempts payment
 2. Detects insufficient balance
-3. Requests 7,000 USDC from CoverPool
-4. CoverPool transfers 7,000 USDC
-5. Treasury pays full 15,000 USDC to trader
+3. Requests 7,000 USDm from CoverPool
+4. CoverPool transfers 7,000 USDm
+5. Treasury pays full 15,000 USDm to trader
 6. Settlement complete
 
 Trader receives full profit, no delays
@@ -245,7 +245,7 @@ Net Profit = Premiums Collected - Options Paid Out
 
 **Capital Protection**:
 ```
-LP Deposit: 100,000 USDC
+LP Deposit: 100,000 USDm
 Worst Case: All options ITM and exercised
 
 Protection Mechanisms:
@@ -314,7 +314,7 @@ At Expiration Timestamp:
 2. Calculate profit = max(0, currentPrice - strike)
 3. If profit > 0:
    - Execute payoff automatically
-   - Transfer USDC to owner
+   - Transfer USDm to owner
    - Burn NFT
 4. If profit = 0:
    - Mark option expired
@@ -333,7 +333,7 @@ Current Price at Expiry: $2,300
 Auto-Exercise:
 - Profit: ($2,300 - $2,000) per ETH
 - Automatically calculated
-- USDC profit transferred to holder
+- USDm profit transferred to holder
 - No manual action required
 ```
 
@@ -358,13 +358,13 @@ Purpose: Ensure ability to deliver
 
 **Cash-Secured Puts**:
 ```
-Requirement: Must hold USDC equal to strike × amount
+Requirement: Must hold USDm equal to strike × amount
 
 Example:
 Sell 10 ETH $1,800 puts:
-- Must deposit $18,000 USDC
+- Must deposit $18,000 USDm
 - Locked until expiry or close
-- If exercised: USDC used for settlement
+- If exercised: USDm used for settlement
 
 Purpose: Ensure ability to pay
 ```
@@ -433,8 +433,8 @@ Monitor strategy capacity:
 Utilization = Locked Liquidity / Strategy Limit
 
 Example:
-ETH Call Locked: 35,000 USDC
-ETH Call Limit: 50,000 USDC
+ETH Call Locked: 35,000 USDm
+ETH Call Limit: 50,000 USDm
 Utilization: 70%
 
 High utilization (>90%): Limited capacity
@@ -445,7 +445,7 @@ Low utilization (<50%): Ample capacity
 ```
 Strategy Card:
 ETH Call Options
-Available Capacity: 15,000 USDC (30% remaining)
+Available Capacity: 15,000 USDm (30% remaining)
 Current Premium: $80 per ETH
 
 Helps users understand liquidity availability
@@ -601,7 +601,7 @@ User Impact: Temporary buying pause
 
 ## FAQ
 
-**What if Treasury runs out of USDC?**  
+**What if Treasury runs out of USDm?**  
 CoverPool provides backup liquidity. LPs stake capital specifically for this purpose and earn 70% of profits.
 
 **Can I lose more than my premium as a buyer?**  

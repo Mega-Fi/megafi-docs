@@ -43,12 +43,12 @@ Used for:
 ### USD Coin
 
 **Name**: USD Coin
-**Symbol**: USDC
+**Symbol**: USDm
 **Decimals**: 6
 **Bridged From**: Ethereum
 **Address**: [TO BE ANNOUNCED]
 
-**Pools**: USDC/USDT (0.05%), ETH/USDC (0.3%), WBTC/USDC (0.3%)
+**Pools**: USDm/USDT (0.05%), ETH/USDm (0.3%), WBTC/USDm (0.3%)
 
 ### Tether USD
 
@@ -58,7 +58,7 @@ Used for:
 **Bridged From**: Ethereum
 **Address**: [TO BE ANNOUNCED]
 
-**Pools**: USDC/USDT (0.05%), ETH/USDT (0.3%)
+**Pools**: USDm/USDT (0.05%), ETH/USDT (0.3%)
 
 ### Dai Stablecoin
 
@@ -68,7 +68,7 @@ Used for:
 **Bridged From**: Ethereum
 **Address**: [TO BE ANNOUNCED]
 
-**Pools**: DAI/USDC (0.05%), ETH/DAI (0.3%)
+**Pools**: DAI/USDm (0.05%), ETH/DAI (0.3%)
 
 ## Major Cryptocurrencies
 
@@ -80,7 +80,7 @@ Used for:
 **Bridged From**: Ethereum
 **Address**: [TO BE ANNOUNCED]
 
-**Pools**: ETH/USDC (0.3%), ETH/USDT (0.3%), WBTC/ETH (0.3%)
+**Pools**: ETH/USDm (0.3%), ETH/USDT (0.3%), WBTC/ETH (0.3%)
 
 ### Wrapped Bitcoin
 
@@ -90,7 +90,7 @@ Used for:
 **Bridged From**: Ethereum
 **Address**: [TO BE ANNOUNCED]
 
-**Pools**: WBTC/ETH (0.3%), WBTC/USDC (0.3%)
+**Pools**: WBTC/ETH (0.3%), WBTC/USDm (0.3%)
 
 ## DeFi Blue Chips
 
@@ -102,7 +102,7 @@ Used for:
 **Bridged From**: Ethereum
 **Address**: [TO BE ANNOUNCED]
 
-**Pools**: LINK/ETH (0.3%), LINK/USDC (0.3%)
+**Pools**: LINK/ETH (0.3%), LINK/USDm (0.3%)
 
 ### Uniswap
 
@@ -129,18 +129,18 @@ Used for:
 ### High Liquidity Pools (0.3%)
 
 ```
-ETH/USDC - Primary pair, highest volume
+ETH/USDm - Primary pair, highest volume
 WBTC/ETH - Major crypto pair
 ETH/USDT - Alternative stable pair
-WBTC/USDC - BTC to stable
+WBTC/USDm - BTC to stable
 LINK/ETH - DeFi blue chip
 ```
 
 ### Stable Pairs (0.05%)
 
 ```
-USDC/USDT - Stablecoin swap
-DAI/USDC - Stablecoin swap
+USDm/USDT - Stablecoin swap
+DAI/USDm - Stablecoin swap
 ```
 
 ### Exotic Pairs (1%)

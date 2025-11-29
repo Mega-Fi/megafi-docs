@@ -62,8 +62,8 @@ This performance enables features impossible elsewhere:
 ## Supported Assets
 
 **Major Tokens**: ETH, WBTC, MEGA  
-**Stablecoins**: USDC, USDT, DAI  
-**Options Pairs**: ETH/USDC, WBTC/USDC
+**Stablecoins**: USDm, USDT, DAI  
+**Options Pairs**: ETH/USDm, WBTC/USDm
 
 [View All Supported Tokens →](../reference/supported-tokens.md)
 

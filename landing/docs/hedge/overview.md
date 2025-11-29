@@ -5,7 +5,7 @@ Real-time options trading powered by pool-based liquidity on MegaETH. Hedge enab
 ## At a Glance
 
 - Trade options on major token pairs with sub-10ms execution
-- Pool-based liquidity model with USDC-only architecture
+- Pool-based liquidity model with USDm-only architecture
 - 8 strategy types: calls, puts, straddles, strangles, and spreads
 - Options positions as tradeable ERC721 NFTs
 - Real-time Greeks calculations updated continuously
@@ -23,7 +23,7 @@ graph TD
     F --> G[Mint Option NFT]
     
     H[Liquidity Provider] --> I[CoverPool]
-    I --> J[Provide USDC]
+    I --> J[Provide USDm]
     J --> K[Earn from Premiums]
     
     I -.Backup Liquidity.-> C
@@ -35,9 +35,9 @@ graph TD
 
 **Hedge combines pool-based liquidity with on-chain options**:
 
-1. **Liquidity Providers**: Deposit USDC into CoverPool to earn 70% of protocol profits from option premiums.
+1. **Liquidity Providers**: Deposit USDm into CoverPool to earn 70% of protocol profits from option premiums.
 
-2. **Options Traders**: Purchase options by paying premiums in USDC. Liquidity is locked from OperationalTreasury to back the option.
+2. **Options Traders**: Purchase options by paying premiums in USDm. Liquidity is locked from OperationalTreasury to back the option.
 
 3. **Exercise & Settlement**: When options are exercised, profits are paid from Treasury. CoverPool provides backup liquidity if needed.
 
@@ -50,7 +50,7 @@ All powered by MegaETH's sub-10ms execution for instant settlement and real-time
 Liquidity providers face impermanent loss risk. Hedge enables protection:
 
 ```
-Scenario: Provide liquidity to ETH/USDC pool
+Scenario: Provide liquidity to ETH/USDm pool
 Risk: ETH price drops, causing IL
 
 Solution: Buy ETH put options
@@ -101,7 +101,7 @@ Strategy: Buy straddle (call + put at same strike)
 1. Select strategy (e.g., ETH Call)
 2. Input parameters (amount, duration)
 3. System calculates premium via strategy contract
-4. Approve USDC spending
+4. Approve USDm spending
 5. Purchase option
 6. Receive option as ERC721 NFT
 7. Exercise during exercise window (1 hour before expiry)
@@ -112,22 +112,22 @@ Available durations: 1 day to 30 days.
 
 ### Pool-Based Liquidity
 
-**USDC-Only Architecture**:
+**USDm-Only Architecture**:
 
 MegaFi uses a single-asset liquidity model:
-- Liquidity providers deposit USDC
-- Options traders pay premiums in USDC
-- All settlements happen in USDC
+- Liquidity providers deposit USDm
+- Options traders pay premiums in USDm
+- All settlements happen in USDm
 - No token conversion, no impermanent loss for options
 
 **OperationalTreasury**:
-- Holds USDC reserves for option backing
+- Holds USDm reserves for option backing
 - Locks liquidity when options are purchased
 - Pays profits when options are exercised
 - Manages risk through per-strategy limits
 
 **CoverPool**:
-- LP-provided USDC reserve pool
+- LP-provided USDm reserve pool
 - Earns 70% of net protocol profits
 - Provides backup liquidity for large payouts
 - Weekly profit distribution via 7-day epochs
@@ -181,7 +181,7 @@ Created → Active Period → Exercise Window (1h) → Expiry
 
 **Settlement**:
 1. Calculate profit based on current price vs strike
-2. Transfer profit in USDC
+2. Transfer profit in USDm
 3. Unlock liquidity from Treasury
 4. Burn NFT
 
@@ -195,7 +195,7 @@ Created → Active Period → Exercise Window (1h) → Expiry
 4. Enter amount (e.g., 1 ETH)
 5. Select duration (e.g., 7 days)
 6. Review premium calculation
-7. Approve USDC spending
+7. Approve USDm spending
 8. Confirm purchase
 9. Receive option NFT
 
@@ -212,7 +212,7 @@ Advanced users can sell options to earn premiums:
 
 **Collateral Requirements**:
 - **Covered Calls**: Must own underlying tokens
-- **Cash-Secured Puts**: Must hold USDC equal to strike value
+- **Cash-Secured Puts**: Must hold USDm equal to strike value
 
 Risk: Obligation to deliver if exercised.
 
@@ -222,7 +222,7 @@ Risk: Obligation to deliver if exercised.
 1. Option becomes exercisable 1 hour before expiry
 2. Click "Exercise" on in-the-money option
 3. System calculates profit
-4. USDC profit transferred to wallet
+4. USDm profit transferred to wallet
 5. NFT burns
 
 **Auto-Exercise**:
@@ -315,7 +315,7 @@ Outcome:
 Protect liquidity positions:
 
 ```
-LP Position: $20k in ETH/USDC pool
+LP Position: $20k in ETH/USDm pool
 Risk: IL if ETH moves significantly
 
 Hedge: Buy straddle (call + put at $2,000)
@@ -336,7 +336,7 @@ Outcome:
 Each strategy has exposure limits:
 
 ```
-Per-Strategy Limit: 20,000 USDC (example)
+Per-Strategy Limit: 20,000 USDm (example)
 Total Protocol Limit: Managed via LimitController
 ```
 
@@ -351,7 +351,7 @@ Prevents over-concentration and ensures sufficient backing liquidity.
 - Strategy limit not exceeded
 
 **CoverPool Backup**:
-- Provides additional USDC if Treasury insufficient
+- Provides additional USDm if Treasury insufficient
 - Earns from protocol profits
 - Acts as safety net for large payouts
 
@@ -362,7 +362,7 @@ Selling options requires collateral:
 **Covered Options**:
 ```
 Sell ETH call: Hold 1 ETH per contract
-Sell ETH put: Hold strike price worth of USDC per contract
+Sell ETH put: Hold strike price worth of USDm per contract
 ```
 
 **Maintenance**:
@@ -398,7 +398,7 @@ ITM Option at Expiration:
 Submit exercise: 0ms
 Verify position: 2ms
 Calculate payout: 1ms
-Transfer USDC: 5ms
+Transfer USDm: 5ms
 Total: 8ms
 
 Traditional: 15-30 seconds
@@ -447,11 +447,11 @@ Day 7: fixProfit() called → Profits distributed
 
 ### No Impermanent Loss
 
-USDC-only model eliminates IL:
+USDm-only model eliminates IL:
 
 ```
-Deposit: 10,000 USDC
-Withdrawal: Principal + Profits (all in USDC)
+Deposit: 10,000 USDm
+Withdrawal: Principal + Profits (all in USDm)
 No token conversion, no price risk
 ```
 
@@ -463,7 +463,7 @@ Hedge LP positions automatically:
 
 ```
 Strategy:
-1. Provide liquidity to ETH/USDC
+1. Provide liquidity to ETH/USDm
 2. Buy protective puts from Hedge
 3. LP fees help offset put premium
 4. Downside protected LP position
@@ -486,7 +486,7 @@ Setup:
 8 strategies: Call, Put, Straddle, Strangle, Call Spread, Put Spread, and 2 inverse spreads.
 
 **Are options physically or cash-settled?**  
-Cash-settled in USDC. You receive profit in USDC, not the underlying token.
+Cash-settled in USDm. You receive profit in USDm, not the underlying token.
 
 **Can I close options before expiration?**  
 Yes. Options are ERC721 NFTs and can be transferred or sold on secondary markets.

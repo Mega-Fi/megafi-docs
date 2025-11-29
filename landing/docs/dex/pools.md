@@ -15,7 +15,7 @@ Token pair liquidity pools that enable instant swaps on MegaFi. Pools use concen
 
 Each Pool consists of:
 
-**Token Pair**: Two ERC-20 tokens that can be swapped (e.g., ETH/USDC).
+**Token Pair**: Two ERC-20 tokens that can be swapped (e.g., ETH/USDm).
 
 **Fee Tier**: The trading fee percentage charged on swaps.
 
@@ -66,7 +66,7 @@ Different pool types use different fee tiers:
 
 **Use Case**: Stablecoin pairs and highly correlated assets.
 
-**Examples**: USDC/USDT, DAI/USDC, stETH/ETH
+**Examples**: USDm/USDT, DAI/USDm, stETH/ETH
 
 **Rationale**: Low volatility means less impermanent loss risk. Lower fees attract more volume.
 
@@ -76,7 +76,7 @@ Different pool types use different fee tiers:
 
 **Use Case**: Standard token pairs.
 
-**Examples**: ETH/USDC, WBTC/ETH, LINK/ETH
+**Examples**: ETH/USDm, WBTC/ETH, LINK/ETH
 
 **Rationale**: Balanced fee that compensates for moderate volatility while staying competitive.
 
@@ -157,13 +157,13 @@ When no direct pool exists between two tokens, swaps route through multiple pool
 ```mermaid
 graph LR
     A[LINK] -->|Pool 1| B[ETH]
-    B -->|Pool 2| C[USDC]
+    B -->|Pool 2| C[USDm]
     
     style A fill:#2563EB
     style C fill:#10B981
 ```
 
-Example: Swapping LINK for USDC routes through LINK/ETH and ETH/USDC pools.
+Example: Swapping LINK for USDm routes through LINK/ETH and ETH/USDm pools.
 
 MegaFi's router automatically finds the most efficient path, considering:
 - Total fees across all hops
@@ -280,7 +280,7 @@ No. You must provide both tokens in proportion to the current price.
 Create it yourself. Pool creation is permissionless.
 
 **Can multiple pools exist for the same token pair?**  
-Yes, if they use different fee tiers. For example, ETH/USDC can have 0.05%, 0.3%, and 1% pools simultaneously.
+Yes, if they use different fee tiers. For example, ETH/USDm can have 0.05%, 0.3%, and 1% pools simultaneously.
 
 **How are trading fees split among liquidity providers?**  
 Proportionally based on liquidity contributed and time that liquidity was active.

@@ -40,7 +40,7 @@ Each Tick has two boundaries:
 **Upper Bound**: Maximum price where your liquidity is active.
 
 Example:
-- Token pair: ETH/USDC
+- Token pair: ETH/USDm
 - Lower bound: $1,800
 - Upper bound: $2,200
 - Your liquidity is active when ETH trades between $1,800 and $2,200
@@ -82,12 +82,12 @@ This strategy combines high efficiency with risk management.
 
 ### Based on Price Expectations
 
-**Stable Pairs** (e.g., USDC/USDT):
+**Stable Pairs** (e.g., USDm/USDT):
 - Use very narrow ticks (e.g., 0.995 - 1.005)
 - Price rarely moves outside
 - High capital efficiency with low management
 
-**Volatile Pairs** (e.g., ETH/USDC):
+**Volatile Pairs** (e.g., ETH/USDm):
 - Use wider ticks (e.g., ±20-30%)
 - Balance efficiency with active time
 - Consider automated rebalancing with [Auto-Pools](../auto-pools/overview.md) preset configurations
@@ -182,7 +182,7 @@ Capital efficiency measures how much of your deposit actively earns fees:
 
 **Traditional AMM**:
 ```
-ETH/USDC Pool
+ETH/USDm Pool
 Price: $2000
 Your $10,000 deposit actively trading: ~$500 (5%)
 Capital efficiency: 5%
@@ -190,7 +190,7 @@ Capital efficiency: 5%
 
 **Concentrated Liquidity (±10% tick)**:
 ```
-ETH/USDC Pool
+ETH/USDm Pool
 Price: $2000
 Tick: $1800-$2200
 Your $10,000 deposit actively trading: ~$9,500 (95%)
@@ -204,7 +204,7 @@ Result: 19x more effective liquidity per dollar.
 ### Stable Pair Strategy
 
 ```
-Pair: USDC/USDT
+Pair: USDm/USDT
 Current Price: 1.0000
 Tick: 0.9990 - 1.0010
 Width: 0.2%
@@ -217,7 +217,7 @@ Width: 0.2%
 ### Blue Chip Strategy
 
 ```
-Pair: ETH/USDC
+Pair: ETH/USDm
 Current Price: $2000
 Tick: $1800 - $2200
 Width: 20%
@@ -243,7 +243,7 @@ Width: 100%
 ### Mean Reversion Strategy
 
 ```
-Pair: ETH/USDC
+Pair: ETH/USDm
 Current Price: $2000 (oversold)
 Tick: $2000 - $2400
 Width: 20% (asymmetric, above current)

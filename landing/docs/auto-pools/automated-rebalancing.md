@@ -38,54 +38,54 @@ When the price of tokens in a liquidity pool diverges from the price at the time
 
 Trailing rebalancing works by trailing the market price before executing the rebalance. It does so to wait for the market price to come back to the previous range as it goes out of range usually for a very short time. It also prevents unnecessary divergence loss by quickly swapping tokens in the pool and keeping the LP position in the range.
 
-When the TWAP of pool, for example TWAP of USDC per ETH in an $ETH/$USDC pool, hits the rebalancing threshold on either side of the price range, Auto-Pools will put that position right behind the new price. This means that it will not swap your assets to bring it back to the range essentially saving from greater loss of buying your asset on a higher price or selling on a lower price.
+When the TWAP of pool, for example TWAP of USDm per ETH in an $ETH/$USDm pool, hits the rebalancing threshold on either side of the price range, Auto-Pools will put that position right behind the new price. This means that it will not swap your assets to bring it back to the range essentially saving from greater loss of buying your asset on a higher price or selling on a lower price.
 
-Let's understand this by an example of a pool ETH/USDC.
+Let's understand this by an example of a pool ETH/USDm.
 
 ### Scenario 1: When $ETH Price Goes Above the Range
 
 Your liquidity position trails the current $ETH price as it increases and goes out of range. It is suitable for bullish market trends so you would be able to capture more of the upside.
 
-#### Example: Trailing Rebalancing in Auto-Pools ($ETH/$USDC Pool) - Bull Mode
+#### Example: Trailing Rebalancing in Auto-Pools ($ETH/$USDm Pool) - Bull Mode
 
-Let's walk through a scenario using the $ETH/$USDC pool to understand how trailing rebalancing works in Bull Mode.
+Let's walk through a scenario using the $ETH/$USDm pool to understand how trailing rebalancing works in Bull Mode.
 
 **Intents You Setup Initially:**
 
 Price Range for the strategy:
-- Minimum Price: 3100.56 $USDC per $ETH
-- Maximum Price: 3210.44 $USDC per $ETH
+- Minimum Price: 3100.56 $USDm per $ETH
+- Maximum Price: 3210.44 $USDm per $ETH
 
 Rebalance Triggers (Cushion):
-- Min Trigger: 2890.93 $USDC per $ETH
-- Max Trigger: 3240.12 $USDC per $ETH
+- Min Trigger: 2890.93 $USDm per $ETH
+- Max Trigger: 3240.12 $USDm per $ETH
 
 Current TWAP Price:
-- 3180.32 $USDC per $ETH
+- 3180.32 $USDm per $ETH
 
 **What Happens When the $ETH Price Increases?**
 
-Let's say the price of $ETH rises to 3235.86 $USDC per $ETH.
+Let's say the price of $ETH rises to 3235.86 $USDm per $ETH.
 
 **Rebalancing Action:**
 The rebalancing mechanism adjusts the price range to trail just behind the new price.
 
-New Price Range: 3109.06 – 3210.34 $USDC per $ETH
+New Price Range: 3109.06 – 3210.34 $USDm per $ETH
 
 This ensures your liquidity is positioned optimally for the updated market price.
 
 ![Trailing Rebalancing - Price Increase Step 1](img/increase-1.png)
 
-**If $ETH's price continues to rise and touches the maximum rebalance trigger (3240.12 $USDC per $ETH):**
+**If $ETH's price continues to rise and touches the maximum rebalance trigger (3240.12 $USDm per $ETH):**
 
 **Rebalancing Execution:**
-The system swaps $ETH for $USDC, rebalancing your position automatically.
+The system swaps $ETH for $USDm, rebalancing your position automatically.
 
 ![Trailing Rebalancing - Price Increase Step 2](img/increase-2.png)
 
 **What Happens When the $ETH Price Falls Back?**
 
-If the price of $ETH falls back into the original price range (3100.56 – 3210.44 $USDC per $ETH):
+If the price of $ETH falls back into the original price range (3100.56 – 3210.44 $USDm per $ETH):
 
 **No Rebalancing Required:**
 The system does not take action since the price remains within the predefined range. Your liquidity stays intact without unnecessary adjustments.
@@ -94,46 +94,46 @@ The system does not take action since the price remains within the predefined ra
 
 Your liquidity position trails the current $ETH price as it decreases and goes out of range. It is suitable for bearish market trends so you can protect yourself against decreasing prices.
 
-#### Example: Trailing Rebalancing in Auto-Pools ($ETH/$USDC Pool) - Bear Mode
+#### Example: Trailing Rebalancing in Auto-Pools ($ETH/$USDm Pool) - Bear Mode
 
-Let's walk through a scenario using the $ETH/$USDC pool to understand how trailing rebalancing works in Bear Mode.
+Let's walk through a scenario using the $ETH/$USDm pool to understand how trailing rebalancing works in Bear Mode.
 
 **Intents You Setup Initially:**
 
 Price Range for strategy:
-- Minimum Price: 3100.56 $USDC per $ETH
-- Maximum Price: 3210.44 $USDC per $ETH
+- Minimum Price: 3100.56 $USDm per $ETH
+- Maximum Price: 3210.44 $USDm per $ETH
 
 Rebalance Triggers (Cushion):
-- Min Trigger: 2890.93 $USDC per $ETH
-- Max Trigger: 3240.12 $USDC per $ETH
+- Min Trigger: 2890.93 $USDm per $ETH
+- Max Trigger: 3240.12 $USDm per $ETH
 
 Current TWAP Price:
-- 3180.32 $USDC per $ETH
+- 3180.32 $USDm per $ETH
 
 **What Happens When the $ETH Price Decreases?**
 
-Let's say the price of $ETH falls to 2999.8 $USDC per $ETH.
+Let's say the price of $ETH falls to 2999.8 $USDm per $ETH.
 
 **Rebalancing Action:**
 The rebalancing mechanism adjusts the price range to trail just behind the new price.
 
-New Price Range: 3050.24 – 3199.33 $USDC per $ETH
+New Price Range: 3050.24 – 3199.33 $USDm per $ETH
 
 This ensures your liquidity is positioned optimally for the updated market price.
 
 ![Trailing Rebalancing - Price Decrease Step 1](img/decrease-1.png)
 
-**If $ETH's price continues to fall and touches the minimum rebalance trigger (2890.93 $USDC per $ETH):**
+**If $ETH's price continues to fall and touches the minimum rebalance trigger (2890.93 $USDm per $ETH):**
 
 **Rebalancing Execution:**
-The system swaps $USDC for $ETH, rebalancing your position automatically.
+The system swaps $USDm for $ETH, rebalancing your position automatically.
 
 ![Trailing Rebalancing - Price Decrease Step 2](img/decrease-2.png)
 
 **What Happens When the $ETH Price Rises Back?**
 
-If the price of $ETH rises back into the original price range (3100.56 – 3210.44 $USDC per $ETH):
+If the price of $ETH rises back into the original price range (3100.56 – 3210.44 $USDm per $ETH):
 
 **No Rebalancing Required:**
 The system does not take action since the price remains within the predefined range. Your liquidity stays intact without unnecessary adjustments.
@@ -158,15 +158,15 @@ Since it works by trailing the market price instead of rebalancing the position 
 
 Active rebalancing adjusts your liquidity position within the market's price range by actively adjusting the distribution of tokens in your liquidity pool. It ensures your position is always within the active price range to keep earning fees and yields from trading volume.
 
-Let's understand this by an example of a pool ETH/USDC. ETH has a volatile price and it could go up or down.
+Let's understand this by an example of a pool ETH/USDm. ETH has a volatile price and it could go up or down.
 
 ### Scenario 1: When $ETH price goes above the range
 
-When the price of $ETH goes above the maximum price range, your position will go out of range and will stop generating fees and yields. Auto-Pools will actively rebalance your position by converting your $ETH to $USDC partially since its price increased to bring your LP position back to the range.
+When the price of $ETH goes above the maximum price range, your position will go out of range and will stop generating fees and yields. Auto-Pools will actively rebalance your position by converting your $ETH to $USDm partially since its price increased to bring your LP position back to the range.
 
 ### Scenario 2: When $ETH price drops below the range
 
-When the price of $ETH drops below the minimum price range, your position will go out of range and will stop generating fees and yields. Auto-Pools will actively rebalance your position by converting your $USDC to $ETH partially since its price decreased to bring your LP position back to the range.
+When the price of $ETH drops below the minimum price range, your position will go out of range and will stop generating fees and yields. Auto-Pools will actively rebalance your position by converting your $USDm to $ETH partially since its price decreased to bring your LP position back to the range.
 
 ### Scenario 3: When $ETH price fluctuates below and above the range
 

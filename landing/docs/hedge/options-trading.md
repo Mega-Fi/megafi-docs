@@ -9,7 +9,7 @@ Buy and sell call and put options on major token pairs. Options provide leverage
 - Options as ERC721 NFTs - transferable and composable
 - Exercise window: 1 hour before expiry
 - Auto-exercise for in-the-money options at expiration
-- On-chain settlement in USDC
+- On-chain settlement in USDm
 - Defined maximum loss for option buyers
 
 ## Option Basics
@@ -63,7 +63,7 @@ Exposure: Same upside, 96% less capital
 ### Buying Process
 
 1. Navigate to Hedge → Options
-2. Select token pair (e.g., ETH/USDC)
+2. Select token pair (e.g., ETH/USDm)
 3. Choose option type:
    - Call (profit from price increase)
    - Put (profit from price decrease)
@@ -73,11 +73,11 @@ Exposure: Same upside, 96% less capital
    - Maximum: 30 days
    - Common: 7 days, 14 days, 30 days
 6. Review quote:
-   - Premium cost (USDC)
+   - Premium cost (USDm)
    - Max profit potential
    - Max loss (premium paid)
    - Break-even price
-7. Approve USDC spending
+7. Approve USDm spending
 8. Confirm purchase
 9. Receive option as ERC721 NFT
 
@@ -213,7 +213,7 @@ Exercise during the window:
 3. Click "Exercise"
 4. System calculates profit based on current price
 5. Confirm transaction
-6. Receive USDC profit
+6. Receive USDm profit
 7. NFT burns
 
 **When to exercise early**:
@@ -230,7 +230,7 @@ At Expiration:
 1. System checks if option is ITM
 2. If profit > 0:
    - Calculates profit automatically
-   - Transfers USDC to owner
+   - Transfers USDm to owner
    - Burns NFT
 3. If profit = 0:
    - Option expires worthless
@@ -248,7 +248,7 @@ Exercise Flow:
 3. Profit calculated: max(0, currentPrice - strike) for calls
 4. Treasury unlocks liquidity
 5. If Treasury insufficient: CoverPool provides backup
-6. USDC transferred to option holder
+6. USDm transferred to option holder
 7. Position marked as exercised
 8. NFT burns
 
@@ -282,7 +282,7 @@ Advanced strategy for earning premium income.
 3. Enter parameters (strike, expiration, amount)
 4. Review collateral requirement:
    - **Covered Call**: Must own underlying tokens
-   - **Cash-Secured Put**: Must have USDC equal to strike × amount
+   - **Cash-Secured Put**: Must have USDm equal to strike × amount
 5. Deposit collateral
 6. Review premium received
 7. Confirm sale
@@ -334,13 +334,13 @@ Sell Cash-Secured Put:
 - Sell: 10 ETH puts at $1,800 (30 days)
 - Premium: $50 per ETH × 10 = $500
 
-Collateral: $18,000 USDC
+Collateral: $18,000 USDm
 
 Scenarios at Expiration:
 
 ETH at $2,500:
 - Option expires worthless
-- Keep: $18,000 USDC + $500 premium
+- Keep: $18,000 USDm + $500 premium
 - Annualized: ($500 / $18,000) × 12 = 33% APY
 
 ETH at $1,900:
@@ -525,7 +525,7 @@ Premium Inputs:
 
 Calculation:
 Strategy contract computes Black-Scholes formula
-Returns premium in USDC (6 decimals)
+Returns premium in USDm (6 decimals)
 ```
 
 ### Real-Time Pricing
@@ -592,7 +592,7 @@ Yes. On-chain data enables tracking premium values, Greeks, and P&L over time.
 ITM options auto-exercise and pay profit. OTM options expire worthless.
 
 **How is profit calculated?**  
-Based on Chainlink oracle price at exercise time vs strike price, settled in USDC.
+Based on Chainlink oracle price at exercise time vs strike price, settled in USDm.
 
 ## Next Steps
 

@@ -16,7 +16,7 @@ Protect your portfolio from adverse price movements using options-based hedging 
 ### Risk Without Hedging
 
 ```
-LP Position: $20k in ETH/USDC
+LP Position: $20k in ETH/USDm
 ETH drops 30%: $2,000 → $1,400
 
 Impermanent Loss: -$1,800
@@ -29,7 +29,7 @@ Unhedged portfolio suffers full IL
 ### Risk With Hedging
 
 ```
-LP Position: $20k in ETH/USDC
+LP Position: $20k in ETH/USDm
 Hedge: Buy 5 ETH puts at $1,800 for $250
 
 ETH drops 30%: $2,000 → $1,400
@@ -62,7 +62,7 @@ Execution:
 2. Enter 10 ETH amount
 3. Select 30-day duration
 4. Review premium: $500
-5. Approve USDC
+5. Approve USDm
 6. Purchase option
 7. Receive option NFT
 ```
@@ -106,7 +106,7 @@ Execution:
 5. Deposit 10 ETH as collateral
 6. Review premium: $800
 7. Confirm sale
-8. Receive $800 USDC
+8. Receive $800 USDm
 ```
 
 **Payoff**:
@@ -186,7 +186,7 @@ Protect liquidity provider positions:
 
 **Setup**:
 ```
-LP Position: $20k in ETH/USDC pool (10 ETH worth)
+LP Position: $20k in ETH/USDm pool (10 ETH worth)
 Risk: IL if ETH price moves significantly
 
 Hedge Options:
@@ -411,11 +411,11 @@ Action: Sell some puts or buy calls to rebalance
 Impermanent loss occurs when prices diverge:
 
 ```
-Start: 10 ETH + $20,000 USDC at $2,000/ETH
+Start: 10 ETH + $20,000 USDm at $2,000/ETH
 LP Share: $40,000
 
 ETH drops to $1,500:
-Pool rebalances: 11.55 ETH + $17,320 USDC
+Pool rebalances: 11.55 ETH + $17,320 USDm
 LP Value: $34,640
 
 vs HODLing: 10 ETH ($15,000) + $20,000 = $35,000
@@ -428,7 +428,7 @@ If more volatile swing: IL increases
 
 **Full Protection**:
 ```
-LP Position: $40k (10 ETH + $20k USDC)
+LP Position: $40k (10 ETH + $20k USDm)
 Hedge: Buy 5 ETH straddle at $2,000
 
 Cost: $500

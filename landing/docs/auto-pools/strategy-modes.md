@@ -33,7 +33,7 @@ Best for bull market. This mode functions like a dynamic range order that follow
 
 **Market Condition**: Optimized for bullish market trends.
 
-**Use Case**: When you expect the tokenB asset (ETH) to increase in value relative to tokenA (USDC).
+**Use Case**: When you expect the tokenB asset (ETH) to increase in value relative to tokenA (USDm).
 
 ### How It Works
 
@@ -57,7 +57,7 @@ Best for bear market. This mode functions like a dynamic range order that follow
 
 **Market Condition**: Optimized for bearish market trends.
 
-**Use Case**: When you expect the tokenB asset (ETH) to decrease in value relative to tokenA (USDC).
+**Use Case**: When you expect the tokenB asset (ETH) to decrease in value relative to tokenA (USDm).
 
 ### How It Works
 
@@ -154,7 +154,7 @@ Choose when:
 | 3 | Dynamic | Best for sideways (volatile) market. This mode functions like a dynamic range order that follows the pool price right and left, keeping liquidity as active as possible. | This is how ALMs work, best for volatile markets with no clear direction. |
 | 4 | Static | Best for advanced liquidity strategies. This mode features static ticks that you can use to define your own custom liquidity strategy. | Static liquidity used for building more sophisticated LP strategies. |
 
-Note: tokenA = USDC, tokenB = ETH
+Note: tokenA = USDm, tokenB = ETH
 
 ## Switching Modes
 

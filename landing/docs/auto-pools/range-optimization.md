@@ -30,7 +30,7 @@ When setting up your strategy, you configure:
 
 ### Example Price Ranges
 
-For an ETH/USDC pool with current price of $3,000:
+For an ETH/USDm pool with current price of $3,000:
 
 **Wide Range (Bull Mode)**:
 - Minimum: $2,400 (-20%)

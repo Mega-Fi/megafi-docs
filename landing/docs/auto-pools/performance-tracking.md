@@ -95,10 +95,10 @@ Lower is better. Target: < 2%
 IL = Current Position Value - Hold Value
 
 Example:
-Started: 1 ETH + $2,000 USDC = $4,000
+Started: 1 ETH + $2,000 USDm = $4,000
 ETH now: $2,400
-Current position: 0.91 ETH + $2,187 USDC = $3,371
-Hold value: 1 ETH + $2,000 USDC = $4,400
+Current position: 0.91 ETH + $2,187 USDm = $3,371
+Hold value: 1 ETH + $2,000 USDm = $4,400
 IL = $3,371 - $4,400 = -$1,029 (23% loss)
 ```
 
@@ -304,13 +304,13 @@ Understand strategy performance across conditions.
 Compare across different pools:
 
 ```
-Your ETH/USDC Position (Bear Mode):
+Your ETH/USDm Position (Bear Mode):
 APR: 28%
 
 Your WBTC/ETH Position (Bear Mode):
 APR: 22%
 
-Analysis: ETH/USDC performing better due to higher volume
+Analysis: ETH/USDm performing better due to higher volume
 ```
 
 Helps allocate capital optimally.

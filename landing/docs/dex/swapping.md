@@ -77,7 +77,7 @@ You cannot select the same token for input and output. The interface prevents th
 
 Quote generates automatically after selecting both tokens:
 
-**Exchange Rate**: Current price (e.g., 1 ETH = 2000 USDC).
+**Exchange Rate**: Current price (e.g., 1 ETH = 2000 USDm).
 
 **Expected Output**: Amount you'll receive.
 
@@ -135,9 +135,9 @@ Swap executes and finalizes in 10-50ms:
 Current price between tokens:
 
 ```
-1 ETH = 2000 USDC
+1 ETH = 2000 USDm
 or
-1 USDC = 0.0005 ETH
+1 USDm = 0.0005 ETH
 ```
 
 Click the swap icon to toggle between formats.
@@ -163,12 +163,12 @@ Price impact is separate from trading fees.
 The worst-case output amount after slippage:
 
 ```
-Expected output: 2000 USDC
+Expected output: 2000 USDm
 Slippage tolerance: 0.5%
-Minimum received: 1990 USDC
+Minimum received: 1990 USDm
 ```
 
-If execution price results in output < 1990 USDC, transaction reverts automatically.
+If execution price results in output < 1990 USDm, transaction reverts automatically.
 
 ### Trading Fee
 
@@ -194,7 +194,7 @@ MegaFi's router finds the optimal path for your swap:
 Single pool between tokens:
 
 ```
-ETH --> [ETH/USDC Pool] --> USDC
+ETH --> [ETH/USDm Pool] --> USDm
 ```
 
 Lowest fees and best price when direct pool exists.
@@ -204,7 +204,7 @@ Lowest fees and best price when direct pool exists.
 Multiple pools when no direct pool:
 
 ```
-LINK --> [LINK/ETH Pool] --> ETH --> [ETH/USDC Pool] --> USDC
+LINK --> [LINK/ETH Pool] --> ETH --> [ETH/USDm Pool] --> USDm
 ```
 
 Router considers:
@@ -219,8 +219,8 @@ Automatically selects most efficient path.
 Large trades may split across multiple paths:
 
 ```
-70% via: ETH --> USDC (0.3% pool)
-30% via: ETH --> USDT --> USDC (0.05% pools)
+70% via: ETH --> USDm (0.3% pool)
+30% via: ETH --> USDT --> USDm (0.05% pools)
 ```
 
 Splitting reduces price impact by distributing the trade.

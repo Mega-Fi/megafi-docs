@@ -37,7 +37,7 @@ graph TB
 
 ### Pools
 
-Token pair pools that facilitate swaps. Each Pool contains two tokens (e.g., ETH/USDC) and executes swaps between them.
+Token pair pools that facilitate swaps. Each Pool contains two tokens (e.g., ETH/USDm) and executes swaps between them.
 
 Pools use an automated market maker formula to price tokens. As trades occur, prices adjust automatically to maintain balance.
 
@@ -67,8 +67,8 @@ LP NFTs are transferable. You can sell, trade, or hold them like any NFT.
 
 Different pools have different fee structures:
 
-- **0.05%**: Stable pairs (USDC/USDT, DAI/USDC)
-- **0.3%**: Standard pairs (ETH/USDC, WBTC/ETH)
+- **0.05%**: Stable pairs (USDm/USDT, DAI/USDm)
+- **0.3%**: Standard pairs (ETH/USDm, WBTC/ETH)
 - **1%**: Exotic pairs (low liquidity or volatile tokens)
 
 Higher fees compensate for higher risk and volatility.

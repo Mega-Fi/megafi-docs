@@ -44,7 +44,7 @@ Upgradeable: Yes (Transparent Proxy)
 ```
 
 **Functions**:
-- `provide()` - Deposit USDC
+- `provide()` - Deposit USDm
 - `claim()` - Claim profits
 - `withdraw()` - Request withdrawal
 - `withdrawEpoch()` - Complete withdrawal
@@ -181,18 +181,18 @@ Description: Inverse bull put spread
 
 ## External Dependencies
 
-### USDC (Stablecoin)
+### USDm (Stablecoin)
 
-**USDC on MegaETH**
+**USDm on MegaETH**
 ```
 Address: [TO BE ANNOUNCED]
-Symbol: USDC
+Symbol: USDm
 Decimals: 6
 Bridged from: Ethereum
 Purpose: Primary protocol currency
 ```
 
-**Note**: All premiums, settlements, and LP operations use USDC.
+**Note**: All premiums, settlements, and LP operations use USDm.
 
 ---
 
@@ -236,7 +236,7 @@ Type: Library
 
 ```
 Address: [TO BE ANNOUNCED]
-Description: Backup USDC source for CoverPool
+Description: Backup USDm source for CoverPool
 Purpose: Emergency liquidity reserve
 ```
 
@@ -272,7 +272,7 @@ HegicStrategyPut_ETH: [TESTNET ADDRESS TBA]
 
 **Test Tokens** (Testnet)
 ```
-USDC (Test): [TESTNET ADDRESS TBA]
+USDm (Test): [TESTNET ADDRESS TBA]
 WETH (Test): [TESTNET ADDRESS TBA]
 ```
 
@@ -483,7 +483,7 @@ If you encounter fraudulent addresses:
 1. Core contracts (Treasury, CoverPool, PositionsManager)
 2. Strategy contracts (Call, Put, Straddle, Strangle)
 3. Utility contracts (LimitController, ProfitCalculator)
-4. Initial USDC liquidity seeding
+4. Initial USDm liquidity seeding
 5. First epoch initialization
 
 **Announcement Channels**:
@@ -505,7 +505,7 @@ No. Testnet and mainnet have completely different addresses.
 **Can I use these addresses on Ethereum or other chains?**  
 No. These contracts are specific to MegaETH network only.
 
-**What if I send USDC to the wrong address?**  
+**What if I send USDm to the wrong address?**  
 Blockchain transactions are irreversible. Always verify addresses before sending.
 
 **How do I know an address is official?**  
@@ -514,7 +514,7 @@ Check multiple official sources, verify on block explorer, and review source cod
 **Will proxy addresses ever change?**  
 No. Proxy addresses remain constant. Only implementation addresses change during upgrades.
 
-**Where can I get test USDC for testnet?**  
+**Where can I get test USDm for testnet?**  
 Testnet faucet will be provided (link TBA).
 
 **Can I verify contracts myself?**  

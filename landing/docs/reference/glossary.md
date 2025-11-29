@@ -154,7 +154,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Smart Contract**: Self-executing code on blockchain. MegaFi is built with smart contracts.
 
-**Stablecoin**: Token pegged to stable asset (usually $1). USDC, USDT, DAI.
+**Stablecoin**: Token pegged to stable asset (usually $1). USDm, USDT, DAI.
 
 **Auto-Pools**: MegaFi's automated liquidity management functionality.
 

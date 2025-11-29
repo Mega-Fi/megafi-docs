@@ -17,12 +17,12 @@ Traditional AMM LP tokens are fungible - one token is identical to another. This
 
 **Position A**:
 - Zone: $1900 - $2000
-- Liquidity: 10 ETH + 19,000 USDC
+- Liquidity: 10 ETH + 19,000 USDm
 - Fees: $150 unclaimed
 
 **Position B**:
 - Zone: $2000 - $2100
-- Liquidity: 10 ETH + 20,000 USDC
+- Liquidity: 10 ETH + 20,000 USDm
 - Fees: $50 unclaimed
 
 These positions are not interchangeable. NFTs solve this by giving each position a unique identifier.

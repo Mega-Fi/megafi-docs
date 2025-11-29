@@ -6,7 +6,7 @@ Technical reference for MegaFi smart contracts. Understand contract architecture
 
 ## At a Glance
 
-- Pool-based liquidity architecture with USDC-only model
+- Pool-based liquidity architecture with USDm-only model
 - OperationalTreasury manages option lifecycle
 - CoverPool provides LP staking and backup liquidity
 - 8+ strategy contracts implement different option types
@@ -53,7 +53,7 @@ graph TD
 - Inverse strategies (optional)
 
 **External Dependencies**:
-- USDC (ERC20 token)
+- USDm (ERC20 token)
 - Chainlink Price Feeds (ETH/USD, BTC/USD)
 
 ## OperationalTreasury
@@ -64,7 +64,7 @@ graph TD
 
 ```solidity
 // Immutable
-IERC20 public immutable token;                 // USDC address
+IERC20 public immutable token;                 // USDm address
 IPositionsManager public immutable manager;    // NFT manager
 ICoverPool public immutable coverPool;        // Backup liquidity
 uint256 public immutable maxLockupPeriod;     // 30 days (2,592,000s)
@@ -119,13 +119,13 @@ function buy(
 **Flow**:
 1. Validate strategy is accepted
 2. Calculate premium via strategy.create()
-3. Transfer premium (USDC) from msg.sender
+3. Transfer premium (USDm) from msg.sender
 4. Lock liquidity (negativePNL)
 5. Mint option NFT to holder
 6. Emit Acquired event
 
 **Requirements**:
-- msg.sender approved USDC ≥ premium
+- msg.sender approved USDm ≥ premium
 - period within allowed range
 - strategy limit not exceeded
 - sufficient liquidity available
@@ -151,7 +151,7 @@ function payOff(uint256 positionID, address account)
 2. Calculate profit via strategy.payOffAmount()
 3. Unlock liquidity from Treasury
 4. If Treasury balance < profit: call coverPool.payOut(deficit)
-5. Transfer profit (USDC) to account
+5. Transfer profit (USDm) to account
 6. Emit Paid event
 
 **Requirements**:
@@ -224,8 +224,8 @@ event Expired(uint256 indexed id);
 
 ```solidity
 // Immutable
-IERC20 public immutable coverToken;      // USDC
-IERC20 public immutable profitToken;     // USDC
+IERC20 public immutable coverToken;      // USDm
+IERC20 public immutable profitToken;     // USDm
 
 // Constants
 uint256 constant CHANGING_PRICE_DECIMALS = 1e30;
@@ -236,7 +236,7 @@ uint32 public windowSize;                // 5 days (entry/exit window)
 uint256 public cumulativeProfit;        // Profit per share
 uint256 public totalShare;              // Total LP shares
 uint256 public currentEpoch;            // Current epoch number
-address public payoffPool;              // Backup USDC source
+address public payoffPool;              // Backup USDm source
 
 mapping(uint256 => uint256) public shareOf;
 mapping(uint256 => uint256) public bufferredUnclaimedProfit;
@@ -249,10 +249,10 @@ mapping(uint256 => Epoch) public epoch;
 ```solidity
 struct Epoch {
     uint256 start;                      // Start timestamp
-    uint256 changingPrice;              // 1e30 (USDC/USDC)
+    uint256 changingPrice;              // 1e30 (USDm/USDm)
     uint256 cumulativePoint;            // Profit checkpoint
     uint256 totalShareOut;              // Shares withdrawing
-    uint256 coverTokenOut;              // USDC withdrawing
+    uint256 coverTokenOut;              // USDm withdrawing
     uint256 profitTokenOut;             // Profits distributing
     mapping(uint256 => uint256) outShare;
 }
@@ -269,12 +269,12 @@ function provide(uint256 amount, uint256 positionId)
 ```
 
 **Parameters**:
-- `amount`: USDC to deposit (6 decimals)
+- `amount`: USDm to deposit (6 decimals)
 - `positionId`: 0 for new, existing ID to add
 
 **Flow**:
 1. Check within entry window (first 5 days of epoch)
-2. Transfer USDC from msg.sender
+2. Transfer USDm from msg.sender
 3. Calculate share: (amount × totalShare) / totalCoverToken
 4. Mint or update LP NFT
 5. Emit Provided event
@@ -298,11 +298,11 @@ function claim(uint256 positionId)
 
 **Flow**:
 1. Calculate claimable: buffered + ((cumulativeProfit - cumulativePoint) × share)
-2. Transfer USDC to msg.sender
+2. Transfer USDm to msg.sender
 3. Update cumulativePoint
 4. Reset buffered profit
 
-**Returns**: USDC claimed (6 decimals)
+**Returns**: USDm claimed (6 decimals)
 
 **Gas**: ~100,000-150,000
 
@@ -347,7 +347,7 @@ function withdrawEpoch(uint256 positionId, uint256[] calldata epochs)
 
 **Flow**:
 1. For each closed epoch with outShare
-2. Calculate USDC + profits to return
+2. Calculate USDm + profits to return
 3. Transfer tokens
 4. Clear epoch withdrawal data
 
@@ -393,10 +393,10 @@ function payOut(uint256 amount)
 ```
 
 **Parameters**:
-- `amount`: USDC needed (6 decimals)
+- `amount`: USDm needed (6 decimals)
 
 **Flow**:
-1. Transfer USDC to Treasury
+1. Transfer USDm to Treasury
 2. Update internal accounting
 
 **Use**: Called by Treasury when balance insufficient for option payoff
@@ -588,8 +588,8 @@ Before option purchase:
 ### Buying Options
 
 ```typescript
-// 1. Approve USDC
-await usdc.approve(treasury.address, premium);
+// 1. Approve USDm
+await usdm.approve(treasury.address, premium);
 
 // 2. Buy option
 const tx = await treasury.buy(
@@ -621,8 +621,8 @@ if (profit > 0) {
 ### Providing Liquidity
 
 ```typescript
-// 1. Approve USDC
-await usdc.approve(coverPool.address, amount);
+// 1. Approve USDm
+await usdm.approve(coverPool.address, amount);
 
 // 2. Provide liquidity
 const positionId = await coverPool.provide(

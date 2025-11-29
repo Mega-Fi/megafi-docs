@@ -105,7 +105,7 @@ Premium Calculation Flow:
    - Return premium (positivePNL) and max loss (negativePNL)
 
 3. Result returned to user:
-   - Premium in USDC (6 decimals)
+   - Premium in USDm (6 decimals)
    - Max potential loss
    - Calculated on-chain, transparent
 ```
@@ -401,12 +401,12 @@ Quote Request Flow:
    strategy.calculateNegativepnlAndPositivepnl(1e18, 604800, [])
 
 3. Contract returns:
-   - negativePNL: 200000000 (200 USDC max loss)
-   - positivePNL: 80000000 (80 USDC premium)
+   - negativePNL: 200000000 (200 USDm max loss)
+   - positivePNL: 80000000 (80 USDm premium)
 
 4. Display to user:
-   - Premium: $80.00 USDC
-   - Max Loss: $200.00 USDC
+   - Premium: $80.00 USDm
+   - Max Loss: $200.00 USDm
 
 Total latency: < 50ms
 ```

@@ -18,12 +18,12 @@ Understand how trading fees work, how they're distributed to liquidity providers
 Swappers pay a percentage of their trade as a fee:
 
 **0.05% Fee Tier**:
-- Stable pairs (USDC/USDT, DAI/USDC)
+- Stable pairs (USDm/USDT, DAI/USDm)
 - Low volatility
 - High volume, low profit per trade
 
 **0.3% Fee Tier**:
-- Standard pairs (ETH/USDC, WBTC/ETH)
+- Standard pairs (ETH/USDm, WBTC/ETH)
 - Moderate volatility
 - Balanced volume and profit
 
@@ -37,7 +37,7 @@ Swappers pay a percentage of their trade as a fee:
 Fees distribute proportionally among active liquidity providers:
 
 ```
-Swap: 10 ETH for 20,000 USDC (0.3% fee = $60)
+Swap: 10 ETH for 20,000 USDm (0.3% fee = $60)
 
 Pool has 1000 ETH total liquidity
 Your position: 100 ETH (10% of pool)
@@ -187,7 +187,7 @@ Target pools with consistent high volume for best earnings.
 
 Match fee tier to volatility:
 
-**Wrong**: 1% fee tier on stable pair (USDC/USDT)
+**Wrong**: 1% fee tier on stable pair (USDm/USDT)
 - Traders avoid due to high fees
 - Low volume
 - Low earnings despite high fee percentage
@@ -293,10 +293,10 @@ Grow position by adding fee earnings back:
 Maintain target allocation:
 
 ```
-Portfolio Target: 50% ETH/USDC LP, 50% ETH holdings
+Portfolio Target: 50% ETH/USDm LP, 50% ETH holdings
 
-Collect fees: 0.1 ETH + 200 USDC
-Rebalance: Add 0.05 ETH to LP, keep 0.05 ETH + 200 USDC
+Collect fees: 0.1 ETH + 200 USDm
+Rebalance: Add 0.05 ETH to LP, keep 0.05 ETH + 200 USDm
 ```
 
 Prevents overexposure to single strategy.
@@ -306,7 +306,7 @@ Prevents overexposure to single strategy.
 Use fees from one pool to enter different pools:
 
 ```
-Collect fees from ETH/USDC
+Collect fees from ETH/USDm
 Deploy into WBTC/ETH for diversification
 ```
 
@@ -315,7 +315,7 @@ Deploy into WBTC/ETH for diversification
 ### MegaFi vs Other Protocols
 
 ```
-Volume: $1M swap in ETH/USDC
+Volume: $1M swap in ETH/USDm
 
 Traditional AMM (0.3% fee):
 Trader pays: $3,000

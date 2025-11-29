@@ -48,7 +48,7 @@ Select a pool based on:
 Higher volume means more fee earnings:
 
 ```
-High volume (> $10M daily): Major pairs (ETH/USDC, WBTC/ETH)
+High volume (> $10M daily): Major pairs (ETH/USDm, WBTC/ETH)
 Medium volume ($1M - $10M daily): Popular tokens
 Low volume (< $1M daily): Long-tail or new tokens
 ```
@@ -59,7 +59,7 @@ Check 24h volume statistics in pool info.
 
 Higher volatility increases impermanent loss:
 
-**Low Volatility**: Stablecoin pairs (USDC/USDT). Minimal IL, lower fees.
+**Low Volatility**: Stablecoin pairs (USDm/USDT). Minimal IL, lower fees.
 
 **Medium Volatility**: Blue chip pairs (ETH/WBTC). Balanced IL and fees.
 
@@ -250,7 +250,7 @@ LP NFT remains in wallet but represents zero liquidity.
 Every swap through your Tick generates fees:
 
 ```
-Swap: 1 ETH for 2000 USDC
+Swap: 1 ETH for 2000 USDm
 Trading fee: 0.3% = $6
 Your zone contains: 10% of active liquidity
 Your fee: $0.60
@@ -308,12 +308,12 @@ When token prices diverge, your position value may be lower than simply holding 
 ```
 Start:
 1 ETH = $2000
-Position: 1 ETH + 2000 USDC = $4000 total
+Position: 1 ETH + 2000 USDm = $4000 total
 
 Later:
 1 ETH = $3000
-Position: 0.816 ETH + 2449 USDC = $3897 total
-Holding: 1 ETH + 2000 USDC = $5000 total
+Position: 0.816 ETH + 2449 USDm = $3897 total
+Holding: 1 ETH + 2000 USDm = $5000 total
 
 Impermanent Loss: $1103 (22%)
 ```
@@ -332,7 +332,7 @@ IL occurs because the pool rebalances as price moves, selling the appreciating t
 
 **Choose Correlated Pairs**: ETH/WBTC moves together. Lower IL.
 
-**Stable Pairs**: USDC/USDT has minimal IL.
+**Stable Pairs**: USDm/USDT has minimal IL.
 
 **Wide Zones**: Full-range positions have lower IL than concentrated positions.
 

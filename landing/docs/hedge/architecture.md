@@ -1,10 +1,10 @@
 # Architecture
 
-Technical overview of MegaFi's system architecture. Understand how pool-based options trading works with USDC-only liquidity and epoch-based profit distribution.
+Technical overview of MegaFi's system architecture. Understand how pool-based options trading works with USDm-only liquidity and epoch-based profit distribution.
 
 ## At a Glance
 
-- USDC-only architecture for simplified risk management
+- USDm-only architecture for simplified risk management
 - Pool-based liquidity model with OperationalTreasury and CoverPool
 - 7-day epoch system for fair profit distribution
 - Options as ERC721 NFTs for composability
@@ -34,7 +34,7 @@ graph TD
     style C fill:#FF3A1E
 ```
 
-## USDC-Only Architecture
+## USDm-Only Architecture
 
 ### Core Concept
 
@@ -48,7 +48,7 @@ Traditional Options Platforms:
 - Price exposure to multiple assets
 
 MegaFi:
-- USDC only
+- USDm only
 - No conversion needed
 - No impermanent loss (for options)
 - Pure 1:1 accounting
@@ -57,13 +57,13 @@ MegaFi:
 ### Benefits
 
 **For Traders**:
-- Simple premium calculation (USDC)
-- Simple profit settlement (USDC)
+- Simple premium calculation (USDm)
+- Simple profit settlement (USDm)
 - No token price risk
 - Easy to understand P&L
 
 **For LPs**:
-- Deposit USDC, earn USDC
+- Deposit USDm, earn USDm
 - No impermanent loss from token conversion
 - Transparent 1:1 accounting
 - Predictable returns
@@ -91,7 +91,7 @@ Responsibilities:
 
 **Key State**:
 ```
-- Current USDC balance
+- Current USDm balance
 - Total locked liquidity
 - Locked premium amounts
 - Per-strategy locked amounts
@@ -111,7 +111,7 @@ Before Option Purchase:
 
 ### CoverPool
 
-**Purpose**: LP liquidity pool providing backup USDC and profit distribution.
+**Purpose**: LP liquidity pool providing backup USDm and profit distribution.
 
 ```
 Responsibilities:
@@ -124,7 +124,7 @@ Responsibilities:
 
 **Key State**:
 ```
-- Total USDC deposited
+- Total USDm deposited
 - Total shares issued
 - Cumulative profit per share
 - Current epoch number
@@ -196,9 +196,9 @@ Benefits:
 
 ```
 Configuration Example:
-ETH Call: 50,000 USDC max
-ETH Put: 50,000 USDC max
-BTC Call: 30,000 USDC max
+ETH Call: 50,000 USDm max
+ETH Put: 50,000 USDm max
+BTC Call: 30,000 USDm max
 
 Prevents over-concentration
 Admin configurable
@@ -214,7 +214,7 @@ Purchase Flow:
 1. Trader selects strategy + parameters
 2. Frontend calls strategy.calculateNegativepnlAndPositivepnl()
 3. Premium displayed
-4. Trader approves USDC
+4. Trader approves USDm
 5. Trader calls treasury.buy()
 6. Premium transferred to Treasury
 7. Liquidity locked (negativePNL)
@@ -243,11 +243,11 @@ Auto-Exercise Flow:
 
 ```
 Provide Flow:
-1. LP approves USDC
+1. LP approves USDm
 2. LP calls coverPool.provide(amount, positionId)
 3. Check within entry window (first 5 days of epoch)
-4. USDC transferred to CoverPool
-5. Share calculated: (amount × totalShare) / totalUSDC
+4. USDm transferred to CoverPool
+5. Share calculated: (amount × totalShare) / totalUSDm
 6. LP NFT minted or updated
 7. LP earns from premiums
 
@@ -265,7 +265,7 @@ Earn Flow (continuous):
 Claim Flow:
 1. LP calls coverPool.claim(positionId)
 2. Calculate claimable: buffered + new profits
-3. Transfer USDC to LP
+3. Transfer USDm to LP
 4. Update LP's cumulative point
 5. Reset buffered amount
 
@@ -279,7 +279,7 @@ Step 1 - Request:
 Step 2 - Complete:
 1. Epoch closes (admin calls fixProfit())
 2. LP calls coverPool.withdrawEpoch(positionId, [epochs])
-3. Calculate USDC + profits to return
+3. Calculate USDm + profits to return
 4. Transfer funds to LP
 5. Reduce LP's share
 ```
@@ -347,7 +347,7 @@ Called weekly by admin:
 
 4. Process withdrawals:
    - Calculate each withdrawal's share of profits
-   - Mark USDC available for claim
+   - Mark USDm available for claim
 
 5. Start next epoch:
    currentEpoch++
@@ -367,7 +367,7 @@ Step-by-Step:
    - Display quote to user
 
 2. Approval:
-   - User approves USDC spending
+   - User approves USDm spending
    - Transaction confirmed
 
 3. Purchase:
@@ -433,7 +433,7 @@ Step-by-Step:
    - If balance < profit:
      * deficit = profit - balance
      * Call coverPool.payOut(deficit)
-     * CoverPool transfers USDC
+     * CoverPool transfers USDm
    - Transfer full profit to account
 
 6. Cleanup:
@@ -572,7 +572,7 @@ Benefit: Accurate risk metrics always
 Exercise option:
 0ms: Submit transaction
 5ms: Execute payoff calculation
-8ms: Transfer USDC
+8ms: Transfer USDm
 10ms: Confirmed
 
 Traditional: 15-30 seconds minimum
@@ -615,8 +615,8 @@ Multicall support:
 
 **Protocol Health**:
 ```
-- Treasury USDC balance
-- CoverPool USDC balance
+- Treasury USDm balance
+- CoverPool USDm balance
 - Total locked liquidity
 - Available liquidity
 - Number of active options
@@ -671,14 +671,14 @@ Info Alerts:
 
 ## FAQ
 
-**Why USDC-only?**  
+**Why USDm-only?**  
 Simplicity, no impermanent loss, transparent accounting, reduced risk.
 
 **Can I use other stablecoins?**  
-Not currently. USDC is the single accepted collateral.
+Not currently. USDm is the single accepted collateral.
 
-**What if USDC depegs?**  
-Protocol uses USDC as unit of account. Depeg affects all positions equally.
+**What if USDm depegs?**  
+Protocol uses USDm as unit of account. Depeg affects all positions equally.
 
 **How does CoverPool prevent losses?**  
 Strategy limits, benchmark reserves, and LP risk-sharing ensure solvency.

@@ -146,9 +146,9 @@ Strategies adjust positions in real-time:
 Deploy strategies across multiple positions:
 
 ```
-Position 1: ETH/USDC (Bull Mode)
+Position 1: ETH/USDm (Bull Mode)
 Position 2: WBTC/ETH (Dynamic Mode)
-Position 3: USDC/USDT (Static Mode)
+Position 3: USDm/USDT (Static Mode)
 ```
 
 Each position runs its own strategy independently.
@@ -252,7 +252,7 @@ Hedge: Buy put option for downside protection
 - **Real-time execution**: MegaETH's sub-10ms execution enables precise hedging
 
 **Example Strategy:**
-- Deploy Auto-Pools position in ETH/USDC (Bull Mode)
+- Deploy Auto-Pools position in ETH/USDm (Bull Mode)
 - Buy ETH put options at support level via [Hedge](../hedge/overview.md)
 - Fees from LP position offset option costs
 - If ETH price drops, puts protect against IL
