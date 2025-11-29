@@ -271,7 +271,7 @@ Deploy a Strategy Mode that rebalances automatically:
 - Adjusts zone width based on volatility
 - No manual intervention required
 
-[CLM guide →](../clm/overview.md)
+[Auto-Pools guide →](../auto-pools/overview.md)
 
 ### Rebalancing Costs
 
@@ -363,8 +363,8 @@ When position goes out of range or when rebalancing cost is < 5% of expected add
 Apply Liquidity Zone concepts:
 
 - [Providing Liquidity](providing-liquidity.md) - Create your first position
-- [Strategy Modes](../clm/strategy-modes.md) - Automate zone management
-- [Range Optimization](../clm/range-optimization.md) - Advanced zone selection
+- [Strategy Modes](../auto-pools/strategy-modes.md) - Automate zone management
+- [Range Optimization](../auto-pools/range-optimization.md) - Advanced zone selection
 
 ---
 

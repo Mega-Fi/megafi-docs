@@ -33,10 +33,11 @@ Protocol-level limits and constraints for MegaFi. Understand operational boundar
 - Maximum capital per strategy: No limit
 
 **Rebalancing**:
-- Conservative mode: Max 2 rebalances/day
-- Balanced mode: Max 12 rebalances/day
-- Aggressive mode: Max 24 rebalances/day
-- Minimum cooldown between rebalances: 30 minutes (aggressive), 1 hour (balanced), 12 hours (conservative)
+- Bull mode: Max 2 rebalances/day
+- Bear mode: Max 12 rebalances/day
+- Static mode: Max 24 rebalances/day
+- Dynamic mode: Max 18 rebalances/day
+- Minimum cooldown between rebalances: 30 minutes (static), 1 hour (bear/dynamic), 12 hours (bull)
 
 ### Options Positions
 
@@ -125,15 +126,15 @@ Block gas limit: Effectively unlimited (continuous execution)
 ### Zone Parameters
 
 **Width Limits**:
-- Conservative: 15% to 50%
-- Balanced: 8% to 25%
-- Aggressive: 2% to 10%
+- Bull: 15% to 50%
+- Bear: 8% to 25%
+- Static: 2% to 10%
 - Dynamic: 3% to 30%
 
 **Rebalance Thresholds**:
-- Minimum benefit: $0.50 (aggressive) to $5 (conservative)
+- Minimum benefit: $0.50 (static) to $5 (bull)
 - Maximum gas spend: 5% of expected benefit
-- Price movement trigger: 1% (aggressive) to 10% (conservative)
+- Price movement trigger: 1% (static) to 10% (bull)
 
 ### Performance
 

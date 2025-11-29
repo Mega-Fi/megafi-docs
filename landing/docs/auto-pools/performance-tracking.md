@@ -1,6 +1,6 @@
 # Performance Tracking
 
-Monitor, analyze, and optimize your CLM positions with comprehensive performance metrics and analytics tools.
+Monitor, analyze, and optimize your Auto-Pools positions with comprehensive performance metrics and analytics tools.
 
 ## At a Glance
 
@@ -251,17 +251,17 @@ Recommendation: Widen zones or switch to Dynamic Mode
 See how different modes would have performed:
 
 ```
-Your Position (Balanced Mode):
+Your Position (Bear Mode):
 APR: 28%
 Active Time: 82%
 Gas: $0.15
 
-Simulated Conservative Mode:
+Simulated Bull Mode:
 APR: 21% (-7%)
 Active Time: 93% (+11%)
 Gas: $0.03 (-$0.12)
 
-Simulated Aggressive Mode:
+Simulated Static Mode:
 APR: 35% (+7%)
 Active Time: 68% (-14%)
 Gas: $0.65 (+$0.50)
@@ -302,10 +302,10 @@ Understand strategy performance across conditions.
 Compare across different pools:
 
 ```
-Your ETH/USDC Position (Balanced):
+Your ETH/USDC Position (Bear Mode):
 APR: 28%
 
-Your WBTC/ETH Position (Balanced):
+Your WBTC/ETH Position (Bear Mode):
 APR: 22%
 
 Analysis: ETH/USDC performing better due to higher volume
@@ -423,8 +423,8 @@ If ETH drops 20% to $1,600:
 ```
 If volatility doubles:
 - Dynamic Mode: Widens zones automatically
-- Aggressive Mode: Higher rebalancing costs
-- Conservative Mode: Minimal impact
+- Static Mode: Higher rebalancing costs
+- Bull Mode: Minimal impact
 ```
 
 ## FAQ

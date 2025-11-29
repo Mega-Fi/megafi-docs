@@ -407,7 +407,7 @@ Understand LP NFT mechanics:
 
 - [Providing Liquidity](providing-liquidity.md) - Create positions and receive NFTs
 - [Fees and Rewards](fees-and-rewards.md) - Maximize NFT value
-- [CLM](../clm/overview.md) - Automate NFT management
+- [Auto-Pools](../auto-pools/overview.md) - Automate NFT management
 
 ---
 

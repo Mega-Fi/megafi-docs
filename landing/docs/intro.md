@@ -18,10 +18,10 @@ Token swaps and liquidity provision powered by concentrated liquidity. Provide l
 
 [Explore DEX →](dex/overview.md)
 
-### 🤖 CLM
+### 🤖 Auto-Pools
 Automated liquidity management that works 24/7. Deploy strategies that continuously rebalance positions and maximize yield.
 
-[Learn About CLM →](clm/overview.md)
+[Learn About Auto-Pools →](auto-pools/overview.md)
 
 ## Why MegaFi?
 
@@ -49,7 +49,7 @@ Automated liquidity management that works 24/7. Deploy strategies that continuou
 - **Getting Started**: Platform overview and basics
 - **Hedge**: Options trading and risk management
 - **DEX**: Trading, liquidity, fees, LP NFTs
-- **CLM**: Automated strategies and optimization
+- **Auto-Pools**: Automated strategies and optimization
 - **Technical Docs**: Architecture, smart contracts, audits
 - **Reference**: Glossary, supported tokens, limits
 

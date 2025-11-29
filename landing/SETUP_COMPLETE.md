@@ -21,14 +21,14 @@ The MegaFi documentation has been fully integrated into Docusaurus and is ready 
    - Getting Started (2 pages)
    - Hedge - Options Trading (5 pages)
    - DEX - Trading & Liquidity (7 pages)
-   - CLM - Automated Management (5 pages)
+   - Auto-Pools - Automated Management (5 pages)
    - Technical Documentation (4 pages)
    - Reference (3 pages)
    - **Total: 27 documentation files**
 
 4. **Homepage** - Custom landing page with:
    - Hero section with MegaFi branding
-   - Three product cards (Hedge, DEX, CLM)
+   - Three product cards (Hedge, DEX, Auto-Pools)
    - Performance metrics showcase
    - Quick links to documentation sections
 
@@ -43,7 +43,7 @@ landing/
 │   ├── getting-started/
 │   ├── hedge/              # Options trading
 │   ├── dex/                # Trading & liquidity
-│   ├── clm/                # Automated strategies
+│   ├── auto-pools/         # Automated strategies
 │   ├── technical/
 │   └── reference/
 ├── src/
@@ -114,7 +114,7 @@ Test the production build locally before deploying.
 - **Documentation**: http://localhost:3000/intro
 - **Hedge Overview**: http://localhost:3000/hedge/overview
 - **DEX Overview**: http://localhost:3000/dex/overview
-- **CLM Overview**: http://localhost:3000/clm/overview
+- **Auto-Pools Overview**: http://localhost:3000/auto-pools/overview
 
 ## 📝 Notes
 

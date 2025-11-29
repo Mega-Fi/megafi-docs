@@ -543,7 +543,7 @@ If IL risk concerns you, yes. Hedging makes LP positions more attractive by capp
 Monitor portfolio P&L including hedge positions. Effective hedge reduces volatility of total P&L.
 
 **Can hedges be automated?**  
-Currently manual. CLM integration may enable automated hedging strategies in future.
+Currently manual. Auto-Pools integration may enable automated hedging strategies in future.
 
 **What if I can't afford to hedge?**  
 Use cheaper strategies: OTM options, collars (premium offset), or accept some risk unhedged.

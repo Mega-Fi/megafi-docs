@@ -46,7 +46,7 @@ Comprehensive overview of MegaFi security measures and planned audits. Understan
 - Integer overflow/underflow
 - Access control
 
-### CLM
+### Auto-Pools
 
 **Contracts for Audit**:
 - StrategyManager

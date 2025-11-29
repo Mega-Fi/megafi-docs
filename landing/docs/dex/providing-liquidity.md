@@ -385,7 +385,7 @@ Deploy automated strategies:
 - Dynamic zone adjustment
 - Risk management algorithms
 
-[CLM →](../clm/overview.md)
+[Auto-Pools →](../auto-pools/overview.md)
 
 ## Position on MegaETH
 
@@ -477,7 +477,7 @@ After providing liquidity:
 
 - [Understand LP NFTs](lp-nfts.md) and position management
 - [Optimize fee earnings](fees-and-rewards.md)
-- [Deploy automated strategies](../clm/strategy-modes.md)
+- [Deploy automated strategies](../auto-pools/strategy-modes.md)
 - [Learn about impermanent loss](liquidity-zones.md#capital-efficiency)
 
 ---

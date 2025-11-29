@@ -436,8 +436,8 @@ Yes. Historical simulator in interface shows projected fees for various zones.
 Maximize your fee earnings:
 
 - [Liquidity Zones](liquidity-zones.md) - Optimize zone selection
-- [CLM](../clm/overview.md) - Automate management
-- [Performance Tracking](../clm/performance-tracking.md) - Monitor returns
+- [Auto-Pools](../auto-pools/overview.md) - Automate management
+- [Performance Tracking](../auto-pools/performance-tracking.md) - Monitor returns
 
 ---
 

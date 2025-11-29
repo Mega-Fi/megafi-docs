@@ -62,9 +62,9 @@ function HomepageFeatures() {
             link="/dex/overview"
           />
           <Feature
-            title="🤖 CLM - Automated Strategies"
+            title="🤖 Auto-Pools - Automated Strategies"
             description="Deploy automated strategies that continuously rebalance positions, optimize ranges, and maximize yield 24/7 without manual intervention."
-            link="/clm/overview"
+            link="/auto-pools/overview"
           />
         </div>
       </div>
@@ -124,7 +124,7 @@ function QuickLinks() {
                 <li><Link to="/getting-started/welcome">Getting Started</Link></li>
                 <li><Link to="/hedge/options-trading">Options Trading Guide</Link></li>
                 <li><Link to="/dex/providing-liquidity">Liquidity Provision</Link></li>
-                <li><Link to="/clm/strategy-modes">Automated Strategies</Link></li>
+                <li><Link to="/auto-pools/strategy-modes">Automated Strategies</Link></li>
               </ul>
             </div>
           </div>

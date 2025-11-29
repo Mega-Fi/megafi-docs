@@ -469,7 +469,7 @@ Strategy:
 4. Downside protected LP position
 ```
 
-### With CLM
+### With Auto-Pools
 
 Combine automated liquidity management with hedging:
 

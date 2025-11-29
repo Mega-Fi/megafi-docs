@@ -156,7 +156,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Stablecoin**: Token pegged to stable asset (usually $1). USDC, USDT, DAI.
 
-**CLM**: MegaFi's automated liquidity management functionality.
+**Auto-Pools**: MegaFi's automated liquidity management functionality.
 
 **Strike Price**: Price at which option can be exercised.
 
@@ -180,7 +180,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 ## V
 
-**Vault**: In other protocols, automated strategy. In MegaFi, see CLM.
+**Vault**: In other protocols, automated strategy. In MegaFi, see Auto-Pools.
 
 **Vega**: Options Greek measuring volatility sensitivity. How much option value changes with IV.
 
@@ -210,7 +210,7 @@ MegaFi uses specific terminology. Equivalents from other protocols:
 |-----------------|--------|
 | AMM | DEX / MegaPool |
 | Range / Ticks | Liquidity Zones |
-| Vault | CLM / Strategy Modes |
+| Vault | Auto-Pools / Strategy Modes |
 | Pool | MegaPool |
 | V3 Position | LP NFT |
 
@@ -220,7 +220,7 @@ MegaFi uses specific terminology. Equivalents from other protocols:
 **APY**: Annual Percentage Yield (includes compounding)
 **bp**: Basis Point (0.01%)
 **CEX**: Centralized Exchange
-**CLM**: Concentrated Liquidity Manager
+**Auto-Pools**: Automated liquidity management system
 **DA**: Data Availability
 **DEX**: MegaFi's decentralized exchange
 **EVM**: Ethereum Virtual Machine

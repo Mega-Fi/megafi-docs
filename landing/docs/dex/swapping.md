@@ -372,7 +372,7 @@ Currently not supported natively. Use third-party limit order protocols built on
 Execute multiple small swaps over time:
 - Reduces price impact
 - Averages entry price
-- Can be automated via CLM
+- Can be automated via Auto-Pools
 
 ### Arbitrage
 
@@ -428,7 +428,7 @@ Yes, but amount is minimal. $1 worth provides 200+ swaps.
 After mastering swaps:
 
 - [Provide liquidity](providing-liquidity.md) to earn fees from trades
-- Explore [CLM](../clm/overview.md) for automated management
+- Explore [Auto-Pools](../auto-pools/overview.md) for automated management
 - Learn about [fees and rewards](fees-and-rewards.md)
 
 ---

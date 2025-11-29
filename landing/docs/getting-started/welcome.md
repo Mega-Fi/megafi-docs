@@ -16,7 +16,7 @@ MegaFi is a DeFi platform built on MegaETH that brings institutional-grade optio
 
 **The Core**: Options trading (Hedge) with real-time Greeks, instant execution, and capital-efficient collateral.
 
-**The Foundation**: DEX provides liquidity infrastructure. CLM automates position management. Everything works together seamlessly.
+**The Foundation**: DEX provides liquidity infrastructure. Auto-Pools automates position management. Everything works together seamlessly.
 
 ## Why MegaFi?
 
@@ -43,7 +43,7 @@ Three integrated products:
 
 **Hedge**: Options trading and risk management  
 **DEX**: Token swaps and liquidity provision  
-**CLM**: Automated liquidity strategies
+**Auto-Pools**: Automated liquidity strategies
 
 ## MegaETH Performance
 

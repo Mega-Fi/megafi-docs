@@ -41,14 +41,15 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'CLM (Automated Management)',
+      label: 'Auto-Pools (Automated Management)',
       collapsed: false,
       items: [
-        'clm/overview',
-        'clm/strategy-modes',
-        'clm/automated-rebalancing',
-        'clm/range-optimization',
-        'clm/performance-tracking',
+        'auto-pools/overview',
+        'auto-pools/strategy-modes',
+        'auto-pools/automated-rebalancing',
+        'auto-pools/range-optimization',
+        'auto-pools/architecture',
+        'auto-pools/performance-tracking',
       ],
     },
     {

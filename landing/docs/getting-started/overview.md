@@ -97,7 +97,7 @@ After completing setup:
 1. Try a small swap to experience the interface
 2. [Trade options](../hedge/options-trading.md) to protect positions or generate yield
 3. [Provide liquidity](../dex/providing-liquidity.md) to earn fees
-4. Explore [Strategy Modes](../clm/strategy-modes.md) for automation
+4. Explore [Strategy Modes](../auto-pools/strategy-modes.md) for automation
 
 ## Support
 

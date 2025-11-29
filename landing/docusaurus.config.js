@@ -96,8 +96,8 @@ const config = {
                 to: '/dex/overview',
               },
               {
-                label: 'CLM',
-                to: '/clm/overview',
+                label: 'Auto-Pools',
+                to: '/auto-pools/overview',
               },
             ],
           },
