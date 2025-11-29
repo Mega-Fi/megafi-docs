@@ -728,8 +728,6 @@ See [Contract Addresses](contract-addresses.md) for deployed addresses.
 
 **Planned**: Multi-firm security audits before mainnet launch.
 
-**Bug Bounty**: Will be available post-audit.
-
 ## FAQ
 
 **Are contracts upgradeable?**  

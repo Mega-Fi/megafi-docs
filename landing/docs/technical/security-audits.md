@@ -8,7 +8,6 @@ Comprehensive overview of MegaFi security measures and planned audits. Understan
 - Security-focused development practices
 - Open-source code for transparency
 - Multi-tier testing in progress
-- Bug bounty program to launch post-audit
 - Continuous security monitoring planned
 
 ## Audit Overview
@@ -163,43 +162,6 @@ modifier nonReentrant() {
 
 **Protection**: Multi-sig with multiple geographically distributed signers.
 
-## Bug Bounty Program
-
-### Status
-
-**Coming Soon**: Bug bounty program will launch after security audits are completed and mainnet deployment is confirmed.
-
-### Planned Scope
-
-Vulnerabilities in:
-- Smart contracts
-- Frontend application
-- Backend services
-- Infrastructure
-
-### Planned Rewards
-
-Severity-based rewards (amounts to be confirmed at launch):
-
-**Critical** (funds at risk): High rewards
-**High** (major functionality): Significant rewards
-**Medium** (minor issues): Moderate rewards
-**Low** (informational): Base rewards
-
-### Reporting
-
-For security concerns during development:
-
-**Email**: contact@megafi.app
-
-**Please Include**:
-- Detailed description
-- Steps to reproduce
-- Proof of concept (if applicable)
-- Suggested fix (optional)
-
-**Response**: Within 48 hours
-
 ## Incident Response
 
 ### Detection
@@ -229,11 +191,9 @@ Automated monitoring alerts team to:
 
 During incidents:
 
-**Twitter**: @megafi_app
+**X**: [@megafi_app](https://x.com/megafi_app)
 
 **Discord**: #announcements channel
-
-**Email**: Sent to affected users
 
 ## Security Best Practices
 
@@ -349,44 +309,11 @@ After audits are completed:
 - Security roadmap updates provided
 - Ongoing security measures detailed
 
-## Insurance
-
-### Future Insurance Coverage
-
-**Protocol Insurance**: To be explored post-audit and mainnet launch
-
-**User Insurance**: Third-party DeFi insurance protocols may provide coverage once the protocol is live and audited
-
-**Status**: Not currently available during development phase
-
-## Compliance
-
-### Regulatory Approach
-
-Proactive compliance:
-
-**Jurisdiction**: Operating within legal frameworks
-
-**KYC/AML**: Not currently required (decentralized protocol)
-
-**Future**: Adapting to evolving regulations
-
-### Terms of Service
-
-Users must acknowledge:
-
-- Understanding of risks
-- No guarantee of returns
-- Potential for loss
-- Own responsibility for decisions
-
 ## Contact
 
 Security-related or any other inquiries:
 
 **Email**: contact@megafi.app
-
-**Response Time**: < 24 hours
 
 ## Resources
 
@@ -400,19 +327,13 @@ Security-related or any other inquiries:
 Not yet. Audits are planned and will be completed before mainnet launch. The protocol is currently in development and testing.
 
 **What if I find a vulnerability?**  
-Report to contact@megafi.app. Bug bounty program will launch post-audit.
-
-**Are user funds insured?**  
-No insurance available during development phase. Insurance options will be explored post-launch.
-
-**Can contracts be upgraded?**  
-Upgrade mechanisms will be implemented with appropriate governance controls before mainnet.
+Report to contact@megafi.app. All security concerns are taken seriously and will be addressed promptly.
 
 **Is the code open source?**  
 Yes. All smart contracts will be open source and verified on block explorers.
 
 **Should I use MegaFi now?**  
-Current deployments are for testing only. Wait for audited mainnet launch before using with significant funds.
+Current deployments are for testing only.
 
 ## Next Steps
 
@@ -420,7 +341,7 @@ Understand security:
 
 - [Smart Contracts](smart-contracts.md) - Contract architecture
 - [Risk Management](../hedge/risk-management.md) - User risk controls
-- [Architecture](architecture.md) - System design
+- [Architecture](../hedge/architecture.md) - System design
 
 ---
 

@@ -106,7 +106,7 @@ const config = {
             items: [
               {
                 label: 'Architecture',
-                to: '/technical/architecture',
+                to: '/hedge/architecture',
               },
               {
                 label: 'Smart Contracts',
@@ -126,7 +126,7 @@ const config = {
                 href: 'https://discord.com/invite/EFTrPCREfZ',
               },
               {
-                label: 'Twitter',
+                label: 'X',
                 href: 'https://x.com/megafi_app',
               },
               {

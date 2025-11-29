@@ -107,7 +107,7 @@ Before Option Purchase:
 √ Strategy limit not exceeded?
 ```
 
-[Smart Contracts →](smart-contracts.md)
+[Smart Contracts →](../technical/smart-contracts.md)
 
 ### CoverPool
 
@@ -693,10 +693,11 @@ Yes. Names like "HegicStrategy" and "OperationalTreasury" are the actual deploye
 
 Explore technical details:
 
-- [Smart Contracts](smart-contracts.md) - Contract specifications
-- [Contract Addresses](contract-addresses.md) - Deployed addresses
-- [Security Audits](security-audits.md) - Security information
+- [Smart Contracts](../technical/smart-contracts.md) - Contract specifications
+- [Contract Addresses](../technical/contract-addresses.md) - Deployed addresses
+- [Security Audits](../technical/security-audits.md) - Security information
 
 ---
 
 **Built for speed. Designed for simplicity.**
+

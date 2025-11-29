@@ -213,7 +213,7 @@ Pools are deployed as smart contracts on MegaETH. Key components:
 
 **Oracle**: Provides price data for improved routing and MEV protection.
 
-[Technical details →](../technical/architecture.md)
+[Technical details →](../hedge/architecture.md)
 
 ## Performance Metrics
 

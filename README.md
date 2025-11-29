@@ -54,7 +54,7 @@ Explore the documentation:
 
 Review system design and contracts:
 
-[Architecture →](docs/technical/architecture.md)  
+[Architecture →](docs/hedge/architecture.md)  
 [Smart Contracts →](docs/technical/smart-contracts.md)  
 [Contract Addresses →](docs/technical/contract-addresses.md)
 
@@ -92,7 +92,7 @@ MegaFi is a decentralized protocol. Users interact directly with smart contracts
 - Website: [megafi.app](https://megafi.app)
 - GitHub: [github.com/Mega-Fi](https://github.com/Mega-Fi)
 - Discord: [discord.com/invite/EFTrPCREfZ](https://discord.com/invite/EFTrPCREfZ)
-- Twitter: Coming soon
+- X: [x.com/megafi_app](https://x.com/megafi_app)
 
 ---
 

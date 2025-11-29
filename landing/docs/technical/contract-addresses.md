@@ -304,7 +304,7 @@ WETH (Test): [TESTNET ADDRESS TBA]
 
 ⚠️ **Never trust addresses from:**
 - Unofficial websites or domains
-- Private messages (Discord, Telegram, Twitter)
+- Private messages (Discord, Telegram, X)
 - Email (MegaFi never sends addresses via email)
 - Unverified social media accounts
 - Third-party aggregators (without verification)
@@ -421,7 +421,7 @@ Addresses may change due to:
 
 **Stay Updated**:
 - Watch GitHub releases
-- Follow @megafi_app on Twitter
+- Follow @megafi_app on X
 - Join official Discord
 - Subscribe to newsletter
 - Check documentation regularly
@@ -463,7 +463,7 @@ If you encounter fraudulent addresses:
 
 **Contact:**
 - Email: contact@megafi.app
-- Twitter: @megafi_app (DMs open for security)
+- X: @megafi_app (DMs open for security)
 
 **Provide:**
 - Suspicious address
@@ -488,7 +488,7 @@ If you encounter fraudulent addresses:
 
 **Announcement Channels**:
 - Official blog (blog.megafi.app)
-- Twitter (@megafi_app)
+- X (@megafi_app)
 - Discord (https://discord.com/invite/EFTrPCREfZ)
 - Documentation (docs.megafi.app)
 

@@ -23,6 +23,7 @@ const sidebars = {
         'hedge/hedging-strategies',
         'hedge/risk-management',
         'hedge/pricing-models',
+        'hedge/architecture',
       ],
     },
     {
@@ -57,7 +58,6 @@ const sidebars = {
       label: 'Technical Documentation',
       collapsed: true,
       items: [
-        'technical/architecture',
         'technical/smart-contracts',
         'technical/contract-addresses',
         'technical/security-audits',

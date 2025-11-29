@@ -84,11 +84,11 @@ This performance enables features impossible elsewhere:
 
 **Platform Basics**  
 [How MegaFi Works →](overview.md)  
-[Architecture →](../technical/architecture.md)
+[Architecture →](../hedge/architecture.md)
 
 **For Developers**  
 [Smart Contracts →](../technical/smart-contracts.md)  
-[Integration Guide →](../technical/architecture.md)
+[Integration Guide →](../hedge/architecture.md)
 
 ---
 

@@ -299,12 +299,11 @@ Limits may be adjusted based on:
 - Network performance data
 - User feedback
 - Security considerations
-- Regulatory requirements
 
 Changes announced via:
 - Official blog
 - Discord announcements
-- Twitter
+- X
 - In-app notifications
 
 ## Overcoming Limits
@@ -314,10 +313,8 @@ Changes announced via:
 **Contact**: partnerships@megafi.app
 
 **Requirements**:
-- KYC/KYB documentation
 - Trading history
 - Risk management plan
-- Compliance agreement
 
 **Custom Arrangements**:
 - Institutional accounts
@@ -367,7 +364,7 @@ Interface displays usage vs limits in account dashboard.
 Understand boundaries:
 
 - [Risk Management](../hedge/risk-management.md) - Risk controls
-- [Architecture](../technical/architecture.md) - System design
+- [Architecture](../hedge/architecture.md) - System design
 - [Security Audits](../technical/security-audits.md) - Security information
 
 ---

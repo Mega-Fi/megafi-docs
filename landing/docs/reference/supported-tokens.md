@@ -302,7 +302,7 @@ Planned incentive programs:
 
 Announcements on:
 - Discord
-- Twitter
+- X
 - In-app notifications
 
 ## Tokenomics

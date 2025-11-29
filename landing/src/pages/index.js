@@ -133,7 +133,7 @@ function QuickLinks() {
               <Heading as="h3">🔧 Technical</Heading>
               <p>Architecture, contracts, and integration resources</p>
               <ul>
-                <li><Link to="/technical/architecture">System Architecture</Link></li>
+                <li><Link to="/hedge/architecture">System Architecture</Link></li>
                 <li><Link to="/technical/smart-contracts">Smart Contracts</Link></li>
                 <li><Link to="/technical/security-audits">Security & Audits</Link></li>
                 <li><Link to="/reference/glossary">Glossary</Link></li>
