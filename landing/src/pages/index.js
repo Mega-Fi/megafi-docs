@@ -57,14 +57,14 @@ function HomepageFeatures() {
             link="/hedge/overview"
           />
           <Feature
-            title="DEX - Trading & Liquidity"
-            description="Swap tokens and provide liquidity with concentrated capital efficiency up to 95%. Earn fees on every trade through optimized zones."
-            link="/dex/overview"
-          />
-          <Feature
             title="Auto-Pools - Automated Strategies"
             description="Deploy automated strategies that continuously rebalance positions, optimize ranges, and maximize yield 24/7 without manual intervention."
             link="/auto-pools/overview"
+          />
+          <Feature
+            title="DEX - Trading & Liquidity"
+            description="Swap tokens and provide liquidity with concentrated capital efficiency up to 95%. Earn fees on every trade through optimized zones."
+            link="/dex/overview"
           />
         </div>
       </div>

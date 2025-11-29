@@ -27,6 +27,19 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'Auto-Pools (Automated Management)',
+      collapsed: false,
+      items: [
+        'auto-pools/overview',
+        'auto-pools/strategy-modes',
+        'auto-pools/automated-rebalancing',
+        'auto-pools/range-optimization',
+        'auto-pools/architecture',
+        'auto-pools/performance-tracking',
+      ],
+    },
+    {
+      type: 'category',
       label: 'DEX (Trading & Liquidity)',
       collapsed: false,
       items: [
@@ -37,19 +50,6 @@ const sidebars = {
         'dex/providing-liquidity',
         'dex/lp-nfts',
         'dex/fees-and-rewards',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Auto-Pools (Automated Management)',
-      collapsed: false,
-      items: [
-        'auto-pools/overview',
-        'auto-pools/strategy-modes',
-        'auto-pools/automated-rebalancing',
-        'auto-pools/range-optimization',
-        'auto-pools/architecture',
-        'auto-pools/performance-tracking',
       ],
     },
     {
