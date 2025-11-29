@@ -65,6 +65,8 @@ In Bear Mode, when the price of ETH decreases and goes out of range, your liquid
 
 The rebalancing mechanism adjusts the price range to trail just behind the new price, ensuring your liquidity is positioned optimally for the updated market price.
 
+> **Enhanced Protection**: For additional downside protection in bear markets, consider hedging your Bear Mode position with put options through [Hedge](../hedge/overview.md). Options provide an extra layer of protection against impermanent loss while your Auto-Pools position continues earning fees.
+
 ![Bear Mode Visualization](img/bear.png)
 
 ## Dynamic Mode
@@ -128,6 +130,8 @@ Choose when:
 - You expect ETH price to fall
 - Market shows bearish trends
 - You want protection against downside
+
+> **Hedge with Options**: In bear markets, consider complementing Bear Mode with put options from [Hedge](../hedge/overview.md). Options provide additional downside protection while fees from your Auto-Pools position can help offset option premiums.
 
 ### Dynamic Mode
 Choose when:
@@ -199,6 +203,7 @@ Learn more about strategies:
 - [Automated Rebalancing](automated-rebalancing.md) - Trailing and Active rebalancing types
 - [Architecture](architecture.md) - How strategies work under the hood
 - [Performance Tracking](performance-tracking.md) - Monitor returns
+- [Hedge](../hedge/overview.md) - Protect positions with options
 
 ---
 

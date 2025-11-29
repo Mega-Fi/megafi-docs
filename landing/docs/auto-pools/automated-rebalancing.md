@@ -32,6 +32,8 @@ Based on your expertise, market understanding, and risks associated with each re
 
 When the price of tokens in a liquidity pool diverges from the price at the time of deposit, it incurs a loss to the LP called Divergence Loss (DL) or Impermanent Loss (IL). If you withdraw or rebalance your liquidity position at these prices or when your position is out of the market's current price range, it becomes a permanent loss. It especially happens with the volatile token prices.
 
+> **Hedge Against IL**: You can protect your Auto-Pools positions against impermanent loss by buying put options through [Hedge](../hedge/overview.md). Options provide downside protection while your LP position continues earning fees. Fees from Auto-Pools can help offset option premiums, making hedging economically viable.
+
 ## Trailing Rebalancing
 
 Trailing rebalancing works by trailing the market price before executing the rebalance. It does so to wait for the market price to come back to the previous range as it goes out of range usually for a very short time. It also prevents unnecessary divergence loss by quickly swapping tokens in the pool and keeping the LP position in the range.
@@ -220,6 +222,9 @@ No. It optimizes based on algorithms, but markets are unpredictable.
 **How do I know if rebalancing is working?**  
 Monitor your position's active time and fee earnings. Compare to manual management or pool averages.
 
+**Can I hedge my position against impermanent loss?**  
+Yes. You can buy put options through [Hedge](../hedge/overview.md) to protect against downside risk and impermanent loss. Options work alongside your Auto-Pools strategy, providing protection while you continue earning fees. Fees earned can help offset option premiums.
+
 ## Next Steps
 
 Understand rebalancing mechanics:
@@ -227,6 +232,7 @@ Understand rebalancing mechanics:
 - [Strategy Modes](strategy-modes.md) - Choose your market mode
 - [Range Optimization](range-optimization.md) - Set price ranges
 - [Performance Tracking](performance-tracking.md) - Monitor rebalancing effectiveness
+- [Hedge](../hedge/overview.md) - Protect positions with options
 
 ---
 

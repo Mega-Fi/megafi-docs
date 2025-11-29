@@ -50,7 +50,7 @@ Once set up, you can immediately:
 
 **Swap Tokens**: Trade any supported token pair with instant execution and minimal slippage.
 
-**Provide Liquidity**: Deposit tokens into MegaPools to earn trading fees. Choose your Liquidity Zone for custom capital efficiency.
+**Provide Liquidity**: Deposit tokens into Pools to earn trading fees. Choose your Tick for custom capital efficiency.
 
 **Deploy Strategies**: Activate automated Strategy Modes that rebalance your liquidity positions continuously.
 

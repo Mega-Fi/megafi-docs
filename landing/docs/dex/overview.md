@@ -1,11 +1,11 @@
 # DEX
 
-The trading core of MegaFi. DEX enables instant token swaps and efficient capital deployment through MegaPools powered by concentrated liquidity.
+The trading core of MegaFi. DEX enables instant token swaps and efficient capital deployment through Pools powered by concentrated liquidity.
 
 ## At a Glance
 
 - Swap tokens with sub-50ms execution and minimal slippage
-- Provide liquidity in custom Liquidity Zones for maximum capital efficiency
+- Provide liquidity in custom Ticks for maximum capital efficiency
 - Earn trading fees from every swap through your pool
 - LP positions represented as transferable NFTs
 - Real-time pool updates enable continuous capital optimization
@@ -13,11 +13,11 @@ The trading core of MegaFi. DEX enables instant token swaps and efficient capita
 
 ## How It Works
 
-MegaPools use concentrated liquidity to improve capital efficiency. Unlike traditional constant-product pools where liquidity is spread across all prices, concentrated liquidity lets you focus capital in specific price ranges.
+Pools use concentrated liquidity to improve capital efficiency. Unlike traditional constant-product pools where liquidity is spread across all prices, concentrated liquidity lets you focus capital in specific price ranges.
 
 ```mermaid
 graph TB
-    A[Traders] -->|Swap Tokens| B[MegaPool]
+    A[Traders] -->|Swap Tokens| B[Pool]
     B -->|Pay Fees| C[Liquidity Providers]
     C -->|Deposit Assets| B
     B -->|Mint| D[LP NFT]
@@ -27,35 +27,35 @@ graph TB
     style D fill:#10B981
 ```
 
-**Traders** swap tokens through MegaPools, paying a small fee on each trade.
+**Traders** swap tokens through Pools, paying a small fee on each trade.
 
 **Liquidity Providers** deposit token pairs into pools, earning a portion of trading fees.
 
-**LP NFTs** represent each liquidity position, tracking your specific Liquidity Zone and accumulated fees.
+**LP NFTs** represent each liquidity position, tracking your specific Tick and accumulated fees.
 
 ## Key Concepts
 
-### MegaPools
+### Pools
 
-Token pair pools that facilitate swaps. Each MegaPool contains two tokens (e.g., ETH/USDC) and executes swaps between them.
+Token pair pools that facilitate swaps. Each Pool contains two tokens (e.g., ETH/USDC) and executes swaps between them.
 
 Pools use an automated market maker formula to price tokens. As trades occur, prices adjust automatically to maintain balance.
 
 [Learn more →](megapools.md)
 
-### Liquidity Zones
+### Ticks
 
-Custom price ranges where you concentrate your liquidity. By providing liquidity only in zones where trading occurs, you earn more fees per dollar of capital.
+Custom price ranges where you concentrate your liquidity. By providing liquidity only in ticks where trading occurs, you earn more fees per dollar of capital.
 
-Choose wide zones for stable, predictable earnings or narrow zones for higher returns with more active management.
+Choose wide ticks for stable, predictable earnings or narrow ticks for higher returns with more active management.
 
-[Learn more →](liquidity-zones.md)
+[Learn more →](ticks.md)
 
 ### LP NFTs
 
 Your liquidity position is represented as an NFT. Each NFT tracks:
 - Which pool you're providing to
-- Your Liquidity Zone boundaries
+- Your Tick boundaries
 - Accumulated fees
 - Liquidity amount
 
@@ -118,9 +118,9 @@ Provide liquidity to:
 
 **Earn Trading Fees**: Collect a portion of fees from every swap through your pool.
 
-**Custom Zones**: Choose where to concentrate liquidity for optimal returns.
+**Custom Ticks**: Choose where to concentrate liquidity for optimal returns.
 
- 
+**Automated Management**: Use [Auto-Pools](../auto-pools/overview.md) preset configurations to automate tick selection and rebalancing, maximizing active time and fee earnings without constant monitoring.
 
 **Flexible Withdrawal**: Remove liquidity anytime. No lock periods or penalties.
 
@@ -170,10 +170,20 @@ DEX leverages MegaETH's unique capabilities:
 
 ### As a Liquidity Provider
 
+**Manual Management:**
 1. Choose a token pair with good volume
-2. Select your Liquidity Zone based on price expectations
+2. Select your Tick based on price expectations
 3. [Deposit liquidity](providing-liquidity.md) and receive LP NFT
 4. Monitor fees and rebalance as needed
+
+**Automated Management:**
+1. Choose a token pair with good volume
+2. [Deposit liquidity](providing-liquidity.md) and receive LP NFT
+3. Enable [Auto-Pools](../auto-pools/overview.md) with preset configurations
+4. Select strategy mode (Bull, Bear, Dynamic, or Static)
+5. Let Auto-Pools handle tick selection and rebalancing automatically
+
+While manual management gives you full control, Auto-Pools offers preset configurations that automate the entire process, ensuring your positions stay active and earning fees 24/7.
 
  
 
@@ -193,7 +203,7 @@ Understand these risks before providing significant liquidity. Consider starting
 
 ## Technical Architecture
 
-MegaPools are deployed as smart contracts on MegaETH. Key components:
+Pools are deployed as smart contracts on MegaETH. Key components:
 
 **Pool Contracts**: Store liquidity and execute swaps. One contract per token pair and fee tier.
 
@@ -237,8 +247,8 @@ Yes. They're standard ERC-721 tokens. Sell or transfer like any NFT.
 
 Dive deeper into DEX components:
 
-- [MegaPools](megapools.md) - Pool mechanics and pricing
-- [Liquidity Zones](liquidity-zones.md) - Range selection strategies
+- [Pools](pools.md) - Pool mechanics and pricing
+- [Ticks](ticks.md) - Range selection strategies
 - [Swapping](swapping.md) - Execute trades
 - [Providing Liquidity](providing-liquidity.md) - Become an LP
 - [LP NFTs](lp-nfts.md) - Manage positions

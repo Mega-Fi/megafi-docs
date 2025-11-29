@@ -44,8 +44,8 @@ const sidebars = {
       collapsed: false,
       items: [
         'dex/overview',
-        'dex/megapools',
-        'dex/liquidity-zones',
+        'dex/pools',
+        'dex/ticks',
         'dex/swapping',
         'dex/providing-liquidity',
         'dex/lp-nfts',

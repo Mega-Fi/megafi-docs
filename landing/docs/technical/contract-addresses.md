@@ -421,7 +421,7 @@ Addresses may change due to:
 
 **Stay Updated**:
 - Watch GitHub releases
-- Follow @MegaFiApp on Twitter
+- Follow @megafi_app on Twitter
 - Join official Discord
 - Subscribe to newsletter
 - Check documentation regularly
@@ -462,9 +462,8 @@ V2.0 (Future):
 If you encounter fraudulent addresses:
 
 **Contact:**
-- Email: security@megafi.app
-- Discord: #security channel
-- Twitter: @MegaFiApp (DMs open for security)
+- Email: contact@megafi.app
+- Twitter: @megafi_app (DMs open for security)
 
 **Provide:**
 - Suspicious address
@@ -489,7 +488,7 @@ If you encounter fraudulent addresses:
 
 **Announcement Channels**:
 - Official blog (blog.megafi.app)
-- Twitter (@MegaFiApp)
+- Twitter (@megafi_app)
 - Discord (https://discord.com/invite/EFTrPCREfZ)
 - Documentation (docs.megafi.app)
 

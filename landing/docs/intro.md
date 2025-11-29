@@ -8,17 +8,17 @@ MegaFi is a DeFi platform built on MegaETH that brings institutional-grade optio
 
 ## Core Products
 
-### 🎯 Hedge
+### Hedge
 Real-time options trading and risk management. Trade calls and puts with instant execution, live Greeks, and capital-efficient collateral.
 
 [Get Started with Options →](hedge/overview.md)
 
-### 💱 DEX
+### DEX
 Token swaps and liquidity provision powered by concentrated liquidity. Provide liquidity in custom zones to earn fees.
 
 [Explore DEX →](dex/overview.md)
 
-### 🤖 Auto-Pools
+### Auto-Pools
 Automated liquidity management that works 24/7. Deploy strategies that continuously rebalance positions and maximize yield.
 
 [Learn About Auto-Pools →](auto-pools/overview.md)

@@ -1,11 +1,11 @@
 # Providing Liquidity
 
-Earn trading fees by depositing token pairs into MegaPools. Liquidity providers enable swaps and receive a portion of fees from every transaction.
+Earn trading fees by depositing token pairs into Pools. Liquidity providers enable swaps and receive a portion of fees from every transaction.
 
 ## At a Glance
 
 - Deposit token pairs to earn fees from swaps
-- Choose custom Liquidity Zones for optimal capital efficiency
+- Choose custom Ticks for optimal capital efficiency
 - Receive LP NFT representing your position
 - Withdraw liquidity anytime with no lock periods
 - Collect fees when withdrawing or manually claim
@@ -15,7 +15,7 @@ Earn trading fees by depositing token pairs into MegaPools. Liquidity providers 
 
 ```mermaid
 graph TD
-    A[Deposit Tokens] --> B[Select Liquidity Zone]
+    A[Deposit Tokens] --> B[Select Tick]
     B --> C[Create Position]
     C --> D[Receive LP NFT]
     D --> E[Earn Fees from Swaps]
@@ -28,7 +28,7 @@ graph TD
     style E fill:#4F46E5
 ```
 
-You deposit equal value of both tokens, select a Liquidity Zone, and receive an LP NFT. As traders swap through your zone, you earn fees automatically.
+You deposit equal value of both tokens, select a Tick, and receive an LP NFT. As traders swap through your tick, you earn fees automatically.
 
 ## Prerequisites
 
@@ -97,7 +97,7 @@ Navigate to Pools page. Find desired token pair or click "Create Position".
 
 If pool doesn't exist, you can create it.
 
-### Step 2: Choose Liquidity Zone
+### Step 2: Choose Tick
 
 Define price range for your liquidity:
 
@@ -123,13 +123,15 @@ The interface shows:
 - Your selected range visualized
 - Expected APR for the range
 
-[Liquidity Zone strategies →](liquidity-zones.md)
+[Tick strategies →](ticks.md)
+
+> **Tip**: While you can manually select and manage ticks, [Auto-Pools](../auto-pools/overview.md) offers preset configurations that automatically select optimal ticks and rebalance positions 24/7. This maximizes your active time and fee earnings without constant monitoring.
 
 ### Step 3: Enter Amounts
 
 Enter amount of first token. The interface automatically calculates required amount of second token based on:
 - Current pool price
-- Your selected Liquidity Zone
+- Your selected Tick
 
 Amounts must be proportional to current price. You cannot provide single-sided liquidity.
 
@@ -245,7 +247,7 @@ LP NFT remains in wallet but represents zero liquidity.
 
 ### How Fees Accumulate
 
-Every swap through your Liquidity Zone generates fees:
+Every swap through your Tick generates fees:
 
 ```
 Swap: 1 ETH for 2000 USDC
@@ -292,6 +294,8 @@ Maximize fee earnings:
 **Appropriate Fee Tier**: Match fee tier to volatility.
 
 **Active Management**: Rebalance when zone becomes inactive.
+
+> **Automate Management**: [Auto-Pools](../auto-pools/overview.md) can automate active management with preset configurations. Set your strategy mode (Bull, Bear, Dynamic, or Static) and let the system handle rebalancing automatically, ensuring your position stays active and earning fees.
 
 ## Impermanent Loss
 
@@ -379,13 +383,15 @@ Rebalance when:
 
 ### Use Strategies
 
-Deploy automated strategies:
-- Continuous rebalancing
-- Stop-loss mechanisms
-- Dynamic zone adjustment
-- Risk management algorithms
+While you can manage positions manually, [Auto-Pools](../auto-pools/overview.md) offers preset configurations that automate liquidity management:
 
-[Auto-Pools →](../auto-pools/overview.md)
+- **Continuous rebalancing**: Positions automatically adjust when price moves
+- **Strategy modes**: Choose Bull, Bear, Dynamic, or Static based on market conditions
+- **Dynamic tick adjustment**: Ticks automatically optimize based on volatility
+- **24/7 monitoring**: No need to constantly check positions
+- **Preset configs**: Pre-configured strategies for different market conditions
+
+Auto-Pools works with your existing LP NFTs and positions, making it easy to transition from manual to automated management.
 
 ## Position on MegaETH
 
@@ -428,19 +434,6 @@ Position 3 (wide): $1600 - $2400 (insurance)
 
 Balances maximum efficiency with risk management.
 
-### Range Orders
-
-Use positions as limit orders:
-
-```
-Current ETH price: $2000
-Create position: $2200 - $2300
-
-If price reaches $2200+, your position converts ETH to USDC
-```
-
-Acts like a limit sell order while earning fees.
-
 ### Hedge with Options
 
 Open opposite positions in Hedge:
@@ -478,7 +471,7 @@ After providing liquidity:
 - [Understand LP NFTs](lp-nfts.md) and position management
 - [Optimize fee earnings](fees-and-rewards.md)
 - [Deploy automated strategies](../auto-pools/strategy-modes.md)
-- [Learn about impermanent loss](liquidity-zones.md#capital-efficiency)
+- [Learn about impermanent loss](ticks.md#capital-efficiency)
 
 ---
 

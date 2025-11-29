@@ -1,6 +1,6 @@
 # Swapping on DEX
 
-Exchange one token for another instantly through MegaPools. Swaps on MegaFi execute in under 50 milliseconds with minimal slippage and transparent pricing.
+Exchange one token for another instantly through Pools. Swaps on MegaFi execute in under 50 milliseconds with minimal slippage and transparent pricing.
 
 ## At a Glance
 
@@ -225,14 +225,6 @@ Large trades may split across multiple paths:
 
 Splitting reduces price impact by distributing the trade.
 
-### Custom Routing
-
-Enable Expert Mode to:
-- See all possible routes
-- Manually select preferred path
-- Exclude specific pools
-- Set custom hop limits
-
 ## Slippage Protection
 
 Slippage tolerance protects against price movement during execution:
@@ -300,11 +292,7 @@ Enable in settings for advanced features:
 
 **Disable Confirmation**: Skip confirmation modal. Swaps execute immediately.
 
-**Custom Routes**: Manually select swap path.
-
 **High Price Impact**: Allow swaps with > 5% price impact.
-
-**Contract Recipient**: Send output to address other than your wallet.
 
 Only enable if you understand the risks. Mistakes are immediate and irreversible.
 
@@ -362,17 +350,6 @@ Standard swaps at current market price:
 - Use default slippage
 - Execute immediately
 - Accept current market conditions
-
-### Limit Orders
-
-Currently not supported natively. Use third-party limit order protocols built on MegaFi.
-
-### Dollar Cost Averaging (DCA)
-
-Execute multiple small swaps over time:
-- Reduces price impact
-- Averages entry price
-- Can be automated via Auto-Pools
 
 ### Arbitrage
 

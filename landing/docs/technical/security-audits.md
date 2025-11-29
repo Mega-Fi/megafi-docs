@@ -31,8 +31,8 @@ Comprehensive overview of MegaFi security measures and planned audits. Understan
 ### DEX
 
 **Contracts for Audit**:
-- MegaPoolFactory
-- MegaPool implementation
+- PoolFactory
+- Pool implementation
 - PositionManager (LP NFTs)
 - SwapRouter
 - Quoter
@@ -190,7 +190,7 @@ Severity-based rewards (amounts to be confirmed at launch):
 
 For security concerns during development:
 
-**Email**: security@megafi.app
+**Email**: contact@megafi.app
 
 **Please Include**:
 - Detailed description
@@ -229,9 +229,7 @@ Automated monitoring alerts team to:
 
 During incidents:
 
-**Status Page**: [status.megafi.app](https://status.megafi.app)
-
-**Twitter**: @MegaFiApp
+**Twitter**: @megafi_app
 
 **Discord**: #announcements channel
 
@@ -402,7 +400,7 @@ Security-related or any other inquiries:
 Not yet. Audits are planned and will be completed before mainnet launch. The protocol is currently in development and testing.
 
 **What if I find a vulnerability?**  
-Report to security@megafi.app. Bug bounty program will launch post-audit.
+Report to contact@megafi.app. Bug bounty program will launch post-audit.
 
 **Are user funds insured?**  
 No insurance available during development phase. Insurance options will be explored post-launch.

@@ -742,7 +742,7 @@ Yes. All contracts will be verified on MegaETH block explorer with source code p
 Will be available on GitHub and npm package upon deployment.
 
 **How do I report security issues?**  
-Contact security@megafi.app with responsible disclosure.
+Contact contact@megafi.app with responsible disclosure.
 
 **Are contract names final?**  
 Yes. Contract names (including "Hegic" prefix) are the actual deployed names from the audited codebase.

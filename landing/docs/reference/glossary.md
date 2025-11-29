@@ -28,7 +28,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Collateral**: Assets locked to secure a position. Required for selling options.
 
-**Concentrated Liquidity**: Providing liquidity in specific price ranges. Core feature of MegaPools.
+**Concentrated Liquidity**: Providing liquidity in specific price ranges. Core feature of Pools.
 
 **Continuous Execution**: MegaETH's architecture processing transactions immediately rather than in blocks.
 
@@ -92,7 +92,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Liquidity Provider (LP)**: User who deposits tokens into pools to enable trading.
 
-**Liquidity Zone**: Price range where liquidity is concentrated. Called "range" on other protocols.
+**Tick**: Price range where liquidity is concentrated. Called "range" on other protocols.
 
 **LP NFT**: Non-fungible token representing liquidity position. Unique to each position.
 
@@ -106,7 +106,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **MegaETH**: High-performance L2 blockchain. 100k+ TPS, < 10ms finality.
 
-**MegaPool**: Liquidity pool in MegaFi. Uses concentrated liquidity model.
+**Pool**: Liquidity pool in MegaFi. Uses concentrated liquidity model.
 
 ## N
 
@@ -138,7 +138,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 ## R
 
-**Rebalancing**: Adjusting position parameters. Strategies rebalance Liquidity Zones automatically.
+**Rebalancing**: Adjusting position parameters. Strategies rebalance Ticks automatically.
 
 **Hedge**: MegaFi's options and hedging functionality.
 
@@ -166,7 +166,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Theta**: Options Greek measuring time decay. How much option loses per day.
 
-**Tick**: Discrete price point in pool. Ticks define Liquidity Zone boundaries.
+**Tick**: Price range where liquidity is concentrated. Defined by discrete price points (tick boundaries).
 
 **Tick Spacing**: Granularity of ticks. 0.05% pools: 10. 0.3% pools: 60. 1% pools: 200.
 
@@ -208,10 +208,10 @@ MegaFi uses specific terminology. Equivalents from other protocols:
 
 | Other Protocols | MegaFi |
 |-----------------|--------|
-| AMM | DEX / MegaPool |
-| Range / Ticks | Liquidity Zones |
+| AMM | DEX / Pool |
+| Range / Ticks | Ticks |
 | Vault | Auto-Pools / Strategy Modes |
-| Pool | MegaPool |
+| Pool | Pool |
 | V3 Position | LP NFT |
 
 ## Abbreviations

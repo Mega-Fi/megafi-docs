@@ -64,6 +64,12 @@
   color: var(--ifm-heading-color);
 }
 
+.features h3::before,
+.features h3::after {
+  display: none;
+  content: none;
+}
+
 .features p {
   margin-bottom: 1.5rem;
   line-height: 1.6;

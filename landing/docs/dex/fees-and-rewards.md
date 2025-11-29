@@ -47,7 +47,7 @@ Position active for 50% of time
 Your actual fee: $3
 ```
 
-Only liquidity in active Liquidity Zones earns fees.
+Only liquidity in active Ticks earns fees.
 
 ### No Protocol Fee
 
@@ -212,13 +212,22 @@ Benefits:
 
 ### Active Management
 
-Rebalance positions regularly:
+While you can manually rebalance positions regularly, [Auto-Pools](../auto-pools/overview.md) offers preset configurations that automate active management:
 
-- When zone goes out of range
-- When better opportunities appear
-- When volatility changes
+**Manual Active Management:**
+- Rebalance when tick goes out of range
+- Adjust when better opportunities appear
+- Modify when volatility changes
+- Requires constant monitoring
 
-MegaETH's low gas costs make frequent rebalancing profitable.
+**Automated Active Management with Auto-Pools:**
+- Automatic rebalancing when ticks become inactive
+- Continuous monitoring and adjustment
+- Preset configurations adapt to market conditions
+- Strategy modes (Bull, Bear, Dynamic, Static) optimize for different scenarios
+- Maximizes active time and fee earnings without manual intervention
+
+MegaETH's low gas costs make frequent rebalancing profitable, and Auto-Pools makes it effortless. Set your strategy mode once, and the system handles the rest, ensuring your positions stay active and earning fees 24/7.
 
 ## Fee Calculations
 
@@ -435,8 +444,8 @@ Yes. Historical simulator in interface shows projected fees for various zones.
 
 Maximize your fee earnings:
 
-- [Liquidity Zones](liquidity-zones.md) - Optimize zone selection
-- [Auto-Pools](../auto-pools/overview.md) - Automate management
+- [Ticks](ticks.md) - Optimize tick selection
+- [Auto-Pools](../auto-pools/overview.md) - Automate management with preset configurations
 - [Performance Tracking](../auto-pools/performance-tracking.md) - Monitor returns
 
 ---

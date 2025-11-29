@@ -4,7 +4,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'MegaFi',
-  tagline: 'Real-Time Options Trading on MegaETH',
+  tagline: 'DeFi super app on MegaETH',
   favicon: 'img/favicon.png',
 
   future: {

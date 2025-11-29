@@ -1,21 +1,21 @@
-# Liquidity Zones
+# Ticks
 
-Custom price ranges where you concentrate liquidity in MegaPools. Liquidity Zones enable capital-efficient liquidity provision by focusing assets where trading actually occurs.
+Custom price ranges where you concentrate liquidity in Pools. Ticks enable capital-efficient liquidity provision by focusing assets where trading actually occurs.
 
 ## At a Glance
 
 - Define specific price ranges for your liquidity
-- Earn fees only when price is within your zone
-- Narrow zones earn higher fees per dollar but require more management
-- Wide zones earn more consistently but with lower capital efficiency
-- Zones represented in ticks (discrete price points)
-- Adjust zones anytime by modifying position
+- Earn fees only when price is within your tick
+- Narrow ticks earn higher fees per dollar but require more management
+- Wide ticks earn more consistently but with lower capital efficiency
+- Ticks represented as discrete price points
+- Adjust ticks anytime by modifying position
 
 ## Concept
 
 Traditional AMMs spread your liquidity from price 0 to infinity. Most of that liquidity never participates in trades.
 
-Liquidity Zones let you concentrate capital in price ranges where you expect trading:
+Ticks let you concentrate capital in price ranges where you expect trading:
 
 ```
 Traditional AMM:
@@ -24,16 +24,16 @@ Traditional AMM:
 
 Concentrated Liquidity:
       $1800 [================] $2200
-      (Liquidity dense in selected zone)
+      (Liquidity dense in selected tick)
 ```
 
-When price is in your zone, your capital earns fees. When price moves outside, you stop earning until it returns.
+When price is in your tick, your capital earns fees. When price moves outside, you stop earning until it returns.
 
-## How Zones Work
+## How Ticks Work
 
-### Zone Boundaries
+### Tick Boundaries
 
-Each Liquidity Zone has two boundaries:
+Each Tick has two boundaries:
 
 **Lower Bound**: Minimum price where your liquidity is active.
 
@@ -45,22 +45,22 @@ Example:
 - Upper bound: $2,200
 - Your liquidity is active when ETH trades between $1,800 and $2,200
 
-### Zone Width
+### Tick Width
 
-Zone width determines capital efficiency and management requirements:
+Tick width determines capital efficiency and management requirements:
 
-**Narrow Zones** (e.g., ±5% from current price):
+**Narrow Ticks** (e.g., ±5% from current price):
 - Highest capital efficiency
 - Earn maximum fees when active
-- Risk: Price easily moves outside zone
+- Risk: Price easily moves outside tick
 - Requires frequent rebalancing
 
-**Medium Zones** (e.g., ±15% from current price):
+**Medium Ticks** (e.g., ±15% from current price):
 - Balanced efficiency
 - Good fee earnings with moderate management
 - Suitable for most LPs
 
-**Wide Zones** (e.g., ±50% from current price):
+**Wide Ticks** (e.g., ±50% from current price):
 - Lower capital efficiency
 - Consistent fee earnings
 - Minimal management required
@@ -68,7 +68,7 @@ Zone width determines capital efficiency and management requirements:
 
 ### Multiple Positions
 
-You can create multiple positions in the same pool with different zones:
+You can create multiple positions in the same pool with different ticks:
 
 ```
 Position 1: $1900 - $2100 (narrow, active management)
@@ -78,49 +78,51 @@ Position 3: $2000 - $2050 (very narrow, short-term speculation)
 
 This strategy combines high efficiency with risk management.
 
-## Choosing Your Zone
+## Choosing Your Tick
 
 ### Based on Price Expectations
 
 **Stable Pairs** (e.g., USDC/USDT):
-- Use very narrow zones (e.g., 0.995 - 1.005)
+- Use very narrow ticks (e.g., 0.995 - 1.005)
 - Price rarely moves outside
 - High capital efficiency with low management
 
 **Volatile Pairs** (e.g., ETH/USDC):
-- Use wider zones (e.g., ±20-30%)
+- Use wider ticks (e.g., ±20-30%)
 - Balance efficiency with active time
-- Consider automated rebalancing
+- Consider automated rebalancing with [Auto-Pools](../auto-pools/overview.md) preset configurations
 
 ### Based on Management Style
 
 **Active Management**:
-- Narrow zones for maximum efficiency
+- Narrow ticks for maximum efficiency
 - Monitor price movement daily
 - Rebalance frequently (economical on MegaETH)
 - Higher potential returns
 
 **Passive Management**:
-- Wide zones spanning expected price range
+- Wide ticks spanning expected price range
 - Check weekly or monthly
 - Minimal rebalancing
 - Lower but more stable returns
 
+> **Automated Management**: [Auto-Pools](../auto-pools/overview.md) offers preset configurations that automatically select optimal ticks based on your chosen strategy mode (Bull, Bear, Dynamic, or Static). This eliminates the need to manually choose and adjust ticks while maximizing your active time and fee earnings.
+
 ### Based on Risk Tolerance
 
 **Conservative**:
-- Wide zones that rarely exit
+- Wide ticks that rarely exit
 - Focus on stable, high-volume pairs
 - Accept lower efficiency for predictable earnings
 
 **Aggressive**:
-- Narrow zones for maximum efficiency
+- Narrow ticks for maximum efficiency
 - Willing to rebalance frequently
 - Higher returns but more active management
 
 ## Ticks and Tick Spacing
 
-Liquidity Zones are defined using ticks (discrete price points):
+Ticks are defined using discrete price points:
 
 ### What Are Ticks?
 
@@ -139,9 +141,9 @@ Different fee tiers have different tick spacing:
 **0.3% Fee Tier**: Tick spacing = 60 (0.6% increments)  
 **1% Fee Tier**: Tick spacing = 200 (2% increments)
 
-Lower tick spacing allows more precise zones but increases gas costs for pool operations.
+Lower tick spacing allows more precise ticks but increases gas costs for pool operations.
 
-### Setting Zone Boundaries
+### Setting Tick Boundaries
 
 When creating a position, you specify:
 1. Lower tick (must be multiple of tick spacing)
@@ -149,13 +151,13 @@ When creating a position, you specify:
 
 The interface handles tick math automatically - you enter prices, it converts to ticks.
 
-## Zone Status
+## Tick Status
 
-Your Liquidity Zone can be in three states:
+Your Tick can be in three states:
 
 ### Active (In Range)
 
-Current price is within your zone boundaries. Your liquidity:
+Current price is within your tick boundaries. Your liquidity:
 - Participates in swaps
 - Earns fees
 - Comprises both tokens in proportion to current price
@@ -186,29 +188,29 @@ Your $10,000 deposit actively trading: ~$500 (5%)
 Capital efficiency: 5%
 ```
 
-**Concentrated Liquidity (±10% zone)**:
+**Concentrated Liquidity (±10% tick)**:
 ```
 ETH/USDC Pool
 Price: $2000
-Zone: $1800-$2200
+Tick: $1800-$2200
 Your $10,000 deposit actively trading: ~$9,500 (95%)
 Capital efficiency: 95%
 ```
 
 Result: 19x more effective liquidity per dollar.
 
-## Zone Strategy Examples
+## Tick Strategy Examples
 
 ### Stable Pair Strategy
 
 ```
 Pair: USDC/USDT
 Current Price: 1.0000
-Zone: 0.9990 - 1.0010
+Tick: 0.9990 - 1.0010
 Width: 0.2%
 ```
 
-**Rationale**: Price rarely exceeds $0.001 variance. Ultra-narrow zone captures most volume with maximum efficiency.
+**Rationale**: Price rarely exceeds $0.001 variance. Ultra-narrow tick captures most volume with maximum efficiency.
 
 **Management**: Check monthly. Rebalance only if depeg event occurs.
 
@@ -217,7 +219,7 @@ Width: 0.2%
 ```
 Pair: ETH/USDC
 Current Price: $2000
-Zone: $1800 - $2200
+Tick: $1800 - $2200
 Width: 20%
 ```
 
@@ -230,11 +232,11 @@ Width: 20%
 ```
 Pair: NEWTOKEN/ETH
 Current Price: 0.05 ETH
-Zone: 0.03 - 0.08 ETH
+Tick: 0.03 - 0.08 ETH
 Width: 100%
 ```
 
-**Rationale**: New token prices swing wildly. Wide zone ensures position stays active.
+**Rationale**: New token prices swing wildly. Wide tick ensures position stays active.
 
 **Management**: Check daily. Tighten zone as volatility decreases.
 
@@ -243,7 +245,7 @@ Width: 100%
 ```
 Pair: ETH/USDC
 Current Price: $2000 (oversold)
-Zone: $2000 - $2400
+Tick: $2000 - $2400
 Width: 20% (asymmetric, above current)
 ```
 
@@ -251,27 +253,29 @@ Width: 20% (asymmetric, above current)
 
 **Management**: Close when price reaches expected range. Not a passive strategy.
 
-## Rebalancing Zones
+## Rebalancing Ticks
 
-When price moves outside your zone, consider rebalancing:
+When price moves outside your tick, consider rebalancing:
 
 ### Manual Rebalancing
 
 1. Remove liquidity from current position
-2. Select new zone boundaries around current price
-3. Add liquidity with adjusted zone
+2. Select new tick boundaries around current price
+3. Add liquidity with adjusted tick
 4. Receive new LP NFT
 
 ### Automated Rebalancing
 
-Deploy a Strategy Mode that rebalances automatically:
+While manual rebalancing gives you full control, [Auto-Pools](../auto-pools/overview.md) offers preset configurations that automate the entire process:
 
-- Monitors price continuously
-- Rebalances when zone becomes inactive
-- Adjusts zone width based on volatility
-- No manual intervention required
+- **24/7 monitoring**: Continuously tracks price movements
+- **Automatic rebalancing**: Adjusts ticks when they become inactive
+- **Strategy modes**: Choose Bull, Bear, Dynamic, or Static based on market conditions
+- **Preset configs**: Pre-configured strategies optimize tick width based on volatility
+- **No manual intervention**: Set it once and let it manage your positions
+- **Works with existing positions**: Uses your current LP NFTs, no need to recreate positions
 
-[Auto-Pools guide →](../auto-pools/overview.md)
+Auto-Pools makes frequent rebalancing effortless and economically viable, ensuring your liquidity stays active and earning fees.
 
 ### Rebalancing Costs
 
@@ -282,23 +286,23 @@ On MegaETH, rebalancing costs:
 
 Ultra-low costs make frequent rebalancing economically viable.
 
-## Zone Visualization
+## Tick Visualization
 
-The MegaFi interface displays zone information:
+The MegaFi interface displays tick information:
 
-**Price Chart**: Shows current price, your zones, and historical price movement.
+**Price Chart**: Shows current price, your ticks, and historical price movement.
 
 **Liquidity Distribution**: Histogram showing where all liquidity is concentrated across price ranges.
 
-**Zone Status Indicator**: Green (active), Red (out of range), with distance to boundaries.
+**Tick Status Indicator**: Green (active), Red (out of range), with distance to boundaries.
 
-**Expected Fee Earnings**: Projected APR based on current volume and your zone position.
+**Expected Fee Earnings**: Projected APR based on current volume and your tick position.
 
-## Advanced Zone Strategies
+## Advanced Tick Strategies
 
 ### Layered Positions
 
-Create multiple positions with overlapping zones:
+Create multiple positions with overlapping ticks:
 
 ```
 Position 1: $1950 - $2050 (core, narrow)
@@ -311,60 +315,60 @@ Benefits:
 - Buffer provides insurance
 - Safety ensures you always earn some fees
 
-### Asymmetric Zones
+### Asymmetric Ticks
 
-Position zones differently based on bias:
+Position ticks differently based on bias:
 
 **Bullish Bias**:
 ```
 Current: $2000
-Zone: $2000 - $2500 (favors upside)
+Tick: $2000 - $2500 (favors upside)
 ```
 
 **Bearish Bias**:
 ```
 Current: $2000
-Zone: $1500 - $2000 (favors downside)
+Tick: $1500 - $2000 (favors downside)
 ```
 
 Risk: If wrong, position quickly goes out of range.
 
 ### Seasonal Adjustment
 
-Adjust zone width based on market conditions:
+Adjust tick width based on market conditions:
 
-**Low Volatility Period**: Narrow zones for max efficiency.
+**Low Volatility Period**: Narrow ticks for max efficiency.
 
-**High Volatility Period**: Wider zones to stay active.
+**High Volatility Period**: Wider ticks to stay active.
 
-**Consolidation**: Very narrow zones around support/resistance.
+**Consolidation**: Very narrow ticks around support/resistance.
 
-**Trend**: Asymmetric zones favoring trend direction.
+**Trend**: Asymmetric ticks favoring trend direction.
 
 ## FAQ
 
-**What's the optimal zone width?**  
+**What's the optimal tick width?**  
 Depends on pair volatility and management preference. Start with ±15% for standard pairs.
 
-**Can I adjust my zone without removing liquidity?**  
+**Can I adjust my tick without removing liquidity?**  
 No. You must remove liquidity and create a new position with different boundaries.
 
-**Do I lose fees if price exits my zone?**  
+**Do I lose fees if price exits my tick?**  
 No. Accumulated fees remain in your position. You just stop earning new fees until price returns.
 
-**Should I have one wide zone or multiple narrow zones?**  
-Multiple narrow zones often perform better but require more transactions. Wide zones are simpler.
+**Should I have one wide tick or multiple narrow ticks?**  
+Multiple narrow ticks often perform better but require more transactions. Wide ticks are simpler.
 
 **How often should I rebalance?**  
 When position goes out of range or when rebalancing cost is < 5% of expected additional fees.
 
 ## Next Steps
 
-Apply Liquidity Zone concepts:
+Apply Tick concepts:
 
 - [Providing Liquidity](providing-liquidity.md) - Create your first position
 - [Strategy Modes](../auto-pools/strategy-modes.md) - Automate zone management
-- [Range Optimization](../auto-pools/range-optimization.md) - Advanced zone selection
+- [Range Optimization](../auto-pools/range-optimization.md) - Advanced tick selection
 
 ---
 

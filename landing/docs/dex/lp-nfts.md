@@ -1,6 +1,6 @@
 # LP NFTs
 
-Liquidity positions on MegaFi are represented as non-fungible tokens (NFTs). Each LP NFT tracks your liquidity, zone boundaries, and accumulated fees in a specific MegaPool.
+Liquidity positions on MegaFi are represented as non-fungible tokens (NFTs). Each LP NFT tracks your liquidity, tick boundaries, and accumulated fees in a specific Pool.
 
 ## At a Glance
 
@@ -35,13 +35,13 @@ Each LP NFT contains:
 
 **Token ID**: Unique identifier for the position.
 
-**Pool**: Which MegaPool the position is in.
+**Pool**: Which Pool the position is in.
 
 **Liquidity**: Amount of liquidity units in the position.
 
-**Lower Tick**: Lower boundary of Liquidity Zone.
+**Lower Tick**: Lower boundary of Tick.
 
-**Upper Tick**: Upper boundary of Liquidity Zone.
+**Upper Tick**: Upper boundary of Tick.
 
 **Fee Growth**: Checkpoint for calculating unclaimed fees.
 
@@ -211,9 +211,11 @@ Manage multiple positions simultaneously:
 
 **Close All**: Remove liquidity from all positions.
 
-**Rebalance All**: Adjust zones on multiple positions.
+**Rebalance All**: Adjust ticks on multiple positions.
 
 Bulk actions save gas compared to individual transactions.
+
+> **Automate Management**: While you can manually manage multiple positions, [Auto-Pools](../auto-pools/overview.md) offers preset configurations that automatically manage all your LP NFTs. Set strategy modes once, and Auto-Pools handles rebalancing across all positions, ensuring maximum active time and fee earnings without constant monitoring.
 
 ### Organization
 
@@ -226,54 +228,6 @@ Organize positions:
 **Search**: Find specific positions by token or ID.
 
 **Tags**: Add custom labels (coming soon).
-
-## NFT Metadata
-
-### Standard Metadata
-
-LP NFTs follow ERC-721 metadata standard:
-
-```json
-{
-  "name": "MegaFi Position #12345",
-  "description": "Liquidity position in ETH/USDC 0.3%",
-  "image": "ipfs://...",
-  "attributes": [
-    {
-      "trait_type": "Pool",
-      "value": "ETH/USDC"
-    },
-    {
-      "trait_type": "Fee Tier",
-      "value": "0.3%"
-    },
-    {
-      "trait_type": "Lower Price",
-      "value": "1900"
-    },
-    {
-      "trait_type": "Upper Price",
-      "value": "2100"
-    },
-    {
-      "trait_type": "Status",
-      "value": "Active"
-    }
-  ]
-}
-```
-
-### Dynamic Images
-
-NFT images update based on position status:
-
-**Active**: Green border, "IN RANGE" indicator.
-
-**Inactive**: Red border, "OUT OF RANGE" indicator.
-
-**High Fees**: Special badge for positions with significant unclaimed fees.
-
-Images generate dynamically from on-chain data. No IPFS pinning required.
 
 ## Burning NFTs
 
@@ -407,7 +361,7 @@ Understand LP NFT mechanics:
 
 - [Providing Liquidity](providing-liquidity.md) - Create positions and receive NFTs
 - [Fees and Rewards](fees-and-rewards.md) - Maximize NFT value
-- [Auto-Pools](../auto-pools/overview.md) - Automate NFT management
+- [Auto-Pools](../auto-pools/overview.md) - Automate NFT management with preset configurations
 
 ---
 

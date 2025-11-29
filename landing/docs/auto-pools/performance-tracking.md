@@ -115,6 +115,8 @@ Net: +$300 (fees exceeded IL)
 
 **Max Drawdown**: Largest position value decline.
 
+> **Hedge Against IL**: Monitor your impermanent loss metrics closely. If IL becomes significant, consider hedging your position with put options through [Hedge](../hedge/overview.md). Options can limit downside exposure while your Auto-Pools position continues earning fees.
+
 ## Performance Dashboard
 
 ### Overview Tab
@@ -143,7 +145,7 @@ Visual performance tracking:
 - Rolling APR calculation
 - Compare to pool average
 
-**Zone Width Chart**: How Liquidity Zone width changed.
+**Tick Width Chart**: How Tick width changed.
 - Useful for Dynamic Mode
 - Shows adaptation to volatility
 
@@ -405,6 +407,8 @@ Focuses on negative volatility only
 Target: > 1.5
 ```
 
+> **Improve Risk-Adjusted Returns**: If your downside volatility is high, consider hedging with put options via [Hedge](../hedge/overview.md). Options protect against downside moves, improving your Sortino ratio while maintaining upside potential from fee earnings.
+
 ### Scenario Analysis
 
 See how position would perform under different scenarios:
@@ -454,6 +458,7 @@ Use performance data to optimize:
 - [Strategy Modes](strategy-modes.md) - Choose best mode based on performance
 - [Automated Rebalancing](automated-rebalancing.md) - Understand rebalancing impact
 - [Range Optimization](range-optimization.md) - See how zones are calculated
+- [Hedge](../hedge/overview.md) - Protect against IL with options
 
 ---
 

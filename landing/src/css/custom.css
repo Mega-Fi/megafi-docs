@@ -243,3 +243,18 @@ table {
   justify-content: center;
   margin: 2rem 0;
 }
+
+/* Hide icons in Core Products section */
+.features h3::before,
+.features h3::after,
+.features .col::before,
+.features .col::after {
+  display: none !important;
+  content: none !important;
+}
+
+.features .col > div::before,
+.features .col > div::after {
+  display: none !important;
+  content: none !important;
+}

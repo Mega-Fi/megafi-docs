@@ -58,6 +58,8 @@ For an ETH/USDC pool with current price of $3,000:
 - Trailing Rebalancing: Ranges can be wider as position trails price
 - Active Rebalancing: Ranges may need adjustment when price exits
 
+**Risk Management**: For additional protection, especially with narrower ranges or high volatility, consider hedging your position with put options through [Hedge](../hedge/overview.md). Options can limit downside exposure while your Auto-Pools position continues earning fees.
+
 ## Integration with Rebalance Triggers
 
 Price ranges work together with rebalance triggers:
@@ -85,6 +87,9 @@ Yes. You can set different distances above and below current price based on your
 **Do ranges work differently in different modes?**  
 Yes. Bull mode rebalances on the right side, Bear mode on the left side, Dynamic mode in both directions, Static mode doesn't rebalance automatically.
 
+**Can I hedge my position when using narrow ranges?**  
+Yes. Narrow ranges offer higher capital efficiency but increased risk. You can hedge your position with put options through [Hedge](../hedge/overview.md) to protect against downside moves while maintaining the efficiency benefits of narrow ranges. Fees from Auto-Pools can help offset option premiums.
+
 ## Next Steps
 
 Apply range optimization:
@@ -92,6 +97,7 @@ Apply range optimization:
 - [Strategy Modes](strategy-modes.md) - Choose mode that matches your range strategy
 - [Automated Rebalancing](automated-rebalancing.md) - Understand how ranges interact with rebalancing
 - [Performance Tracking](performance-tracking.md) - Monitor how your ranges perform
+- [Hedge](../hedge/overview.md) - Protect positions with options
 
 ---
 

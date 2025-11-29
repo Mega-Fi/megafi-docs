@@ -231,7 +231,7 @@ Watch for:
 - Unusual token behavior
 - Too-good-to-be-true promises
 
-**If Suspicious**: Report to security@megafi.app
+**If Suspicious**: Report to contact@megafi.app
 
 ## Token Information
 

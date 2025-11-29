@@ -1,10 +1,10 @@
 # Auto-Pools
 
-Automated liquidity management directly connected to DEX. Auto-Pools deploys algorithmic strategies that rebalance Liquidity Zones, maximize capital efficiency, and adapt to changing market conditions.
+Automated liquidity management directly connected to DEX. Auto-Pools deploys algorithmic strategies that rebalance Ticks, maximize capital efficiency, and adapt to changing market conditions.
 
 ## At a Glance
 
-- Automated Liquidity Zone management with zero manual intervention
+- Automated Tick management with zero manual intervention
 - Four market modes: Bull, Bear, Dynamic, Static
 - Two rebalancing types: Trailing and Active
 - Continuous rebalancing enabled by MegaETH's low gas costs
@@ -231,23 +231,33 @@ Strategies integrate with other MegaFi layers:
 
 ### With DEX
 
-Strategies build on top of MegaPools:
+Strategies build on top of Pools:
 - Use same liquidity positions
-- Manage Liquidity Zones automatically
+- Manage Ticks automatically
 - Collect and compound fees
 
 ### With Hedge
 
-Combine strategies with hedging:
+Hedge your Auto-Pools positions by buying options to protect against downside risk:
 
 ```
 Auto-Pools: Earn fees from LP position
 Hedge: Buy put option for downside protection
 ```
 
-Fees help offset option premiums. Protection limits downside.
+**Benefits:**
+- **Protect against impermanent loss**: Put options limit downside exposure when prices decline
+- **Offset premiums with fees**: Trading fees from Auto-Pools can help cover option premiums
+- **Works with all modes**: Hedge any strategy mode (Bull, Bear, Dynamic, Static)
+- **Real-time execution**: MegaETH's sub-10ms execution enables precise hedging
 
-[Hedge integration →](../hedge/hedging-strategies.md)
+**Example Strategy:**
+- Deploy Auto-Pools position in ETH/USDC (Bull Mode)
+- Buy ETH put options at support level via [Hedge](../hedge/overview.md)
+- Fees from LP position offset option costs
+- If ETH price drops, puts protect against IL
+
+[Hedge integration guide →](../hedge/hedging-strategies.md)
 
 ## Strategy on MegaETH
 
@@ -315,6 +325,9 @@ Yes. Dynamic mode specifically designed for volatile markets.
 
 **How often does the bot check my position?**  
 The intent bot monitors liquidity positions every 5 minutes.
+
+**Can I hedge my Auto-Pools positions?**  
+Yes. You can hedge your positions by buying put options through [Hedge](../hedge/overview.md). This protects against impermanent loss and downside risk. Fees earned from Auto-Pools can help offset option premiums, making hedging economically viable. Works with all strategy modes.
 
 ## Next Steps
 

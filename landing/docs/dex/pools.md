@@ -1,6 +1,6 @@
-# MegaPools
+# Pools
 
-Token pair liquidity pools that enable instant swaps on MegaFi. MegaPools use concentrated liquidity to achieve superior capital efficiency compared to traditional constant-product pools.
+Token pair liquidity pools that enable instant swaps on MegaFi. Pools use concentrated liquidity to achieve superior capital efficiency compared to traditional constant-product pools.
 
 ## At a Glance
 
@@ -13,7 +13,7 @@ Token pair liquidity pools that enable instant swaps on MegaFi. MegaPools use co
 
 ## Pool Structure
 
-Each MegaPool consists of:
+Each Pool consists of:
 
 **Token Pair**: Two ERC-20 tokens that can be swapped (e.g., ETH/USDC).
 
@@ -23,11 +23,11 @@ Each MegaPool consists of:
 
 **Price**: Current exchange rate between the tokens, determined by pool balance and trades.
 
-**Tick Spacing**: Granularity of Liquidity Zones. Lower tick spacing allows more precise ranges.
+**Tick Spacing**: Granularity of Ticks. Lower tick spacing allows more precise ranges.
 
 ## How Pricing Works
 
-MegaPools determine prices algorithmically based on pool reserves:
+Pools determine prices algorithmically based on pool reserves:
 
 ```mermaid
 graph LR
@@ -50,13 +50,13 @@ This constant feedback mechanism ensures prices track market conditions.
 
 ### Price Formula
 
-MegaPools use the constant product formula with concentrated liquidity adjustments:
+Pools use the constant product formula with concentrated liquidity adjustments:
 
 ```
-x * y = k (where k is constant within a Liquidity Zone)
+x * y = k (where k is constant within a Tick)
 ```
 
-However, unlike simple constant-product AMMs, this formula applies only within active Liquidity Zones. When price moves between zones, the formula parameters update.
+However, unlike simple constant-product AMMs, this formula applies only within active Ticks. When price moves between ticks, the formula parameters update.
 
 ## Fee Tiers
 
@@ -70,7 +70,7 @@ Different pool types use different fee tiers:
 
 **Rationale**: Low volatility means less impermanent loss risk. Lower fees attract more volume.
 
-**Tick Spacing**: 10 (allows very precise Liquidity Zones)
+**Tick Spacing**: 10 (allows very precise Ticks)
 
 ### 0.3% Fee Tier
 
@@ -94,7 +94,7 @@ Different pool types use different fee tiers:
 
 ## Pool Creation
 
-Anyone can create a new MegaPool:
+Anyone can create a new Pool:
 
 1. Select two tokens
 2. Choose fee tier
@@ -112,14 +112,14 @@ The first liquidity provider sets the pool's starting price. Arbitrageurs quickl
 
 ## Liquidity Distribution
 
-Within a MegaPool, liquidity is distributed across different Liquidity Zones:
+Within a Pool, liquidity is distributed across different Ticks:
 
 ```
 Price:     $1800        $2000        $2200        $2400
            |            |            |            |
-Provider A: [========================================]  (wide zone)
-Provider B:              [===========]                 (narrow zone)
-Provider C:         [======================]           (medium zone)
+Provider A: [========================================]  (wide tick)
+Provider B:              [===========]                 (narrow tick)
+Provider C:         [======================]           (medium tick)
 ```
 
 Each provider chooses their own zone. Total pool liquidity equals the sum of all active positions at the current price.
@@ -136,7 +136,7 @@ This eliminates toxic arbitrage opportunities and reduces MEV extraction.
 
 ## Pool Statistics
 
-Each MegaPool displays key metrics:
+Each Pool displays key metrics:
 
 **Total Value Locked (TVL)**: Combined value of both tokens in the pool.
 
@@ -180,7 +180,7 @@ Traditional constant-product pools spread liquidity across all prices:
 
 **Flexibility**: None. LPs can't customize ranges.
 
-MegaPools with concentrated liquidity:
+Pools with concentrated liquidity:
 
 **Capital Efficiency**: High. Liquidity concentrates where trades happen.
 
@@ -192,7 +192,7 @@ Result: 5-10x higher capital efficiency for well-positioned liquidity.
 
 ## Pool Security
 
-MegaPools include several security features:
+Pools include several security features:
 
 **Reentrancy Guards**: Prevent reentrancy attacks during swaps and liquidity modifications.
 
@@ -220,7 +220,7 @@ Track pool performance through the interface:
 
 ## Creating a Pool
 
-To create a new MegaPool:
+To create a new Pool:
 
 1. Navigate to "Pools" → "Create Pool"
 2. Select Token A and Token B
@@ -237,11 +237,13 @@ To add liquidity to an existing pool:
 
 1. Browse pools or search for specific pair
 2. Click "Add Liquidity"
-3. Select Liquidity Zone boundaries
+3. Select Tick boundaries
 4. Enter token amounts
 5. Confirm transaction
 
 [Detailed guide →](providing-liquidity.md)
+
+> **Automate Management**: While you can manually add and manage liquidity, [Auto-Pools](../auto-pools/overview.md) offers preset configurations that automatically manage your positions. Set your strategy mode and tick preferences once, and Auto-Pools handles rebalancing 24/7 to maximize your active time and fee earnings.
 
 ## Pool Economics
 
@@ -259,7 +261,7 @@ Optimal pools balance these factors based on token characteristics.
 
 ## Performance on MegaETH
 
-MegaPools leverage MegaETH's capabilities:
+Pools leverage MegaETH's capabilities:
 
 **Continuous Price Updates**: No price drift between blocks.
 
@@ -286,13 +288,17 @@ Proportionally based on liquidity contributed and time that liquidity was active
 **Do I need both tokens to swap?**  
 No. To swap Token A for Token B, you only need Token A.
 
+**Should I manage my liquidity manually or use Auto-Pools?**  
+Manual management gives you full control and is suitable for active traders. [Auto-Pools](../auto-pools/overview.md) offers preset configurations that automate tick selection and rebalancing, making it ideal for users who want to maximize returns without constant monitoring. Auto-Pools works with your existing LP NFTs and can be enabled or disabled anytime.
+
 ## Next Steps
 
-Learn more about MegaPool components:
+Learn more about Pool components:
 
-- [Liquidity Zones](liquidity-zones.md) - Select optimal ranges
+- [Ticks](ticks.md) - Select optimal ranges
 - [Providing Liquidity](providing-liquidity.md) - Become an LP
 - [Fees and Rewards](fees-and-rewards.md) - Maximize earnings
+- [Auto-Pools](../auto-pools/overview.md) - Automate liquidity management
 
 ---
 
