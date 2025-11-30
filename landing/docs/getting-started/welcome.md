@@ -5,7 +5,7 @@ Real-time options trading and DeFi infrastructure on MegaETH. Trade options with
 ## At a Glance
 
 - **Real-Time Options Trading**: Execute options trades in under 10 milliseconds
-- **Live Greeks Updates**: Continuous risk metric calculations, not block-based
+- **Instant Execution**: Sub-10ms transaction finality for all operations
 - **Ultra-Low Costs**: Transaction fees under $0.005 enable frequent rebalancing
 - **Complete DeFi Stack**: Options, DEX, and automated liquidity management
 - **Built for Speed**: 100,000+ TPS with continuous execution on MegaETH
@@ -14,7 +14,7 @@ Real-time options trading and DeFi infrastructure on MegaETH. Trade options with
 
 MegaFi is a DeFi platform built on MegaETH that brings institutional-grade options trading to everyone. Traditional options platforms update prices every 12+ seconds. MegaFi updates continuously, enabling precise hedging and real-time risk management impossible on other chains.
 
-**The Core**: Options trading (Hedge) with real-time Greeks, instant execution, and capital-efficient collateral.
+**The Core**: Options trading (Hedge) with instant execution and capital-efficient collateral.
 
 **The Foundation**: DEX provides liquidity infrastructure. Auto-Pools automates position management. Everything works together seamlessly.
 
@@ -24,8 +24,8 @@ MegaFi is a DeFi platform built on MegaETH that brings institutional-grade optio
 
 MegaETH's sub-10ms finality enables true real-time options trading:
 
-- Greeks update with every price change
-- Exercise and settle in milliseconds
+- Premium calculation and execution in milliseconds
+- Exercise and settle instantly
 - No stale pricing or delayed liquidations
 - Arbitrage-resistant pricing
 
@@ -54,7 +54,7 @@ Three integrated products:
 | **Gas Cost** | < $0.005 | $2-15 | $0.001-0.02 |
 
 This performance enables features impossible elsewhere:
-- Real-time Greeks calculations
+- Instant premium calculation
 - Sub-second option exercise
 - Continuous position rebalancing
 - Instant arbitrage correction

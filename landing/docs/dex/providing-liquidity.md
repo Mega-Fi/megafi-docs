@@ -93,7 +93,7 @@ Less liquidity means:
 
 ### Step 1: Select Pool
 
-Navigate to Pools page. Find desired token pair or click "Create Position".
+Navigate to Earn -> Spot LP page. Find desired token pair or click "Create Position".
 
 If pool doesn't exist, you can create it.
 

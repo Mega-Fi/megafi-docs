@@ -64,7 +64,7 @@ Comprehensive glossary of MegaFi terminology. Quick reference for understanding 
 
 **Gas**: Fee paid to execute blockchain transactions. On MegaETH: < $0.005 typically.
 
-**Greeks**: Options risk metrics. Delta, gamma, theta, vega, rho.
+**Greeks**: Options risk metrics (Delta, Gamma, Theta, Vega, Rho). Used in traditional options analysis.
 
 ## H
 

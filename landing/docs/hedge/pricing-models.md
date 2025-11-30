@@ -4,8 +4,8 @@ Understand how options are priced on MegaFi. Learn the factors that determine op
 
 ## At a Glance
 
-- Black-Scholes model implemented in strategy contracts
-- On-chain premium calculation with transparent parameters
+- Black-Scholes model for pricing
+- Transparent pricing parameters
 - Real-time pricing updates from Chainlink oracles
 - Implied volatility configured per strategy
 - Pool liquidity determines available sizes
@@ -85,30 +85,6 @@ d2 = d1 - σ × √T
 
 Put price derived via put-call parity.
 
-### On-Chain Implementation
-
-Strategy contracts implement Black-Scholes:
-
-```
-Premium Calculation Flow:
-
-1. User requests quote with parameters:
-   - Amount (e.g., 1 ETH)
-   - Period (e.g., 7 days)
-   - Additional params (e.g., spread for strangles)
-
-2. Strategy contract executes:
-   - Query Chainlink for current price
-   - Get configured implied volatility
-   - Calculate time to expiration
-   - Execute Black-Scholes formula
-   - Return premium (positivePNL) and max loss (negativePNL)
-
-3. Result returned to user:
-   - Premium in USDm (6 decimals)
-   - Max potential loss
-   - Calculated on-chain, transparent
-```
 
 ### Pricing Inputs
 
@@ -122,19 +98,25 @@ Chainlink Price Feeds:
 - Source: Aggregated from multiple data providers
 ```
 
-**Strike Price (K)**: Current spot price at option creation.
+**Strike Price (K)**: Selected strike price (ATM or OTM).
 
 ```
-Strike = Current Chainlink Price
-All options are at-the-money at creation
+Available Strikes:
+- ATM: Current Chainlink Price
+- OTM Call #1: Market Price + 10%
+- OTM Call #2: Market Price + 20%
+- OTM Call #3: Market Price + 30%
+- OTM Put #1: Market Price - 10%
+- OTM Put #2: Market Price - 20%
+- OTM Put #3: Market Price - 30%
 ```
 
 **Time to Expiration (T)**: User-selected duration.
 
 ```
-Minimum: 1 day (86,400 seconds)
-Maximum: 30 days (2,592,000 seconds)
-Typical: 7 days, 14 days, 30 days
+Minimum: 7 days (604,800 seconds)
+Maximum: 90 days (7,776,000 seconds)
+Typical: 7 days, 14 days, 30 days, 90 days
 
 Converted to years: seconds / 31,536,000
 ```
@@ -157,54 +139,9 @@ Admin configurable per strategy
 Affects premium amount significantly
 ```
 
-## On-Chain Pricing
+## Pricing Updates
 
-### Strategy Contract Calculation
-
-Each strategy implements pricing:
-
-```solidity
-// Pseudo-code for strategy pricing
-
-function calculateNegativepnlAndPositivepnl(
-    uint256 amount,      // Option size (e.g., 1e18 for 1 ETH)
-    uint256 period,      // Duration in seconds
-    bytes[] calldata additional  // Extra params
-) public view returns (
-    uint128 negativepnl,  // Max loss / locked liquidity
-    uint128 positivepnl   // Premium to pay
-) {
-    // 1. Get current price from Chainlink
-    uint256 currentPrice = priceProvider.latestRoundData();
-    
-    // 2. Calculate time factor
-    uint256 timeInYears = period / 31536000;
-    
-    // 3. Get volatility parameter
-    uint256 volatility = K; // Strategy-specific
-    
-    // 4. Execute Black-Scholes
-    // ... mathematical calculation ...
-    
-    // 5. Return premium and max loss
-    return (negativepnl, positivepnl);
-}
-```
-
-### Real-Time Updates
-
-Pricing updates continuously:
-
-```mermaid
-graph LR
-    A[Chainlink Oracle] -->|Price Feed| B[Strategy Contract]
-    B -->|Calculate| C[Black-Scholes]
-    C -->|Return| D[Premium Quote]
-    D -->|Display| E[User Interface]
-    
-    style B fill:#4F46E5
-    style D fill:#10B981
-```
+Pricing updates as market conditions change:
 
 **Update Frequency**:
 - Chainlink prices: Continuous (sub-second updates)
@@ -426,58 +363,6 @@ Recommended: Review and purchase within 1-2 minutes
 
 Price can change if underlying asset moves significantly.
 
-## Greeks Impact on Pricing
-
-### Delta
-
-Option price change per $1 underlying move:
-
-```
-Delta 0.5:
-- ETH rises $10 → Option value +$5
-- ETH falls $10 → Option value -$5
-
-Calls: Delta 0 to 1
-Puts: Delta -1 to 0
-```
-
-### Gamma
-
-Delta change rate:
-
-```
-Gamma 0.02:
-- ETH moves $10 → Delta changes by 0.2
-
-High Gamma: Near ATM, short expiry
-Low Gamma: Far ITM/OTM, long expiry
-```
-
-### Theta
-
-Time decay per day:
-
-```
-Theta -2:
-- Option loses $2 value per day
-- All else equal
-
-Accelerates near expiration
-```
-
-### Vega
-
-Volatility sensitivity:
-
-```
-Vega 5:
-- IV rises 1% → Option value +$5
-- IV falls 1% → Option value -$5
-
-Long options: Positive vega
-```
-
-Greeks calculated continuously on MegaETH, updated with every relevant state change.
 
 ## Evaluating Fair Value
 
@@ -607,10 +492,10 @@ Continuously. Chainlink provides sub-second price updates. Premiums recalculate 
 Chainlink aggregates from multiple providers with outlier detection. Circuit breakers prevent stale prices.
 
 **Do all strikes use the same IV?**  
-Options created at-the-money at spot price. IV parameter is per-strategy, affecting all options from that strategy similarly.
+IV parameter is per-strategy, affecting all options from that strategy similarly. Options can be created at ATM or OTM strikes.
 
 **Can I see historical pricing?**  
-Yes. All on-chain transactions are recorded. Query past premium values and Greeks via blockchain explorers or indexers.
+Yes. All on-chain transactions are recorded. Query past premium values via blockchain explorers or indexers.
 
 **Why does my quote change?**  
 Underlying price changes (via Chainlink updates) affect premiums. Request fresh quote if price moves.

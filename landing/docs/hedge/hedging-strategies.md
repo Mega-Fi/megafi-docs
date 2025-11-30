@@ -52,8 +52,6 @@ Strategies for when you expect prices to rise.
 
 #### Call
 
-**Status**: Available
-
 **Description**: High profits if the price rises sharply.
 
 **Use Case**: Bullish outlook, expect significant upward price movement.
@@ -96,17 +94,23 @@ ETH at $2,500:
 
 #### Strap
 
-**Status**: Coming Soon
-
 **Description**: High profits if the price rises sharply, reasonable profits if the price falls.
 
 **Use Case**: Expect high volatility with bullish bias.
+
+The Strap is similar to the Straddle in terms of betting on rising volatility. The Strap usually consists of two call options and one put option with the same strike price and the same expiration.
+
+You can think of the Strap as a bullish Straddle: "I don't care what the price will be, but if it changes significantly in either direction during the period of holding Strap, I win. And I win even more if the increase in volatility leads to an increase in the price of the asset."
 
 **Structure**:
 ```
 Buy: 2 calls + 1 put at same strike
 Example: 2 ETH $2,000 calls + 1 ETH $2,000 put
 ```
+
+The Strap has a limited cost and unlimited potential profit.
+
+Buying one Strap is equal to buying three ATM options at the same time: two ATM calls and one ATM put.
 
 **Payoff**:
 ```
@@ -121,8 +125,6 @@ Price stays flat: Loss premium (time decay)
 - Accept higher premium cost
 
 #### Bull Call Spread
-
-**Status**: Coming Soon
 
 **Description**: Low cost, decent profits if the price rises to a certain level.
 
@@ -148,8 +150,6 @@ ETH > $2,200: Profit capped at $160
 - Accept capped upside
 
 #### Bull Put Spread
-
-**Status**: Coming Soon
 
 **Description**: Low cost, decent profits if the price stays at a certain level or rises.
 
@@ -179,8 +179,6 @@ ETH < $1,700: Max loss $100 - $30 = $70
 Strategies for when you expect prices to fall.
 
 #### Put
-
-**Status**: Available
 
 **Description**: High profits if the price falls sharply.
 
@@ -224,17 +222,23 @@ ETH at $1,500:
 
 #### Strip
 
-**Status**: Coming Soon
-
 **Description**: High profits if the price falls sharply, reasonable profits if the price rises.
 
 **Use Case**: Expect high volatility with bearish bias.
+
+The Strip is similar to Straddle and Strap in terms of betting on rising volatility. The Strip usually consists of one call option and two put options with the same strike price and the same expiration.
+
+You can think of the Strip as a bearish Straddle: "I don't care what the price will be, but if it changes significantly in either direction during the period of holding Strip, I win. And I win even more if the increase in volatility leads to a drop in the price of the asset."
 
 **Structure**:
 ```
 Buy: 2 puts + 1 call at same strike
 Example: 2 ETH $2,000 puts + 1 ETH $2,000 call
 ```
+
+The Strip has a limited cost and unlimited potential profit.
+
+Buying one Strip is equal to buying three ATM options: two ATM puts and one ATM call.
 
 **Payoff**:
 ```
@@ -249,8 +253,6 @@ Price stays flat: Loss premium (time decay)
 - Accept higher premium cost
 
 #### Bear Put Spread
-
-**Status**: Coming Soon
 
 **Description**: Low cost, decent profits if the price falls to a certain level.
 
@@ -276,8 +278,6 @@ ETH < $1,700: Profit capped at $70
 - Accept capped downside profit
 
 #### Bear Call Spread
-
-**Status**: Coming Soon
 
 **Description**: Low cost, decent profits if the price stays at a certain level or falls.
 
@@ -308,8 +308,6 @@ Strategies for when you expect significant price movement in either direction.
 
 #### Straddle
 
-**Status**: Coming Soon
-
 **Description**: High profits if the price rises or falls sharply during the period of holding.
 
 **Use Case**: Expect large price movement, direction unknown.
@@ -334,8 +332,6 @@ ETH at $2,300: Call profit $300 - $130 = $170
 - Willing to pay premium for protection both ways
 
 #### Strangle
-
-**Status**: Coming Soon
 
 **Description**: Low cost, very high profits if the price rises or falls significantly.
 
@@ -366,11 +362,17 @@ Strategies for when you expect prices to stay relatively stable.
 
 #### Long Butterfly
 
-**Status**: Coming Soon
-
 **Description**: Low cost, high profits if the price is about a strike price.
 
 **Use Case**: Expect price to stay near current level.
+
+The Long Butterfly is a strategy that helps you to make a bet on low volatility: that the price of an asset won't rise or fall significantly in either direction during the period of holding.
+
+Instead of being bullish or bearish about the future price, you can have the following reasoning when buying it: "I don't care what the price will be, but if it doesn't change significantly from current levels in either direction during the period of holding the Long Butterfly, I win."
+
+The Long Butterfly is an optimal strategy when the price doesn't rise or fall during the period of holding. The profit zone for this strategy is the opposite of a Straddle: you make profits when the price doesn't change, and you lose when there is volatility with regards to the market price at the moment of buying the Long Butterfly.
+
+With the Long Butterfly, you have higher premiums received for ATM options you sell in comparison to the total amount of premiums for OTM options you sell when you buy the Long Condor.
 
 **Structure**:
 ```
@@ -379,6 +381,10 @@ Sell: 2 ETH $2,000 calls for $80 each = $160
 Buy: 1 ETH $2,100 call for $50
 Net Cost: $10
 ```
+
+Buying one Long Butterfly is equal to selling ATM Call and ATM Put and at the same time buy OTM Call and OTM Put (two ranges available - Narrow and Wide).
+
+Long Butterfly is an inversion strategy. This means that the strategy includes selling (writing) of options, so they can't be exercised before expiry.
 
 **Payoff**:
 ```
@@ -393,11 +399,15 @@ ETH < $1,900 or > $2,100: Max loss $10
 
 #### Long Condor
 
-**Status**: Coming Soon
-
 **Description**: Decent profits if the price changes slightly.
 
 **Use Case**: Expect price to stay within a range.
+
+The Long Condor is a strategy that helps you to make a bet on low volatility: that the price of an asset won't rise or fall significantly in either direction during the period of holding.
+
+Instead of being bullish or bearish about the future price, you can have the following reasoning when buying it: "I don't care what the price will be, but if it won't change significantly from current levels in either direction during the period of holding the Long Condor, I win."
+
+The Long Condor is an optimal strategy when the price is moving within the ~10% range. The profit zone for this strategy is the opposite of a Strangle: you make profits when the price moves within the 10% range, you lose money if the price moves up or down from the 10% range.
 
 **Structure**:
 ```
@@ -407,6 +417,10 @@ Sell: 1 ETH $2,100 call for $50
 Buy: 1 ETH $2,200 call for $30
 Net Cost: $20
 ```
+
+Buying one Long Condor is equal to selling OTM Call and OTM Put and buying higher OTM Call and lower OTM Put (two ranges available - Narrow and Wide).
+
+Long Condor is an inversion strategy. This means that the strategy includes selling (writing) of options, so they can't be exercised before expiry.
 
 **Payoff**:
 ```
@@ -475,7 +489,7 @@ Sell: 10 ETH $2,200 calls (30 days)
 Premium: $80 per ETH = $800 total
 
 Execution:
-1. Navigate to Sell Options
+1. Navigate to Portfolio -> Options Positions
 2. Select ETH Call strategy
 3. Enter 10 ETH amount
 4. Duration: 30 days
@@ -724,7 +738,6 @@ After ETH drops to $1,900:
 Action: Sell some puts or buy calls to rebalance
 ```
 
-**MegaETH Advantage**: Real-time Greeks enable precise rebalancing.
 
 ## Hedging LP Positions
 
@@ -870,8 +883,6 @@ Currently manual. Auto-Pools integration may enable automated hedging strategies
 **What if I can't afford to hedge?**  
 Use cheaper strategies: OTM options, collars (premium offset), or accept some risk unhedged.
 
-**When will "Coming Soon" strategies be available?**  
-Additional strategies are planned for future releases. Follow official channels for updates.
 
 ## Next Steps
 
@@ -879,7 +890,6 @@ Apply hedging strategies:
 
 - [Options Trading](options-trading.md) - Execute hedge trades
 - [Risk Management](risk-management.md) - Understand risk controls
-- [Pricing Models](pricing-models.md) - Calculate optimal hedge sizing
 
 ---
 

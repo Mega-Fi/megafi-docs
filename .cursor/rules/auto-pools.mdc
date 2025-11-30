@@ -79,7 +79,7 @@ Note: Users have full authority to withdraw the strategy any time during the HOD
 # Auto-Rebalance
 Define how LPs want their liquidity to respond to price changes.
 
-A51 offers a set of auto-rebalance intents that helps users dictate how they want the A51's rebalancing mechanism to work for them. Following are the auto-rebalance intents offered by A51:
+The protocol offers a set of auto-rebalance intents that helps users dictate how they want the rebalancing mechanism to work for them. Following are the auto-rebalance intents offered:
 
 Market modes
 
@@ -164,16 +164,16 @@ When the price of tokens in a liquidity pool diverges from the price at the time
 Trailing Rebalancing
 Trailing rebalancing works by trailing the market price before executing the rebalance. It does so to wait for the market price to come back to the previous range as it goes out of range usually for a very short time. It also prevents unnecessary divergence loss by quickly swapping tokens in the pool and keeping the LP position in the range. 
 
-When the TWAP of pool, for example TWAP of USDC per ETH in an $ETH/$USDC pool, hits the rebalancing threshold on either side of the price range, A51 will put that position right behind the new price. This means that it will not swap your assets to bring it back to the range essentially saving from greater loss of buying your asset on a higher price or selling on a lower price.
+When the TWAP of pool, for example TWAP of USDC per ETH in an $ETH/$USDC pool, hits the rebalancing threshold on either side of the price range, the system will put that position right behind the new price. This means that it will not swap your assets to bring it back to the range essentially saving from greater loss of buying your asset on a higher price or selling on a lower price.
 
 Let’s understand this by an example of a pool ETH/USDC.
 
 Scenario 1: When $ETH Price Goes Above the Range
 Your liquidity position trails the current $ETH price as it increases and goes out of range. It is suitable for bullish market trends so you would be able to capture more of the upside.
 
-Example: Trailing Rebalancing in A51 Finance ($ETH/$USDC Pool)
+Example: Trailing Rebalancing ($ETH/$USDC Pool)
 Bull Mode
-Let’s walk through a scenario using the $ETH/$USDC pool on Base via BaseSwap to understand how trailing rebalancing works in A51 Finance in Bull Mode.
+Let's walk through a scenario using the $ETH/$USDC pool to understand how trailing rebalancing works in Bull Mode.
 
 Intents You Setup Initially:
 
@@ -218,9 +218,9 @@ The system does not take action since the price remains within the predefined ra
 Scenario 2: When $ETH Price Drops Below the Range
 Your liquidity position trails the current $ETH price as it decreases and goes out of range. It is suitable for bearish market trends so you can protect yourself against decreasing prices.
 
-Example: Trailing Rebalancing in A51 Finance ($ETH/$USDC Pool)
+Example: Trailing Rebalancing ($ETH/$USDC Pool)
 Bear Mode
-Let’s walk through a scenario using the $ETH/$USDC pool on Base via BaseSwap to understand how trailing rebalancing works in A51 Finance in Bear Mode.
+Let's walk through a scenario using the $ETH/$USDC pool to understand how trailing rebalancing works in Bear Mode.
 
 Intents You Setup Initially:
 
@@ -279,16 +279,16 @@ Active rebalancing adjusts your liquidity position within the market’s price r
 Let’s understand this by an example of a pool ETH/USDC. ETH has a volatile price and it could go up or down.
 
 Scenario 1: When $ETH price goes above the range
-When the price of $ETH goes above the maximum price range, your position will go out of range and will stop generating fees and yields. A51 will actively rebalance your position by converting your $ETH to $USDC partially since its price increased to bring your LP position back to the range.
+When the price of $ETH goes above the maximum price range, your position will go out of range and will stop generating fees and yields. The system will actively rebalance your position by converting your $ETH to $USDC partially since its price increased to bring your LP position back to the range.
 
 Scenario 2: When $ETH price drops below the range
-When the price of $ETH drops below the minimum price range, your position will go out of range and will stop generating fees and yields. A51 will actively rebalance your position by converting your $USDC to $ETH partially since its price decreased to bring your LP position back to the range.
+When the price of $ETH drops below the minimum price range, your position will go out of range and will stop generating fees and yields. The system will actively rebalance your position by converting your $USDC to $ETH partially since its price decreased to bring your LP position back to the range.
 
 Scenario 3: When $ETH price fluctuates below and above the range
 Your liquidity position rebalances actively with the current $ETH price as it increases or decreases or goes out of range.
 
 Set a Price Range
-A51 doesn’t limit you to a fixed price range or ratio while defining auto-rebalance intents.
+The protocol doesn't limit you to a fixed price range or ratio while defining auto-rebalance intents.
 
 You can define the minimum and maximum price range around the current price. You can make it in a custom ratio according to your assets and investment mindset.
 

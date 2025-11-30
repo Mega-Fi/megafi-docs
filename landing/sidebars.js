@@ -22,7 +22,6 @@ const sidebars = {
         'hedge/options-trading',
         'hedge/hedging-strategies',
         'hedge/risk-management',
-        'hedge/pricing-models',
         'hedge/architecture',
       ],
     },

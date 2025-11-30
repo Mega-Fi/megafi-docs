@@ -1,0 +1,263 @@
+# Options Basics
+All you need to know to start trading options
+What are Options?
+An option is a contract giving the buyer the right, but not the obligation, to buy (in the case of a call option contract) or sell (in the case of a put option contract) the underlying asset at a specific price on or before a certain date. Traders can use on-chain options for speculation or to hedge their positions. Options are known as derivatives because they derive their value from an underlying asset.
+What is a Call Option?
+A call option is option contract giving the owner the right, but not the obligation, to buy a specified amount of an underlying asset at a specified price within a certain time. The pre-determined price the call option buyer can buy at is called the strike price. For example, a single call option contract may give a holder the right to buy 1 ETH at $2000 up until the expiry date in 90 days. There are many expiration dates and strike prices for traders to choose from.
+Potential Profit: Unlimited as the level of the underlying asset increases
+Potential Loss: Limited to premium paid for a call option contract
+Example: Buying a Call Option
+The price of a call option is called the premium. It is the price paid for the rights that the call option provides. If at expiry the underlying asset is below the strike price, the call buyer loses the premium paid. This is the maximum loss. If the underlying's price is above the strike price at expiry, the profit is the current asset price minus the strike price and the premium.
+For example, if ETH is trading at $1000 at expiry, the strike price is $800, and the option costs the buyer $50, the profit is $1000 - ($800 + $50) = $150. If at expiry ETH is below $800, then the option buyer loses $50 for each contract they bought.
+What is a Put Option?
+A put is an option contract giving the owner the right, but not the obligation, to sell a specified amount of an underlying asset at a specified price within a certain time. The pre-determined price the put option buyer can sell at is called the strike price.
+Potential Profit: Substantial and increases as the level of the underlying asset decreases to zero
+Potential Loss: Limited to premium paid for a put option contract
+Example: Buying a Put Option
+The price of a put option is called the premium. It is the price paid for the rights that the put option provides. If at expiry the underlying asset is above the strike price, the put buyer loses the premium paid. This is the maximum loss. If the underlying's price is below the strike price at expiry, the profit is the strike price minus the current asset price and the premium.
+For example, if ETH is trading at $1000 at expiry, the strike price is $1200, and the option costs the buyer $50, the profit is $1200 - ($1000 + $50) = $150. If at expiry ETH is above $1200, then the option buyer loses $50 for each contract they bought.
+What is a Strike Price?
+A strike price is the set price at which an option contract can be bought (call option) or sold (put option) when it is exercised. For call options, the strike price is where the asset can be bought by the option holder; for put options, the strike price is the price at which the asset can be sold. The strike price is a key variable of call and put options. For example, the buyer of an ETH call option would have the right, but not the obligation, to buy that ETH in the future at the strike price. Similarly, the buyer of an ETH put option would have the right, but not the obligation, to sell that ETH in the future at the strike price.
+What is an Expiration Date?
+An expiration date in options is the last day that options contracts are valid. On or before this day, options contracts holders will have already decided what to do with their expiring position. Before an option expires, its owners can choose to exercise the option, close the position to realize their profit or loss, or let the contract expire worthless.
+What is an Option Premium?
+An option premium is the price of an option contract. It is thus the income received by the seller (writer) of an option contract. In-the-money option premiums are composed of two factors: intrinsic and extrinsic value. Out-of-the-money options premiums consist solely of extrinsic value.
+The main factors affecting an option's price are the underlying asset's price, moneyness, useful life of the option and implied volatility. As the price of the underlying asset changes, the option premium changes. As the underlying asset's price increases, the premium of a call option increases, but the premium of a put option decreases. As the underlying asset's price decreases, the premium of a put option increases, and the opposite is true for call options.
+The moneyness affects the option's premium because it indicates how far away the underlying asset price is from the specified strike price. As an option becomes further in-the-money, the option's premium normally increases. Conversely, the option premium decreases as the option becomes further out-of-the-money. For example, as an option becomes further out-of-the-money, the option premium loses intrinsic value, and the value stems primarily from the time value.
+
+# Bullish Options
+Bullish options are used by traders when they expect to see a rise in the asset price
+The protocol offers four different types of bullish options:
+Call
+Strap (Classic Strategy)
+Bull Call Spread (Classic Strategy)
+Bull Put Spread (Inversion Strategy)
+What are one-click strategies?
+There are numerous ways to create different payouts in options trading by buying or selling options with different strike prices and different market sentiments at the same time. This is what is considered as a strategy.
+The protocol offers multiple strategies as single structured options products, throughout all four different market sentiments.
+What is the difference between Classic and Inverse strategies?
+The Classic strategies require a manual exercising before the expiration, while P&L on Inversion strategies will be distributed automatically if the price won't reach the maximum loss zone at the time of expiry.
+Inversion strategies include selling (writing) of options as a part of the strategy, which means they can't be exercised before expiry.
+
+## Call
+Call option is an on-chain contract that gives a buyer the right, but not the obligation, to buy ETH or BTC at a fixed price during a certain period
+How Call Options Work?
+
+Call option contract buyer chooses the size, period and strike price for an option contract. A size refers to a number of options contracts that buyer is acquiring. A period is the number of days that the option contract will be active for. The pre-determined price the call option buyer can buy at is called the strike price.
+Premium will be calculated for the chosen size, period and strike price for a call option contract. After that, the buyer will be asked to pay this amount in USDm using their wallet. After payment, buyer will receive an ERC721 option token that represents his bought option.
+After blockchain confirms the transaction, the buyer will be able to exercise the call option contract during the selected period using the aforementioned ERC721 option token.
+Call Option is a bullish financial instrument. Buyer is bullish on the price of the asset during the period of the option.
+How to Exercise a Call Option?
+For exercising a call option contract, the buyer sends the ERC721 option token to the protocol and automatically receives amount of USDm corresponding to profit of his option.
+A call option contract buyer is only able to exercise the contract before the expiration time that the contract has been acquired for, with a precondition that the price is above the strike price.
+All options are cash-settled, which means the profits are distributed in USDm.
+What Periods Are Available?
+Call options periods that the contracts can be acquired for are ranging from 7 up to 90 days.
+What Strike Prices Are Available?
+Call option buyers can choose out of 4 different strike prices for their ETH or BTC call options contracts.
+Those are: ATM price (current price of ETH or WBTC on the market), and three OTM Prices:
+Market Price + 10% = OTM Call Strike #1
+Market Price + 20% = OTM Call Strike #2
+Market Price + 30% = OTM Call Strike #3
+Example: Let’s say the market price of ETH is $2,337.
+The OTM strikes that will be available for trading are:
+For call options:
+$2,337 * 1.1 = $2,571 Strike #1
+$2,337 * 1.2 = $2,804 Strike #2
+$2,337 * 1.3 = $3,038 Strike #3
+Whenever the price of ETH or WBTC changes, the corresponding OTM strikes will follow the market price. The OTM Prices are about offering a range of -30% — +30% out-of-the-money strikes at any given time.
+The OTM options can only be exercised if the strike price is reached.
+
+## Strap
+High profits if the price rises sharply, reasonable profits if the price falls
+
+The Strap is similar to the Straddle in terms of betting on rising volatility. The Strap usually consists of two call options and one put option with the same strike price and the same expiration.
+You can think of the Strap as a bullish Straddle: “I don’t care what the price will be, but if it changes significantly in either direction during the period of holding Strap, I win. And I win even more if the increase in volatility leads to an increase in the price of the asset.”
+The Strap has a limited cost and unlimited potential profit.
+Buying one Strap is equal to buying three ATM options at the same time: two ATM calls and one ATM put.
+
+## Bull Call Spread
+Low cost, decent profits if the price rises to a certain level
+
+The Bull Call Spread is a strategy that helps you to make a bet on a local price rise while paying less than for an at-the-money call option.
+The break-even price will also be lower than in the ATM options as the price should rise just a little higher for the Bull Call Spread to be in-the-money.
+This is achieved by simultaneously selling an out-of-the-money call option with a higher strike price when you buy an at-the-money call option, as this is the essence of the Bull Call Spread.
+The Bull Call Spread has a limited low cost and capped potential profit.
+Buying one Bull Call Spread is equal to buying ATM Call while selling a OTM call with a higher strike price at the same time.
+
+## Bull Put Spread
+Low cost, decent profits if the price stays at a certain level or rises
+
+The Bull Put Spread is a strategy that helps you to make a bet on a local price rise and earn profits if the price doesn’t fall.
+The Bull Put Spread is an optimal strategy when the price rises or does not change during the period of holding. The profit zone for this strategy looks like a profit zone for the Bull Call Spread. The key difference is that with the Bull Put Spread you are immediately in profits after purchasing the strategy and don’t need to wait for a price rise.
+Buying one Bull Put Spread is equal to selling a ATM put while at the same time buying a OTM put with a lower strike price (two ranges available - Narrow and Wide).
+Bull Put Spread is an inversion strategy. This means that the strategy includes selling (writing) of options, so they can't be exercised before expiry.
+
+# Bearish Options
+Bearish options are used by traders when they expect to see a decrease in the asset price
+The protocol offers four different types of bearish options:
+Put
+Strip (Classic Strategy)
+Bear Put Spread (Classic Strategy)
+Bear Call Spread (Inversion Strategy)
+What are one-click strategies?
+There are numerous ways to create different payouts in options trading by buying or selling options with different strike prices and different market sentiments at the same time. This is what is considered as a strategy.
+The protocol offers multiple strategies as single structured options products, throughout all four different market sentiments.
+What is the difference between Classic and Inverse strategies?
+The Classic strategies require a manual exercising before the expiration, while P&L on Inversion strategies will be distributed automatically if the price won't reach the maximum loss zone at the time of expiry.
+Inversion strategies include selling (writing) of options as a part of the strategy, which means they can't be exercised before expiry.
+
+## Put
+Put option is an on-chain contract that gives a buyer the right, but not the obligation, to sell ETH or BTC at a fixed price during a certain period
+How Put Options Work?
+
+Put option contract buyer chooses the size, period and strike price for an option contract. A size refers to a number of options contracts that buyer is acquiring. A period is the number of days that the option contract will be active for. The pre-determined price the put option buyer can sell at is called the strike price.
+Premium will be calculated for the chosen size, period and strike price for a put option contract. After that, the buyer will be asked to pay this amount in USDm using their wallet. After payment, buyer will receive an ERC721 option token that represents his bought option.
+After blockchain confirms the transaction, the buyer will be able to exercise the put option contract during the selected period using the aforementioned an ERC721 option token.
+Put Option is a bearish financial instrument. Buyer is bearish on the price of the asset during the period of the option.
+How to Exercise a Put Option?
+For exercising a put option contract, the buyer sends the ERC721 option token to the protocol and automatically receives amount of USDm corresponding to profit of his option.
+A put option contract buyer is only able to exercise the contract before the expiration time that the contract has been acquired for, with a precondition that the price is below the strike price.
+All options are cash-settled, which means the profits are distributed in USDm.
+What Periods Are Available?
+Put options periods that the contracts can be acquired for are ranging from 7 up to 90 days.
+What Strike Prices are Available?
+Buyers can choose out of 4 different strike prices for their ETH or BTC put options contracts.
+Those are: ATM price (current price of ETH or WBTC on the market), and three OTM Prices:
+Market Price - 10% = OTM Put Strike #1
+Market Price - 20% = OTM Put Strike #2
+Market Price - 30% = OTM Put Strike #3
+Example: Let’s say the market price of ETH is $2,337.
+The OTM strikes that will be available for trading are:
+For put options:
+$2,337 * 0.9 = $2,103 Strike #1
+$2,337 * 0.8 = $1,869 Strike #2
+$2,337 * 0.7 = $1,636 Strike #3
+Whenever the price of ETH or WBTC changes, the corresponding OTM strikes will follow the market price. The OTM Prices are about offering a range of -30% — +30% out-of-the-money strikes at any given time.
+The OTM options can only be exercised if the strike price is reached.
+
+## Strip
+High profits if the price falls sharply, reasonable profits if the price rises
+
+The Strip is similar to Straddle and Strap in terms of betting on rising volatility. The Strip usually consists of one call option and two put options with the same strike price and the same expiration.
+You can think of the Strip as a bearish Straddle: “I don’t care what the price will be, but if it changes significantly in either direction during the period of holding Strip, I win. And I win even more if the increase in volatility leads to a drop in the price of the asset.”
+The Strip has a limited cost and unlimited potential profit.
+Buying one Strip is equal to buying three ATM options: two ATM puts and one ATM call.
+
+## Bear Put Spread
+Low cost, decent profits if the price falls to a certain level
+
+The Bear Put Spread is a strategy that helps you to make a bet on a local price drop while paying less than for an at-the-money put option.
+The break-even price will also be lower than in the ATM options as the price should drop just a little lower for the Bear Put Spread to be in-the-money.
+This is achieved by simultaneously selling an out-of-the-money put option with a lower strike price when you buy an at-the-money put option, and this is the essence of the Bear Put Spread.
+The Bear Put Spread has a limited low cost and capped potential profit.
+
+## Bear Call Spread
+Low cost, decent profits if the price stays at a certain level or falls
+
+The Bear Call Spread is a strategy that helps you to make a bet on a local price drop and earn profits if the price doesn’t rise.
+The Bear Call Spread is an optimal strategy when the price falls or does not change much during the period of holding. The profit zone for this strategy looks like a profit zone for the Bear Put Spread. The key difference is that with the Bear Call Spread you are immediately in profits after purchasing the strategy and don’t need to wait for a price drop.
+Buying one Bear Call Spread is equal to selling an ATM call and buying an OTM call with a higher strike price (two ranges available - Narrow and Wide).
+
+# High Volatility Options
+Making profits in a volatile market no matter which direction it takes
+There are two strategies that can be acquired to make profits in high volatility markets:
+Straddle
+Strangle
+Most important thing to know about these strategies is that you are making a bet that the price of an asset will soon rise or fall significantly in either direction.
+Instead of being bullish or bearish about the future price, you can have the following reasoning when buying Straddle or Strangle: “I don’t care what the price will be, but if it changes significantly in either direction during the period of holding the Straddle/Strangle, I win big.”
+Key difference between the two is that Strangle is combination of OTM call + OTM put, while Straddle is combination of ATM call + ATM put. This means that Strangle is quite cheaper than Straddle.
+
+## Straddle
+High profits if the price rises or falls sharply during the period of holding
+
+The Straddle is a strategy that helps you to make a bet on a volatility rise: that the price of an asset will soon increase or fall (any direction). The Straddle consists of a call option and a put option with the same strike price and the same expiration.
+Instead of being bullish or bearish about the future price, you can have the following reasoning when buying it: “I don’t care what the price will be, but if it changes significantly in either direction during the period of holding the Straddle, I win.”
+The Straddle has a limited cost and unlimited potential profit.
+Buying one Straddle is equal to buying two ATM options: one ATM call and one ATM put.
+
+## Strangle
+Low cost, very high profits if the price rises or falls significantly
+
+The Strangle is a strategy that helps you to make a bet on a volatility rise: that the price of an asset will soon rise or fall significantly in either direction. The Strangle consists of an out-of-the-money call option and an out-of-the-money put option with the same strike price and the same expiration.
+Instead of being bullish or bearish about the future price, you can have the following reasoning when buying it: “I don’t care what the price will be, but if it changes significantly in either direction during the period of holding the Strangle, I win big.”
+The Strangle is much cheaper than the Straddle (which consists of two at-the-money options). This means that you will pay much less when buying Strangles (two out-of-the-money options) and have a higher profits potential.
+The Strangle has a limited cost and unlimited potential profit.
+
+# Low Volatility Options
+Making profits when market is trading sideways
+There are two strategies that can be acquired to make profits in low volatility environment:
+Long Butterfly (Inversion strategy)
+Long Condor (Inversion strategy)
+Most important things to know about low volatility option strategies:
+Make profits when market volatility is low
+Immediately in-the-money (in profits) after purchasing a strategy
+P&L for low volatility one-click option strategies is distributed automatically
+Keep in mind that with one-click option strategies you will have to wait until expiration to make a profit (if any). You won’t be able to change the parameters of the active strategy or exercise it before the expiration.
+
+## Long Butterfly
+Low cost, high profits if the price is about a strike price
+
+The Long Butterfly is a strategy that helps you to make a bet on low volatility: that the price of an asset won’t rise or fall significantly in either direction during the period of holding.
+Instead of being bullish or bearish about the future price, you can have the following reasoning when buying it: “I don’t care what the price will be, but if it doesn’t change significantly from current levels in either direction during the period of holding the Long Butterfly, I win.”
+The Long Butterfly is an optimal strategy when the price doesn’t rise or fall during the period of holding. The profit zone for this strategy is the opposite of a Straddle: you make profits when the price doesn’t change, and you lose when there is volatility with regards to the market price at the moment of buying the Long Butterfly.
+With the Long Butterfly, you have higher premiums received for ATM options you sell in comparison to the total amount of premiums for OTM options you sell when you buy the Long Condor.
+Buying one Long Butterfly is equal to selling ATM Call and ATM Put and at the same time buy OTM Call and OTM Put (two ranges available - Narrow and Wide).
+Long Butterfly is an inversion strategy. This means that the strategy includes selling (writing) of options, so they can't be exercised before expiry.
+
+## Long Condor
+Decent profits if the price changes slightly
+
+The Long Condor is a strategy that helps you to make a bet on low volatility: that the price of an asset won’t rise or fall significantly in either direction during the period of holding.
+Instead of being bullish or bearish about the future price, you can have the following reasoning when buying it: “I don’t care what the price will be, but if it won’t change significantly from current levels in either direction during the period of holding the Long Condor, I win.”
+The Long Condor is an optimal strategy when the price is moving within the ~10% range. The profit zone for this strategy is the opposite of a Strangle: you make profits when the price moves within the 10% range, you lose money if the price moves up or down from the 10% range.
+Buying one Long Condor is equal to selling OTM Call and OTM Put and buying higher OTM Call and lower OTM Put (two ranges available - Narrow and Wide).
+Long Condor is an inversion strategy. This means that the strategy includes selling (writing) of options, so they can't be exercised before expiry.
+
+# Stake & Cover Pool
+Writing options in the protocol
+What is Stake & Cover Pool?
+Stake & Cover (S&C) is a liquidity provision and utilization model. There is no division into liquidity providers and stakers / premiums and settlement fees. Instead of many different liquidity pools and staking contracts, there is only one Stake & Cover pool. Staked tokens are utilized to cover the protocol's net losses on selling options/strategies and earn net profits on all expired options/strategies.
+With Stake & Cover, token holders can provide tokens into the pool that will be used for collateralizing options and option strategies acquired through the protocol. The Stake & Cover (S&C) Pool participants receive 100% of net premiums earned on selling ATM & OTM options (both ETH and WBTC calls & puts) and options strategies (all of them). The net premiums earned (or losses accrued) are distributed pro-rata among all of the S&C Pool participants.
+The net premium is a difference between the total premiums received from all options/strategies buyers and the total profits paid out to options/strategies holders who exercised their contracts in-the-money.
+How is P&L distributed among the S&C participants?
+The accumulation of P&L is conducted during a set period called an Epoch.
+If at the end of an Epoch the P&L is positive, 100% of it then distributed among the Stake & Cover pool participants in USDm with regards to their shares in the S&C (pro rata distribution).
+If at the end of an Epoch the P&L is negative, then a pro rata share of tokens from S&C will be converted into USDm for covering the net negative difference.
+The conversion rate is publicly announced five days in advance before a new Epoch starts. The initial USDm liquidity for converting tokens into for covering the potential negative P&L will be provided by the Development Fund.
+How do I get USDm if P&L was positive at the end of an Epoch?
+If you were participating with tokens in Stake & Cover during the Epoch that had positive P&L accrued, you will be able to claim your share of USDm at any moment after the end of the Epoch.
+This share of P&L in USDm is linked to your address and won't be utilized in the next Epochs. If the following Epoch(s) will result in negative P&L accrued, it will be covered by your share of tokens allocated in Stake & Cover, not by the unclaimed USDm balance.
+How is the token/USDm conversion rate determined for covering the negative P&L?
+The protocol is using experimental token price monitoring mechanics that are used for setting the conversion rate based on the token price performance during the previous Epoch.
+If you don't agree to participate in the S&C Epoch with a set token/USDm conversion rate, you can request to not participate in the following Epoch and tokens will be sent to your address at the end of the current Epoch. Otherwise, your tokens will be automatically utilized in the following Epoch.
+Is it possible that Epoch loss is more than S&C pool can handle?
+There are risk management measures in place that are directly to connected to how much options can be sold in regards to amount of tokens staked in S&C pool, and how much of each type can be sold - amount of available bullish/bearish options, and low/high volatility options should always be in balance.
+How long is one Epoch?
+The total duration of an Epoch is 45 days. After the end of one Epoch, the next begins immediately. Epoch durations can be changed in order to protect S&C participants from sharply increased volatility.
+Tokens can be allocated in Stake & Cover only in the first 7 days of every Epoch. The token/USDm conversion rate for the next Epoch is decided five days before the end of ongoing Epoch.
+A request for withdrawing tokens from Stake & Cover can be sent at any moment during the Epoch. The withdrawal will be automatically conducted at the end of an Epoch.
+How do I know if P&L is positive or negative during the Epoch?
+You can find and monitor the current P&L of the operational pool in real-time on the Stake & Cover page of the website.
+This metric might be changing during the whole period of an Epoch as new options and option strategies will expire or will be exercised by the users. The final P&L (positive or negative) for settlement is automatically set at the moment of an Epoch’s end.
+You can follow and verify the P&L numbers independently following the operational pool’s on-chain balance.
+Can I have a look at the past performance of Stake & Cover?
+You can find the historical data on P&L behind Stake & Cover previous Epochs looking at the graph on the Stake & Cover page of the website. Note that past performance is no guarantee of future results.
+Example of both positive and negative P&L at the end of a Epoch
+Let's assume that at the beginning of the Epoch, fixed token price is $0.02, user BigOptionPlaya staked 500,000 tokens (10,000 USD worth), and the total amount of staked tokens for that Epoch was 100,000,000 (1 million USD worth).
+Positive P&L example:
+Total revenue from selling options was 500,000 USDm
+Profits that were paid out to option buyers who exercised their options in-the-money were 300,000 USDm
+That means Net Premium of the Epoch was 200,000 USDm
+Net P&L per token therefore is equal to Net Premium/Amount of staked tokens, or in our example 200,000/10,000,000 = $0.002 per token
+User BigOptionPlaya profit is equal to his amount of staked tokens * Profit per token, or as in our example, 500,000 * $0.002 = $1,000
+As user's token stack was worth $10,000 at the time of staking, his profit during Epoch was exactly 10%, or if we convert it into an APR, it results in a +120% APR
+Negative P&L example:
+Total revenue from selling options was 500,000 USDm
+Profits that were paid out to option buyers who exercised their options in-the-money was 600,000 USDm
+That means Net Premium of the Epoch was negative 100,000 USDm, so Epoch ended in a Net loss of 100,000 USDm
+Loss per token therefore is equal to Net Loss/Amount of staked tokens, or as in our example, 100,000/10,000,000 = $0.001 per token
+User BigOptionPlaya loss is equal to his amount of staked tokens * loss per token, or in our example 500,000 * $0.001 = $500
+As fixed token price before Epoch started was $0.02, the amount of tokens the user will lose is equal to $500/$0.02 = 25,000 tokens
+User's stack at the end of the epoch will be lowered by 25,000 tokens, so he will have 475,000 tokens, therefore the realized loss is 5% of staked tokens.
+

@@ -8,7 +8,6 @@ Real-time options trading powered by pool-based liquidity on MegaETH. Hedge enab
 - Pool-based liquidity model with USDm-only architecture
 - 8 strategy types: calls, puts, straddles, strangles, and spreads
 - Options positions as tradeable ERC721 NFTs
-- Real-time Greeks calculations updated continuously
 - Hedge liquidity positions, protect holdings, or speculate on volatility
 
 ## How It Works
@@ -99,14 +98,21 @@ Strategy: Buy straddle (call + put at same strike)
 
 **How Trading Works**:
 1. Select strategy (e.g., ETH Call)
-2. Input parameters (amount, duration)
+2. Input parameters (amount, strike price, duration)
 3. System calculates premium via strategy contract
 4. Approve USDm spending
 5. Purchase option
 6. Receive option as ERC721 NFT
-7. Exercise during exercise window (1 hour before expiry)
+7. Exercise before expiration
 
-Available durations: 1 day to 30 days.
+**Available Strike Prices**:
+- ATM (current market price)
+- OTM Call: +10%, +20%, +30% above market
+- OTM Put: -10%, -20%, -30% below market
+
+OTM options can only be exercised if the strike price is reached.
+
+Available durations: 7 days to 90 days.
 
 [Options trading guide →](options-trading.md)
 
@@ -124,7 +130,6 @@ MegaFi uses a single-asset liquidity model:
 - Holds USDm reserves for option backing
 - Locks liquidity when options are purchased
 - Pays profits when options are exercised
-- Manages risk through per-strategy limits
 
 **CoverPool**:
 - LP-provided USDm reserve pool
@@ -149,34 +154,16 @@ Option Purchased → NFT Minted → Transfer/Hold/Exercise → NFT Burns
 
 Each NFT contains option parameters (strike, expiry, size, strategy).
 
-### Real-Time Greeks
-
-Track option risk metrics in real-time:
-
-**Delta**: Price sensitivity. How much option value changes per $1 token move.
-
-**Gamma**: Delta sensitivity. How delta changes as price moves.
-
-**Theta**: Time decay. How much value lost per day.
-
-**Vega**: Volatility sensitivity. How value changes with volatility.
-
-**Rho**: Interest rate sensitivity. Usually minimal in DeFi.
-
-MegaETH's continuous execution enables Greeks updates with every swap and price change, not just every block.
-
 ### Exercise Mechanics
 
-**Exercise Window**: Options have a 1-hour exercise window before expiry.
+**Exercise Timing**: Options can be exercised before expiration when in-the-money.
 
-**Auto-Exercise**: In-the-money options auto-exercise at expiration.
-
-**Manual Exercise**: Exercise early during the window if profitable.
+**Manual Exercise**: Exercise anytime before expiry if profitable.
 
 ```
 Option Lifecycle:
-Created → Active Period → Exercise Window (1h) → Expiry
-                           └─ Can exercise here
+Created → Active Period → Expiry
+         └─ Can exercise here (if ITM)
 ```
 
 **Settlement**:
@@ -189,11 +176,15 @@ Created → Active Period → Exercise Window (1h) → Expiry
 
 ### Buying Options
 
-1. Navigate to Hedge → Options
+1. Navigate to Hedge
 2. Select strategy type (Call, Put, etc.)
 3. Choose underlying asset (ETH, BTC)
 4. Enter amount (e.g., 1 ETH)
-5. Select duration (e.g., 7 days)
+5. Select strike price:
+   - ATM (current market price)
+   - OTM Call: +10%, +20%, or +30% above market
+   - OTM Put: -10%, -20%, or -30% below market
+6. Select duration (e.g., 7 days)
 6. Review premium calculation
 7. Approve USDm spending
 8. Confirm purchase
@@ -218,17 +209,14 @@ Risk: Obligation to deliver if exercised.
 
 ### Exercising Options
 
-**During Exercise Window**:
-1. Option becomes exercisable 1 hour before expiry
-2. Click "Exercise" on in-the-money option
+**Exercise Process**:
+1. Option is in-the-money (price above strike for calls, below strike for puts)
+2. Click "Exercise" on the option
 3. System calculates profit
 4. USDm profit transferred to wallet
 5. NFT burns
 
-**Auto-Exercise**:
-- System exercises profitable options at expiration
-- No manual intervention needed
-- Optimal execution guaranteed
+**OTM Options**: Out-of-the-money options can only be exercised if the strike price is reached.
 
 ## Pricing & Premiums
 
@@ -240,26 +228,13 @@ Options priced using Black-Scholes model:
 
 **Strike Price**: Exercise price selected by trader.
 
-**Time to Expiration**: Duration selected (1-30 days).
+**Time to Expiration**: Duration selected (7-90 days).
 
 **Implied Volatility**: Market expectation of future volatility.
 
 **Risk-Free Rate**: DeFi lending rates (minimal impact).
 
-### On-Chain Calculation
-
-```
-Premium Calculation Flow:
-1. User inputs parameters
-2. Strategy contract queries Chainlink for current price
-3. Black-Scholes calculation executed on-chain
-4. Premium returned instantly
-5. User reviews and confirms
-```
-
 Transparent, deterministic pricing with no intermediaries.
-
-[Pricing details →](pricing-models.md)
 
 ## Hedging Strategies
 
@@ -331,63 +306,14 @@ Outcome:
 
 ## Risk Management
 
-### Strategy Limits
-
-Each strategy has exposure limits:
-
-```
-Per-Strategy Limit: 20,000 USDm (example)
-Total Protocol Limit: Managed via LimitController
-```
-
-Prevents over-concentration and ensures sufficient backing liquidity.
-
-### Treasury Safety
-
-**Before Option Purchase**:
-- Strategy must be approved
-- Duration within allowed range (1-30 days)
-- Treasury + CoverPool liquidity sufficient
-- Strategy limit not exceeded
-
 **CoverPool Backup**:
 - Provides additional USDm if Treasury insufficient
 - Earns from protocol profits
 - Acts as safety net for large payouts
 
-### Collateral Requirements
-
-Selling options requires collateral:
-
-**Covered Options**:
-```
-Sell ETH call: Hold 1 ETH per contract
-Sell ETH put: Hold strike price worth of USDm per contract
-```
-
-**Maintenance**:
-- Collateral locked until expiry or position closed
-- System ensures solvency throughout
-
 [Risk controls →](risk-management.md)
 
 ## Hedge on MegaETH
-
-### Real-Time Greeks
-
-Traditional chains update Greeks every block (12 seconds). MegaETH updates continuously:
-
-```
-Traditional Chain:
-Price: $2,000 (stale for 8 seconds)
-Delta: 0.55 (calculated at last block)
-Risk: Positions may be mishedged
-
-MegaETH:
-Price: $2,000.43 (real-time)
-Delta: 0.5523 (recalculated continuously)
-Risk: Perfect hedge maintenance
-```
 
 ### Sub-10ms Exercise
 
@@ -413,14 +339,6 @@ Parameter input → Chainlink price query → Black-Scholes calculation → Prem
 Total latency: < 50ms
 ```
 
-### High-Frequency Hedging
-
-Real-time execution enables dynamic hedging:
-
-```
-Price change detected → Greeks recalculated → Hedge adjustment → Executed
-All in < 100ms
-```
 
 ## Liquidity Provider Benefits
 
@@ -491,11 +409,8 @@ Cash-settled in USDm. You receive profit in USDm, not the underlying token.
 **Can I close options before expiration?**  
 Yes. Options are ERC721 NFTs and can be transferred or sold on secondary markets.
 
-**What happens if I don't exercise ITM options?**  
-System auto-exercises at expiration. You don't lose value.
-
 **When can I exercise options?**  
-During the 1-hour exercise window before expiry. Auto-exercise occurs at expiration for ITM options.
+Before expiration when the option is in-the-money. OTM options can only be exercised if the strike price is reached.
 
 **What's the minimum trade size?**  
 Varies by strategy. Typically 0.1 ETH or equivalent.
@@ -504,7 +419,7 @@ Varies by strategy. Typically 0.1 ETH or equivalent.
 Built on audited smart contracts. Additional security audits planned before mainnet launch.
 
 **How are premiums calculated?**  
-On-chain Black-Scholes model using Chainlink price feeds and configurable volatility parameters.
+Black-Scholes model using Chainlink price feeds and configurable volatility parameters.
 
 ## Next Steps
 
@@ -513,7 +428,6 @@ Explore Hedge capabilities:
 - [Options Trading](options-trading.md) - Trade calls and puts
 - [Hedging Strategies](hedging-strategies.md) - Protect your positions
 - [Risk Management](risk-management.md) - Understand risk controls
-- [Pricing Models](pricing-models.md) - How options are priced
 
 ---
 

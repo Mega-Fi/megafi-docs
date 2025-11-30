@@ -63,7 +63,7 @@ The interface calculates from on-chain data:
 
 ### In MegaFi Interface
 
-Navigate to "Positions" tab. All your LP NFTs display with:
+Navigate to "Portfolio" tab. All your LP NFTs display with:
 - Visual representation of position
 - Current status (active/inactive)
 - Value and fee earnings

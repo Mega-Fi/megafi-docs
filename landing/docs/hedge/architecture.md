@@ -26,8 +26,6 @@ graph TD
     H --> E
     E --> I[LP NFTs]
     
-    J[Admin] --> K[LimitController]
-    K --> B
     
     style B fill:#4F46E5
     style H fill:#10B981
@@ -104,7 +102,6 @@ Before Option Purchase:
 √ Strategy approved?
 √ Duration valid?
 √ Sufficient liquidity?
-√ Strategy limit not exceeded?
 ```
 
 [Smart Contracts →](../technical/smart-contracts.md)
@@ -190,20 +187,6 @@ Benefits:
 - On-chain ownership proof
 ```
 
-### LimitController
-
-**Purpose**: Enforce per-strategy exposure limits.
-
-```
-Configuration Example:
-ETH Call: 50,000 USDm max
-ETH Put: 50,000 USDm max
-BTC Call: 30,000 USDm max
-
-Prevents over-concentration
-Admin configurable
-Checked on every purchase
-```
 
 ## Actor Flows
 
@@ -222,7 +205,7 @@ Purchase Flow:
 9. Position active
 
 Exercise Flow:
-1. Option enters exercise window (1h before expiry)
+1. Option is in-the-money before expiration
 2. Trader calls treasury.payOff()
 3. Strategy calculates profit
 4. Treasury checks balance
@@ -230,13 +213,6 @@ Exercise Flow:
 6. Profit transferred to trader
 7. NFT burns
 8. Liquidity unlocked
-
-Auto-Exercise Flow:
-1. Option reaches expiration
-2. System checks if ITM
-3. If profitable: Automatically execute payOff()
-4. Transfer profit to holder
-5. Clean up state
 ```
 
 ### Liquidity Provider Flow
@@ -409,16 +385,15 @@ Total Time: 10-50ms on MegaETH
 ```
 Step-by-Step:
 
-1. Exercise Window Opens:
-   - 1 hour before expiry
+1. Exercise Before Expiration:
+   - Option is in-the-money
    - User can manually exercise
 
 2. Manual Exercise:
    - User calls treasury.payOff(optionId, account)
-   - Or: Auto-exercise at expiration if ITM
 
 3. Treasury Actions:
-   - Verify within window or at expiry
+   - Verify option is ITM and before expiry
    - Get LockedLiquidity data
    - Call strategy.payOffAmount(optionId)
 
@@ -514,14 +489,12 @@ Layer 3 - Reentrancy Guards:
 - Checks-Effects-Interactions pattern
 
 Layer 4 - Liquidity Safety:
-- Strategy limits
 - Treasury balance checks
 - CoverPool backup
 
 Layer 5 - Time Constraints:
-- Exercise windows
-- Epoch boundaries
 - Expiration enforcement
+- Epoch boundaries
 
 Layer 6 - Oracle Protection:
 - Chainlink price feeds
@@ -557,14 +530,6 @@ Traditional: Batch transactions every 12s
 MegaETH: Process transactions continuously
 
 Benefit: No queueing, instant execution
-```
-
-**Real-Time Greeks**:
-```
-Traditional: Greeks stale between blocks
-MegaETH: Greeks update continuously
-
-Benefit: Accurate risk metrics always
 ```
 
 **Instant Settlement**:
@@ -625,7 +590,6 @@ Multicall support:
 
 **Risk Metrics**:
 ```
-- Per-strategy utilization
 - Largest single position
 - Options approaching expiry
 - Pending withdrawals
@@ -653,7 +617,6 @@ Critical Alerts:
 
 Info Alerts:
 - Epoch ending soon
-- Exercise windows opening
 - New LP deposits
 - Profit distribution completed
 ```
@@ -681,7 +644,7 @@ Not currently. USDm is the single accepted collateral.
 Protocol uses USDm as unit of account. Depeg affects all positions equally.
 
 **How does CoverPool prevent losses?**  
-Strategy limits, benchmark reserves, and LP risk-sharing ensure solvency.
+Benchmark reserves and LP risk-sharing ensure solvency.
 
 **Can epochs be changed?**  
 Duration is 7 days minimum (hardcoded constant). Admin can adjust window size.

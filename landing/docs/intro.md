@@ -9,7 +9,7 @@ MegaFi is a DeFi platform built on MegaETH that brings institutional-grade optio
 ## Core Products
 
 ### Hedge
-Real-time options trading and risk management. Trade calls and puts with instant execution, live Greeks, and capital-efficient collateral.
+Real-time options trading and risk management. Trade calls and puts with instant execution and capital-efficient collateral.
 
 [Get Started with Options →](hedge/overview.md)
 
@@ -25,7 +25,7 @@ Automated liquidity management that works 24/7. Deploy strategies that continuou
 
 ## Why MegaFi?
 
-**Speed**: Options execute and settle in under 10 milliseconds. Greeks update continuously, not every 12 seconds.
+**Speed**: Options execute and settle in under 10 milliseconds. Instant premium calculation and settlement.
 
 **Efficiency**: Concentrated liquidity and automated strategies achieve 30-50% higher capital utilization than traditional platforms.
 

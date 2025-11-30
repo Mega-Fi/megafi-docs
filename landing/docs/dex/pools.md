@@ -222,7 +222,7 @@ Track pool performance through the interface:
 
 To create a new Pool:
 
-1. Navigate to "Pools" → "Create Pool"
+1. Navigate to "Earn" → "Spot LP"
 2. Select Token A and Token B
 3. Choose fee tier based on pair characteristics
 4. Set initial price (important - sets starting exchange rate)

@@ -7,8 +7,6 @@ Buy and sell call and put options on major token pairs. Options provide leverage
 - Trade call and put options on major token pairs (ETH, BTC)
 - Direct pool-based purchasing with instant premium calculation
 - Options as ERC721 NFTs - transferable and composable
-- Exercise window: 1 hour before expiry
-- Auto-exercise for in-the-money options at expiration
 - On-chain settlement in USDm
 - Defined maximum loss for option buyers
 
@@ -32,7 +30,6 @@ Options give the right, but not obligation, to profit from price movements:
 
 **Underlying**: The token the option is based on (e.g., ETH).
 
-**Exercise Window**: 1-hour period before expiry when option can be exercised.
 
 **In-the-Money (ITM)**: Option has profit potential.
 - Call: Underlying price > strike
@@ -43,6 +40,37 @@ Options give the right, but not obligation, to profit from price movements:
 - Put: Underlying price > strike
 
 **At-the-Money (ATM)**: Underlying price equals strike.
+
+## Strike Prices
+
+Options buyers can choose from 4 different strike prices for their ETH or BTC options contracts:
+
+**Available Strikes**:
+- **ATM**: Current market price of ETH or BTC
+- **OTM Call Strike #1**: Market Price + 10%
+- **OTM Call Strike #2**: Market Price + 20%
+- **OTM Call Strike #3**: Market Price + 30%
+- **OTM Put Strike #1**: Market Price - 10%
+- **OTM Put Strike #2**: Market Price - 20%
+- **OTM Put Strike #3**: Market Price - 30%
+
+**Example**: Let's say the market price of ETH is $2,337.
+
+The OTM strikes that will be available for trading are:
+
+For call options:
+- $2,337 × 1.1 = $2,571 Strike #1
+- $2,337 × 1.2 = $2,804 Strike #2
+- $2,337 × 1.3 = $3,038 Strike #3
+
+For put options:
+- $2,337 × 0.9 = $2,103 Strike #1
+- $2,337 × 0.8 = $1,869 Strike #2
+- $2,337 × 0.7 = $1,636 Strike #3
+
+Whenever the price of ETH or BTC changes, the corresponding OTM strikes will follow the market price. The OTM Prices offer a range of -30% — +30% out-of-the-money strikes at any given time.
+
+**Important**: The OTM options can only be exercised if the strike price is reached.
 
 ## Buying Options
 
@@ -62,16 +90,17 @@ Exposure: Same upside, 96% less capital
 
 ### Buying Process
 
-1. Navigate to Hedge → Options
+1. Navigate to Hedge
 2. Select token pair (e.g., ETH/USDm)
 3. Choose option type:
    - Call (profit from price increase)
    - Put (profit from price decrease)
 4. Enter amount (e.g., 1 ETH)
-5. Select duration:
-   - Minimum: 1 day
-   - Maximum: 30 days
-   - Common: 7 days, 14 days, 30 days
+5. Select strike price (ATM or OTM)
+6. Select duration:
+   - Minimum: 7 days
+   - Maximum: 90 days
+   - Common: 7 days, 14 days, 30 days, 90 days
 6. Review quote:
    - Premium cost (USDm)
    - Max profit potential
@@ -189,61 +218,40 @@ Possible Use Cases:
 
 ## Exercise Mechanics
 
-### Exercise Window
+### Exercise Timing
 
-Options can only be exercised during the 1-hour window before expiry:
+Options can be exercised before expiration when in-the-money:
 
 ```
 Option Timeline:
-Created → Active Period → Exercise Window (1h) → Expiry
-                           └─ Can exercise here
+Created → Active Period → Expiry
+         └─ Can exercise here (if ITM)
 ```
-
-**Why the window?**
-- Prevents gaming the system
-- Ensures fair profit distribution
-- Aligns with epoch mechanics
 
 ### Manual Exercise
 
-Exercise during the window:
+Exercise before expiration:
 
-1. Navigate to active position
-2. Check current profit (if ITM)
+1. Navigate to Portfolio -> Options Positions
+2. Check if option is in-the-money
 3. Click "Exercise"
 4. System calculates profit based on current price
 5. Confirm transaction
 6. Receive USDm profit
 7. NFT burns
 
-**When to exercise early**:
-- Option is deep in-the-money
+**When to exercise**:
+- Option is in-the-money
 - Want to lock in profits before expiry
 - Need liquidity immediately
 
-### Auto-Exercise
-
-System automatically exercises ITM options at expiration:
-
-```
-At Expiration:
-1. System checks if option is ITM
-2. If profit > 0:
-   - Calculates profit automatically
-   - Transfers USDm to owner
-   - Burns NFT
-3. If profit = 0:
-   - Option expires worthless
-   - NFT becomes inactive
-```
-
-**No action required**: Profitable options automatically settled.
+**OTM Options**: Out-of-the-money options can only be exercised if the strike price is reached.
 
 ### Settlement Process
 
 ```
 Exercise Flow:
-1. Exercise submitted (manual or auto)
+1. Exercise submitted
 2. Strategy contract queries Chainlink price
 3. Profit calculated: max(0, currentPrice - strike) for calls
 4. Treasury unlocks liquidity
@@ -277,7 +285,7 @@ Advanced strategy for earning premium income.
 
 ### Selling Process
 
-1. Navigate to Sell Options
+1. Navigate to Portfolio -> Options Positions
 2. Select strategy and underlying
 3. Enter parameters (strike, expiration, amount)
 4. Review collateral requirement:
@@ -380,7 +388,7 @@ Position Dashboard:
 
 **Bought Option**:
 - Transfer/sell NFT on secondary market
-- Exercise early if in exercise window
+- Exercise if in-the-money before expiration
 - Let expire if OTM
 
 **Sold Option**:
@@ -397,11 +405,8 @@ Real-Time Metrics:
 - Current P&L
 - Break-even price
 - Days to expiration
-- Greeks (Delta, Gamma, Theta, Vega)
 - Probability of profit
 ```
-
-MegaETH's continuous execution enables real-time updates.
 
 ## Option Strategies
 
@@ -446,68 +451,6 @@ Wider break-even range
 
 [More strategies →](hedging-strategies.md)
 
-## Greeks and Risk Metrics
-
-### Delta
-
-Price sensitivity:
-
-```
-Delta 0.5 means:
-- If ETH moves $1 up, option value increases $0.50
-- If ETH moves $1 down, option value decreases $0.50
-
-Call options: Delta 0 to 1
-Put options: Delta -1 to 0
-```
-
-Use for position sizing:
-
-```
-Want 10 ETH delta exposure:
-Option has delta 0.5
-Need: 20 contracts (20 × 0.5 = 10 delta)
-```
-
-### Gamma
-
-Delta change rate:
-
-```
-Gamma 0.02 means:
-- If ETH moves $1, delta increases by 0.02
-
-High Gamma: Near ATM, short expiry
-Low Gamma: Deep ITM/OTM, long expiry
-```
-
-### Theta
-
-Time decay:
-
-```
-Theta -2 means:
-- Option loses $2 value per day
-- All else equal
-
-Option buyers: Negative theta (time works against)
-Option sellers: Positive theta (time works for)
-```
-
-### Vega
-
-Volatility sensitivity:
-
-```
-Vega 5 means:
-- If implied volatility rises 1%, option gains $5
-- If implied volatility falls 1%, option loses $5
-
-Long options: Positive vega (want volatility)
-Short options: Negative vega (want calm markets)
-```
-
-Interface displays all Greeks in real-time for every position.
 
 ## Premium Calculation
 
@@ -526,20 +469,6 @@ Premium Inputs:
 Calculation:
 Strategy contract computes Black-Scholes formula
 Returns premium in USDm (6 decimals)
-```
-
-### Real-Time Pricing
-
-```
-Pricing Flow:
-1. User enters parameters
-2. Frontend calls strategy.calculateNegativepnlAndPositivepnl()
-3. Strategy queries Chainlink for current price
-4. Black-Scholes calculation executes on-chain
-5. Premium displayed to user
-6. Updates dynamically as parameters change
-
-Latency: < 50ms
 ```
 
 Transparent, deterministic pricing with no hidden fees.
@@ -570,11 +499,8 @@ Ultra-low fees compared to traditional options exchanges.
 **What's the minimum trade size?**  
 Varies by strategy. Typically 0.1 ETH or equivalent (implementation dependent).
 
-**Can I exercise options before the exercise window?**  
-No. Options can only be exercised during the 1-hour window before expiry or via auto-exercise at expiration.
-
-**What if I don't exercise during the window?**  
-System auto-exercises ITM options at expiration. You receive profit automatically.
+**When can I exercise options?**  
+Before expiration when the option is in-the-money. OTM options can only be exercised if the strike price is reached.
 
 **What if option expires OTM?**  
 Option expires worthless. You lose the premium paid. NFT becomes inactive.
@@ -586,10 +512,10 @@ Yes. Options are ERC721 NFTs and can be transferred or sold on secondary markets
 Small protocol fee (0.03% of notional) + minimal gas (~$0.005 on MegaETH).
 
 **Can I see historical option prices?**  
-Yes. On-chain data enables tracking premium values, Greeks, and P&L over time.
+Yes. On-chain data enables tracking premium values and P&L over time.
 
-**What happens at expiration if I do nothing?**  
-ITM options auto-exercise and pay profit. OTM options expire worthless.
+**What happens at expiration if I don't exercise?**  
+Options expire. If in-the-money, you should exercise before expiration to receive profit. OTM options expire worthless.
 
 **How is profit calculated?**  
 Based on Chainlink oracle price at exercise time vs strike price, settled in USDm.
@@ -600,7 +526,6 @@ Deepen options knowledge:
 
 - [Hedging Strategies](hedging-strategies.md) - Protect positions
 - [Risk Management](risk-management.md) - Control risk
-- [Pricing Models](pricing-models.md) - Understand valuations
 
 ---
 

@@ -73,7 +73,6 @@ Comprehensive overview of MegaFi security measures and planned audits. Understan
 - Option pricing accuracy
 - Collateral management
 - Collateralization mechanisms
-- Greeks calculations
 - Exercise logic
 - Expiration handling
 
