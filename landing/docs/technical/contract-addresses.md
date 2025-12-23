@@ -6,14 +6,64 @@ Deployed smart contract addresses for MegaFi on MegaETH. Use these addresses to 
 
 ## At a Glance
 
-- All addresses are for MegaETH mainnet (when deployed)
+- All addresses are for MegaETH mainnet
 - Contracts will be verified on block explorer
-- Testnet addresses available for development
 - Always verify addresses from official sources
 - Never send tokens directly to contract addresses
 
+## MegaETH Mainnet Deployed Addresses
+
 ## Core Protocol Contracts
 
+### ALM (Auto Pools) Contracts
+
+| Contract | Address |
+|----------|---------|
+| CLTHelper | `0x80Dbfacfadb028d69E73168eA2b837A1Ee7788eD` |
+| CLTModules | `0x82Ea0338cB0f35B3Fb77657b969576Ed08EFB58a` |
+| CLTTwapQuoter | `0x9fA7f39A0bFE0dD0C7F9863815A85d5190a59B30` |
+| GovernanceFeeHandler | `0xbAcDDf64208a9e3177dE63E7da910b268b732B86` |
+| CLTBase | `0xeb3d3bCf5df5DF19689AfCCA4cD8Fdde7CE7aeF1` |
+
+### Advanced Modules
+
+| Contract | Address |
+|----------|---------|
+| Modes | `0x9bF13D2feEe430e0D05482B09B8834f09a1e77BA` |
+| RebaseModule | `0x1f9bDe3F99d897BDF1b4BCFe52a1716aB030f894` |
+
+### Libraries
+
+| Library | Address |
+|---------|---------|
+| PoolActions | `0x93884a316eDf8b3bC8129B4C83fDbd69a71f60B9` |
+| Position | `0x3C2b0DB9716d4E15797462F4231D25A5B1F32d43` |
+| StrategyFeeShares | `0xcB86f9ffD88dDD1947b17AC8C6078A8646D10556` |
+| TransferHelper | `0x0a6315c290Dc5ee33714E77F1a6689d184C65C00` |
+| UserPositions | `0x16463897f54B9E70c3b53379db373aC5587E730A` |
+| LiquidityShares | `0x819b6Cef85A0520897eFb6d8371c2DBD568203d9` |
+
+### Configuration
+
+| Parameter | Address |
+|-----------|---------|
+| Owner | `0x7eb4fa669716271f3b0e71a9d05ab3039af41e26` |
+| WETH9 | `0x4200000000000000000000000000000000000006` |
+| Factory | `0xbd4Ca451E3d28d053E7BE2738623Ed3d91709aa3` |
+
+### DEX Contracts
+
+| Contract | Address |
+|----------|---------|
+| UniswapV3Factory | `0xbd4Ca451E3d28d053E7BE2738623Ed3d91709aa3` |
+| PositionManager | `0xf2cA31CEfDD5B0814AB728A9C8358747dDd5da83` |
+| PositionDescriptor | `0xc40a0aea1c3630C46DBBA0762F8A136E1742beB0` |
+| NFTDescriptor Library | `0x3BA02Fb548AB983323A953Ba16Ba378A421c3258` |
+| QuoterV2 | `0xe0253d48919521D1253587782B6fFF06bDE18D21` |
+
+---
+
+### Hedge Protocol Contracts
 ### OperationalTreasury
 
 **Purpose**: Central hub for option lifecycle management
